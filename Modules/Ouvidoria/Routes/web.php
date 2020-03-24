@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,5 +11,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Auth\LoginController@index');
-
+Route::prefix('ouvidoria')->group(function() {
+    Route::get('/', 'OuvidoriaController@index');
+});

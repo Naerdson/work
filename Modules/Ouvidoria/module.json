@@ -1,0 +1,13 @@
+{
+    "name": "Ouvidoria",
+    "alias": "ouvidoria",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Ouvidoria\\Providers\\OuvidoriaServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
