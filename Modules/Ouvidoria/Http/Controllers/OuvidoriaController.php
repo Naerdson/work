@@ -51,20 +51,18 @@ class OuvidoriaController extends Controller
             ));
             $ouvidoriaInstance->save();
             if($ouvidoriaInstance){
-                $contatoEmail = $ouvidoriaInstance->contato;
-                $numeroProtocolo = $ouvidoriaInstance->protocolo;
+                // $contatoEmail = $ouvidoriaInstance->contato;
+                // $numeroProtocolo = $ouvidoriaInstance->protocolo;
                 
-                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
-                    $message->to($contatoEmail);
-                    $message->from('sistemas@unifametro.edu.br','Unifametro');
-                    $message->subject('Recebemos sua solicitação.');
-                });
+                // Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
+                //     $message->to($contatoEmail);
+                //     $message->from('sistemas@unifametro.edu.br','Unifametro');
+                //     $message->subject('Recebemos sua solicitação.');
+                // });
 
                 return response()->json([
                     'message' => 'Ouvidoria criada com sucesso',
-                    'docs' => [
-                        'ouvidoria' => $ouvidoriaInstance->toArray()
-                    ]
+                    'protocolo' => $ouvidoriaInstance->protocolo
                 ], 200);
             }
 
