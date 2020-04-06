@@ -13,13 +13,11 @@ class CreateTableUser extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome');
+            $table->string('name');
             $table->string('username');
-            $table->unsignedBigInteger('setor_id');
 
-            $table->foreign('setor_id')->references('id')->on('setor')->onUpdate('cascade');
             $table->timestamps();
         });
     }

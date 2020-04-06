@@ -19,8 +19,8 @@ class CreateTableHistorico extends Migration
             $table->unsignedBigInteger('setor_id');
             $table->unsignedBigInteger('user_id');
 
-            $table->foreign('setor_id')->references('id')->on('users')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('setor_id')->references('id')->on('user')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('user')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -16,8 +16,7 @@ class OuvidoriaController extends Controller
     }
     public function index()
     {
-        $ocorrencias = $this->ouvidoria->all();
-        dd($ocorrencias);
+        return view('admin.ouvidoria.home');
     }
 
     /**

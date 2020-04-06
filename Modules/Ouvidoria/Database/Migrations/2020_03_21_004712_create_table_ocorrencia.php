@@ -29,7 +29,7 @@ class CreateTableOcorrencia extends Migration
             $table->foreign('demandante_id')->references('id')->on('demandante');
             $table->foreign('status_id')->references('id')->on('status');
             $table->foreign('campus_id')->references('id')->on('campus');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('user');
 
             
 

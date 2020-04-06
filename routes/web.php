@@ -13,5 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Auth\LoginController@index');
+Route::get('/', 'Auth\LoginController@index')->name('auth.login');
+Route::post('/', 'Auth\LoginController@login')->name('login');
 
+Route::prefix('admin')->group(function () {
+    Route::get('ouvidoria/home', 'Admin\Ouvidoria\OuvidoriaController@index')->name('ouvidoria.home');
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+});
