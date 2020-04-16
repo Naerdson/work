@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTableOcorrencia extends Migration
+class CreateTableOuvidoriaOcorrencia extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTableOcorrencia extends Migration
      */
     public function up()
     {
-        Schema::create('ocorrencia', function (Blueprint $table) {
+        Schema::create('ouvidoria_ocorrencia', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('protocolo');
             $table->string('nome');
@@ -21,20 +21,14 @@ class CreateTableOcorrencia extends Migration
             $table->longText('descricao');
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('demandante_id');
-            $table->unsignedBigInteger('status_id');
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('campus_id');
-            $table->unsignedBigInteger('user_id');
-
-            $table->foreign('categoria_id')->references('id')->on('cat_ocorrencia');
-            $table->foreign('demandante_id')->references('id')->on('demandante');
-            $table->foreign('status_id')->references('id')->on('status');
-            $table->foreign('campus_id')->references('id')->on('campus');
-            $table->foreign('user_id')->references('id')->on('user');
-
-            
-
-
             $table->timestamps();
+
+            $table->foreign('categoria_id')->references('id')->on('ouvidoria_categoria');
+            $table->foreign('demandante_id')->references('id')->on('ouvidoria_demandante');
+            $table->foreign('status_id')->references('id')->on('ouvidoria_status');
+            $table->foreign('campus_id')->references('id')->on('campus');
         });
     }
 
@@ -45,6 +39,6 @@ class CreateTableOcorrencia extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ocorrencia');
+        Schema::dropIfExists('ouvidoria_ocorrencia');
     }
 }

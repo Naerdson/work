@@ -5,24 +5,49 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Ouvidoria;
+use App\HistoricoOuvidoria;
 use Auth;
 
-class OuvidoriaController extends Controller
+class HistoricoController extends Controller
 {
     private $ouvidoria = null;
+    private $historico = null;
 
-
-    public function __construct(Ouvidoria $ouvidoria)
+    public function __construct(Ouvidoria $ouvidoria, HistoricoOuvidoria $historico)
     {
         $this->ouvidoria = $ouvidoria;
+        $this->historico = $historico;
     }
-
-    public function index()
+    public function forwardOccurrence(Request $request)
     {
-        $ouvidorias = (Auth::user()->setor_id == 4) ? $this->ouvidoria->listAllOccurrencesInOmbudsman() : $this->ouvidoria->listAllOccurrencesWithCondition(Auth::user()->setor_id);
-        return view('admin.ouvidoria.home', compact('ouvidorias'));
+        try {
+            $historicoInstance = $this->historico->fill(array_merge(            
+                $request->post(),
+                [
+                    'user_id' => (string) Auth::user()->id
+                ]
+            ));
+    
+            $historicoInstance->save();
+    
+            $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $request->ocorrencia_id);   
+            $ouvidoriaInstance->update([ "status_id" => 2 ]);
+        
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -30,7 +55,7 @@ class OuvidoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
         //
     }

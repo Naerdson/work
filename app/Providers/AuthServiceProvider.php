@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('isSectorOmbudsman', function($user){
+            return $user->setor_id = 'ouvidoria';
+        });
     }
 }

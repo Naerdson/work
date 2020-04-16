@@ -1,11 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTableCategoria extends Migration
+class CreateTableOuvidoriaStatus extends Migration
 {
+    // INSERT INTO ouvidoria_status (id, nome) VALUES (1, "Aberto"), (2, "Encaminhado"), (3, "Concluido");
+
     /**
      * Run the migrations.
      *
@@ -13,7 +15,7 @@ class CreateTableCategoria extends Migration
      */
     public function up()
     {
-        Schema::create('cat_ocorrencia', function (Blueprint $table) {
+        Schema::create('ouvidoria_status', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
         });
@@ -26,6 +28,6 @@ class CreateTableCategoria extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cat_ocorrencia');
+        Schema::dropIfExists('ouvidoria_status');
     }
 }

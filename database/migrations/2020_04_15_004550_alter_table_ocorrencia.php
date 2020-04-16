@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AlterTableOcorrencia extends Migration
 {
@@ -13,7 +13,7 @@ class AlterTableOcorrencia extends Migration
      */
     public function up()
     {
-        Schema::table('ocorrencia', function (Blueprint $table) {
+        Schema::table('ouvidoria_ocorrencia', function (Blueprint $table) {
             $table->string('protocolo')->unique()->change();
             $table->string('nome')->nullable()->change();
             $table->unsignedBigInteger('status_id')->default(1)->change();
@@ -27,6 +27,6 @@ class AlterTableOcorrencia extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ocorrencia');
+        Schema::dropIfExists('ouvidoria_ocorrencia');
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateTableSetor extends Migration
 {
+    // INSERT INTO setor (id, nome) VALUES (1, "Técnologia da Informação"), (2, "Atendimento ao Aluno"), (3, "Financeiro"), (4, "EAD");
+
     /**
      * Run the migrations.
      *

@@ -1,11 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTableDemandante extends Migration
 {
+
+    // INSERT INTO ouvidoria_demandante (id, nome) VALUES (1, "Aluno(a)"), (2, "Professor(a)"), (3, "Funcionário(a)");
+    
     /**
      * Run the migrations.
      *
@@ -13,7 +16,7 @@ class CreateTableDemandante extends Migration
      */
     public function up()
     {
-        Schema::create('demandante', function (Blueprint $table) {
+        Schema::create('ouvidoria_demandante', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome');
         });
@@ -26,6 +29,6 @@ class CreateTableDemandante extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('demandante');
+        Schema::dropIfExists('ouvidoria_demandante');
     }
 }
