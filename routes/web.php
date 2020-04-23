@@ -20,4 +20,9 @@ Route::prefix('admin')->group(function () {
     Route::get('ouvidoria/home', 'Admin\Ouvidoria\OuvidoriaController@index')->name('ouvidoria.home');
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
     Route::put('ouvidoria/home', 'Admin\Ouvidoria\HistoricoController@forwardOccurrence')->name('ouvidoria.home.encaminhar');
+    Route::put('ouvidoria/home/responder', 'Admin\Ouvidoria\HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
+
+    Route::get('responder', function (){
+        return new \App\Mail\ResponderOuvidoria();
+    });
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Ouvidoria;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResponderOuvidoria;
 use Illuminate\Http\Request;
 use App\Ouvidoria;
 use App\HistoricoOuvidoria;
@@ -18,21 +19,22 @@ class HistoricoController extends Controller
         $this->ouvidoria = $ouvidoria;
         $this->historico = $historico;
     }
+
     public function forwardOccurrence(Request $request)
     {
         try {
-            $historicoInstance = $this->historico->fill(array_merge(            
+            $historicoInstance = $this->historico->fill(array_merge(
                 $request->post(),
                 [
-                    'user_id' => (string) Auth::user()->id
+                    'user_id' => (string) Auth::user()->id,
                 ]
             ));
-    
+
             $historicoInstance->save();
-    
-            $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $request->ocorrencia_id);   
-            $ouvidoriaInstance->update([ "status_id" => 2 ]);
-        
+
+            $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $request->ocorrencia_id);
+            $ouvidoriaInstance->update([ "status_id" => 2, "setor_responsavel_id" => $request->setor_id ]);
+
         } catch (Exception $e) {
             dd($e->getMessage());
         }
@@ -40,68 +42,33 @@ class HistoricoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Responder ocorrencia por emil
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function replyOccurrenceByEmail(Request $request)
     {
-        //
+
+        try {
+            $historicoInstance = $this->historico->fill(array_merge(
+                $request->post(),
+                [
+                    'user_id' => (string) Auth::user()->id,
+                    'setor_id' => (string) Auth::user()->setor_id
+                ]
+            ));
+
+            $historicoInstance->save();
+
+            new ResponderOuvidoria($request->post());
+
+            return redirect('admin\ouvidoria\home');
+
+        }catch (\Exception $e){
+            dd($e->getMessage());
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

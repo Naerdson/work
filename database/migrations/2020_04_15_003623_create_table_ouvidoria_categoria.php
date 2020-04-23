@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateTableOuvidoriaCategoria extends Migration
 {
     // INSERT INTO ouvidoria_categoria (id, nome) VALUES (1, "Reclamação"), (2, "Elogio"), (3, "Sugestão"), (4, "Informação"), (5, "Denúncia");
-    
+
     /**
      * Run the migrations.
      *

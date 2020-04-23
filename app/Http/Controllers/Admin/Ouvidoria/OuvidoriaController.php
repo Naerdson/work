@@ -5,34 +5,52 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Ouvidoria;
+use Exception;
 use Auth;
 
 class OuvidoriaController extends Controller
 {
     private $ouvidoria = null;
 
-
     public function __construct(Ouvidoria $ouvidoria)
     {
         $this->ouvidoria = $ouvidoria;
     }
 
-    public function index()
-    {
-        $ouvidorias = (Auth::user()->setor_id == 4) ? $this->ouvidoria->listAllOccurrencesInOmbudsman() : $this->ouvidoria->listAllOccurrencesWithCondition(Auth::user()->setor_id);
+    public function index(){
+
+        $ouvidorias = $this->ouvidoria->listAllOccurrences();
+
+
         return view('admin.ouvidoria.home', compact('ouvidorias'));
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
+    public function store(Request $request)
     {
-        //
+
+//        try {
+//
+//            $contatoEmail = $ouvidoriaInstance->contato;
+//            $numeroProtocolo = $ouvidoriaInstance->protocolo;
+//
+//            Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
+//                $message->to($contatoEmail);
+//                $message->from('sistemas@unifametro.edu.br','Unifametro');
+//                $message->subject('Recebemos sua solicitação.');
+//            });
+//
+//            return response()->json([
+//                'message' => 'Ouvidoria aberta com sucesso',
+//                'docs' => [
+//                        'ouvidoria' => $ouvidoriaInstance->toArray()
+//                ]
+//            ], 200);
+//
+//
+//        }
+//        catch (Exception $e){
+//            dd($e->getMessage());
+//        }
     }
 
     /**

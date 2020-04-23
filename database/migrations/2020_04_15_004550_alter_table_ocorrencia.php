@@ -27,6 +27,7 @@ class AlterTableOcorrencia extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvidoria_ocorrencia');
+//        Schema::dropIfExists('ouvidoria_ocorrencia');
+
     }
 }

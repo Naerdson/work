@@ -16,12 +16,12 @@ class CreateTableOuvidoriaHistorico extends Migration
         Schema::create('OUVIDORIA_HISTORICO', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('ocorrencia_id');
-            $table->unsignedBigInteger('status_ocorrencia');
+            $table->unsignedBigInteger('status_ocorrencia_id');
             $table->unsignedBigInteger('setor_id');
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('ocorrencia_id')->references('id')->on('ouvidoria_ocorrencia');
-            $table->foreign('status_ocorrencia')->references('id')->on('ouvidoria_status');
+            $table->foreign('status_ocorrencia_id')->references('id')->on('ouvidoria_status');
             $table->foreign('setor_id')->references('id')->on('setor');
             $table->foreign('user_id')->references('id')->on('usuario');
             $table->timestamps();
