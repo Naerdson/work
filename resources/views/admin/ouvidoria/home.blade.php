@@ -1,5 +1,8 @@
 @extends('admin.layouts.master')
 @section('content')
+    @if(Session::has('message') && Session::has('type'))
+        <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
+    @endif
     <h1>Home Ouvidoria</h1>
 	<table class="table">
 		<thead>
@@ -23,12 +26,15 @@
                         <td>{{ $ocorrencia->setor_responsavel  }}</td>
                         <td>
                             @if($ocorrencia->setor_responsavel_id == Auth::user()->setor_id)
-                                <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia">Responder</button>
-                                <button type="button" class="btn btn-success btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia">Encaminhar</button>
+                                @if($ocorrencia->status_id >= 3)
+                                    <button type="button" class="btn btn-primary btn-sm">Histórico</button>
+                                @else
+                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia">Responder</button>
+                                    <button type="button" class="btn btn-success btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia">Encaminhar</button>
+                                @endif
                             @else
                                 <button type="button" class="btn btn-primary btn-sm">Histórico</button>
                             @endif
-
                         </td>
                     </tr>
                 @endif
@@ -69,7 +75,7 @@
 </div>
 
 <!-- Modal Encaminhar Ocorrencia-->
-<div class="modal fade" id="modalResponderOcorrencia" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modalEncaminharOcorrencia" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -104,7 +110,7 @@
     </div>
 </div>
 <script>
-    $('#modalEncaminharOcorrencia, #modalResponderOcorrencia').on('show.bs.modal', function (event) {
+    $('#modalResponderOcorrencia').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var ocorrencia_id = button.data('ocorrenciaid'); // Extract info from data-* attributes
         var email_ocorrencia = button.data('email');
@@ -113,6 +119,15 @@
         modal.find('.modal-body #ocorrencia_id').val(ocorrencia_id)
         modal.find('.modal-body #email').val(email_ocorrencia)
     });
+
+    $('#modalEncaminharOcorrencia').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var ocorrencia_id = button.data('ocorrenciaid'); // Extract info from data-* attributes
+
+        var modal = $(this)
+        modal.find('.modal-body #ocorrencia_id').val(ocorrencia_id)
+    });
+
 
 </script>
 @endsection

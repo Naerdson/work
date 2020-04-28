@@ -34,6 +34,6 @@ Route::get('responder', function (){
     $ouvidoriaData->nome = 'Moises abreu rodrigues';
     $ouvidoriaData->email = 'moisesabreurodrigues@gmail.com';
 
-    Mail::send(new App\Mail\ResponderOuvidoria($ouvidoriaData));
+
 
 });

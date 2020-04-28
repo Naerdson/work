@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class ResponderOuvidoria extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $data = null;
+    private $user;
+    private $data;
 
 
     /**
@@ -22,9 +24,11 @@ class ResponderOuvidoria extends Mailable
      *
      * @return void
      */
-    public function __construct(\StdClass $postData)
+    public function __construct(User $user, Request $data)
     {
-        $this->data = $postData;
+        $this->user = $user;
+        $this->data = $data;
+
     }
 
     /**
@@ -36,9 +40,10 @@ class ResponderOuvidoria extends Mailable
     {
        $this->subject('Resposta Ouvidoria - Unifametro');
        $this->to($this->data->email);
-       $this->from('sistemas@unifametro.edu.br', 'Ouvidoria Unifametro');       
+       $this->from('sistemas@unifametro.edu.br', 'Ouvidoria Unifametro');
        $this->markdown('emails.resposta-ouvidoria', [
-           'data' => $this->data
+           'usuario' => $this->user,
+           'ouvidoria' => $this->data
        ]);
     }
 }

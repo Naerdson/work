@@ -20,7 +20,7 @@ class Ouvidoria extends Model
             ->join('ouvidoria_categoria as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
             ->join('ouvidoria_status as status', 'status.id', '=', 'ocorrencia.status_id')
             ->join('setor', 'setor.id', '=' , 'ocorrencia.setor_responsavel_id')
-            ->select('ocorrencia.id','ocorrencia.protocolo','ocorrencia.contato as email','categoria.nome as categoria', 'status.nome as status', 'ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
+            ->select('ocorrencia.id','ocorrencia.protocolo','ocorrencia.contato as email','categoria.nome as categoria', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
             ->get();
 
         return $ocurrencesOmbudsman;
