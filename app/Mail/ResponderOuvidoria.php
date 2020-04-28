@@ -8,26 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Log;
+use StdClass;
 
 class ResponderOuvidoria extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $mensagem = null;
-    private $email = null;
+    private $data = null;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($postData)
+    public function __construct(\StdClass $postData)
     {
-        $postData = is_array($postData) ? (object) $postData : $postData;
-
-        $this->mensagem = $postData->mensagem;
-        $this->email = $postData->email;
-
+        $this->data = $postData;
     }
 
     /**
@@ -37,14 +34,11 @@ class ResponderOuvidoria extends Mailable
      */
     public function build()
     {
-//        $this->subject('Resposta Ouvidoria - Unifametro');
-//        $this->to($this->email);
-//        $this->from('sistemas@unifametro.edu.br','Unifametro');
-
-        json_encode(Log::info($this->mensagem));
-
-        $this->markdown('emails.resposta-ouvidoria', [
-            "mensagem" => $this->mensagem
-        ]);
+       $this->subject('Resposta Ouvidoria - Unifametro');
+       $this->to($this->data->email);
+       $this->from('sistemas@unifametro.edu.br', 'Ouvidoria Unifametro');       
+       $this->markdown('emails.resposta-ouvidoria', [
+           'data' => $this->data
+       ]);
     }
 }
