@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'cors'], function(){
-    Route::post('ouvidoria','Admin\Ouvidoria\OuvidoriaController@store');
-});
+
+
+
+
 
 
 

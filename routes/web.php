@@ -37,3 +37,7 @@ Route::get('responder', function (){
 
 
 });
+
+Route::post('ouvidoria', 'Admin\Ouvidoria\OuvidoriaController@store')->middleware('cors.ouvidoria');
+
+Route::get('historico', 'Admin\Ouvidoria\OuvidoriaController@getOuvidoria')->middleware('cors.routes');

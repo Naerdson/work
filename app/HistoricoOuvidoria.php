@@ -23,4 +23,17 @@ class HistoricoOuvidoria extends Model
 
         return $ocurrences;
     }
+
+    public function getHistoricWithProtocolo($protocolo)
+    {
+        $historic = DB::table('ouvidoria_ocorrencia AS ocorrencia')
+            ->join('ouvidoria_historico AS historico', 'historico.ocorrencia_id', '=', 'ocorrencia.id')
+            ->join('setor', 'setor.id', '=', 'historico.setor_id')
+            ->join('ouvidoria_status as status', 'status.id', '=', 'historico.status_ocorrencia_id')
+            ->where('protocolo', $protocolo)
+            ->select('historico.id as historico_id', 'setor.nome as setor', 'status.nome as status', 'historico.created_at as data')
+            ->get();
+
+        return $historic;
+    }
 }

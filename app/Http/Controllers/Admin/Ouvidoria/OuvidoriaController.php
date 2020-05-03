@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Ouvidoria;
 
+use App\HistoricoOuvidoria;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Ouvidoria;
@@ -10,14 +11,17 @@ use Auth;
 
 class OuvidoriaController extends Controller
 {
-    private $ouvidoria = null;
+    private $ouvidoria;
+    private $historico;
 
-    public function __construct(Ouvidoria $ouvidoria)
+    public function __construct(Ouvidoria $ouvidoria, HistoricoOuvidoria $historico)
     {
         $this->ouvidoria = $ouvidoria;
+        $this->historico = $historico;
     }
 
-    public function index(){
+    public function index()
+    {
 
         $ouvidorias = $this->ouvidoria->listAllOccurrences();
 
@@ -28,73 +32,59 @@ class OuvidoriaController extends Controller
     public function store(Request $request)
     {
 
-//        try {
+        try {
+            $ouvidoriaInstance = $this->ouvidoria->fill(array_merge(
+                $request->post(),
+                [
+                    'protocolo' =>  uniqid()
+                ]
+            ));
+            $ouvidoriaInstance->save();
+            if($ouvidoriaInstance){
+
+//                $contatoEmail = $ouvidoriaInstance->contato;
+//                $numeroProtocolo = $ouvidoriaInstance->protocolo;
 //
-//            $contatoEmail = $ouvidoriaInstance->contato;
-//            $numeroProtocolo = $ouvidoriaInstance->protocolo;
-//
-//            Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
-//                $message->to($contatoEmail);
-//                $message->from('sistemas@unifametro.edu.br','Unifametro');
-//                $message->subject('Recebemos sua solicitação.');
-//            });
-//
-//            return response()->json([
-//                'message' => 'Ouvidoria aberta com sucesso',
-//                'docs' => [
-//                        'ouvidoria' => $ouvidoriaInstance->toArray()
-//                ]
-//            ], 200);
-//
-//
-//        }
-//        catch (Exception $e){
-//            dd($e->getMessage());
-//        }
+//                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
+//                    $message->to($contatoEmail);
+//                    $message->from('sistemas@unifametro.edu.br','Unifametro');
+//                    $message->subject('Recebemos sua solicitação.');
+//                });
+
+                return response()->json([
+                    'message' => 'Ouvidoria aberta com sucesso',
+                    'docs' => [
+                        'ouvidoria' => $ouvidoriaInstance->toArray()
+                    ]
+                ], 200);
+            }
+
+        }
+        catch (Exception $e){
+            dd($e->getMessage());
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getOuvidoria(Request $request, HistoricoOuvidoria $historico)
     {
-        //
+        try {
+            $protocolo = $request->input('protocolo');
+
+            return response()->json([
+                'message' => 'Ouvidoria selecionada com sucesso',
+                'docs' => [
+                    'ouvidoria' => $this->ouvidoria->getOuvidoriaWhereProtocol($protocolo),
+                    'historico' => $this->historico->getHistoricWithProtocolo($protocolo)
+                ]
+            ], 200);
+
+        }
+        catch (Exception $e){
+
+        }
+
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
