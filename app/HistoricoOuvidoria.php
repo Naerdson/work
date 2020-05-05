@@ -36,4 +36,18 @@ class HistoricoOuvidoria extends Model
 
         return $historic;
     }
+
+    public function getHistoric($id)
+    {
+        $historic = DB::table('ouvidoria_historico as historico')
+            ->join('ouvidoria_status as status', 'status.id', '=', 'historico.status_ocorrencia_id')
+            ->join('setor', 'setor.id', '=', 'historico.setor_id')
+            ->join('usuario', 'usuario.id', '=', 'historico.user_id')
+            ->where('historico.ocorrencia_id', $id)
+            ->select('historico.ocorrencia_id', 'status.nome as status', 'setor.nome as setor', 'usuario.name as usuario', 'historico.created_at as criado_em')
+            ->get();
+
+        return $historic;
+
+    }
 }

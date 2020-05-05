@@ -19,21 +19,29 @@
             @foreach ($ouvidorias as $ocorrencia)
                 @if(Auth::user()->setor_id == 4 ||$ocorrencia->setor_responsavel_id == Auth::user()->setor_id )
                     <tr>
-                        <td>{{ $ocorrencia->data }}</td>
+                        <td>{{ date("d/m/Y H:i", strtotime($ocorrencia->data)) }}</td>
                         <td>{{ $ocorrencia->protocolo }}</td>
                         <td>{{ $ocorrencia->categoria }}</td>
                         <td>{{ $ocorrencia->status }}</td>
                         <td>{{ $ocorrencia->setor_responsavel  }}</td>
                         <td>
                             @if($ocorrencia->setor_responsavel_id == Auth::user()->setor_id)
-                                @if($ocorrencia->status_id >= 3)
-                                    <button type="button" class="btn btn-primary btn-sm">Histórico</button>
-                                @else
+                                @if($ocorrencia->status_id == 4)
+                                    <form method="post" action="{{ route('ouvidoria.home.encerrar', $ocorrencia->id) }}" style="display: inline" onsubmit="return confirm('Deseja encerrar esta ocorrência?');" >
+                                        @csrf
+                                        <input name="_method" type="hidden" value="PUT">
+                                        <button class="btn btn-info btn-sm">Encerrar Ocorrência</button>
+                                    </form>
+                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia">Responder</button>
+                                    <button type="button" class="btn btn-success btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia">Encaminhar</button>
+                                @elseif($ocorrencia->status_id == 3)
+                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-primary btn-sm">Histórico</button></a>
+                                 @else
                                     <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia">Responder</button>
                                     <button type="button" class="btn btn-success btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia">Encaminhar</button>
                                 @endif
                             @else
-                                <button type="button" class="btn btn-primary btn-sm">Histórico</button>
+                                <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-primary btn-sm">Histórico</button></a>
                             @endif
                         </td>
                     </tr>
@@ -57,8 +65,11 @@
                     @csrf
                     <input name="_method" type="hidden" value="PUT">
                     <input type="hidden" name="ocorrencia_id" id="ocorrencia_id">
-                    <input type="hidden" name="status_ocorrencia_id" value="3">
-                    <input type="hidden" class="form-control" name="email" id="email" />
+                    <input type="hidden" name="status_ocorrencia_id" value="4">
+                    <div class="form-group">
+                        <label for="mensagem">Responder para: </label>
+                        <input type="text" class="form-control" name="email" id="email" />
+                    </div>
                     <div class="form-group">
                         <label for="mensagem">Mensagem</label>
                         <textarea class="form-control" name="mensagem" id="mensagem" rows="6"></textarea>

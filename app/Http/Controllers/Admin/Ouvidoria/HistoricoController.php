@@ -23,6 +23,7 @@ class HistoricoController extends Controller
 
     public function forwardOccurrence(Request $request)
     {
+
         try {
             $historicoInstance = $this->historico->fill(array_merge(
                 $request->post(),
@@ -66,13 +67,40 @@ class HistoricoController extends Controller
 //            Mail::send(new ResponderOuvidoria(Auth::user(), $request));
 
             $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $request->ocorrencia_id);
-            $ouvidoriaInstance->update([ "status_id" => 3, "setor_responsavel_id" => 4 ]);
+            $ouvidoriaInstance->update([ "status_id" => 4, "setor_responsavel_id" => Auth::user()->setor_id ]);
 
-            return redirect('admin\ouvidoria\home');
+            return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria respondida com sucesso' ]);
 
         }catch (\Exception $e){
             dd($e->getMessage());
         }
+    }
+
+    public function finishOccurrence($id)
+    {
+
+        $historicoInstance = $this->historico->fill(
+            [
+                'ocorrencia_id' => $id,
+                'status_ocorrencia_id' => 3,
+                'user_id' => (string) Auth::user()->id,
+                'setor_id' => (string) Auth::user()->setor_id
+            ]
+        );
+
+        $historicoInstance->save();
+
+        $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $id);
+        $ouvidoriaInstance->update([ "status_id" => 3, "setor_responsavel_id" => 4 ]);
+
+        return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria encerrada com sucesso' ]);
+    }
+
+    public function getHistoric($id)
+    {
+        $historics = $this->historico->getHistoric($id);
+
+        return view('admin.ouvidoria.historico', compact('historics'));
     }
 
 

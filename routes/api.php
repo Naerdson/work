@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('ouvidoria', 'Admin\Ouvidoria\OuvidoriaController@store')->middleware('cors.ouvidoria');
+
+Route::get('historico', 'Admin\Ouvidoria\OuvidoriaController@getOuvidoria');
 
 
 

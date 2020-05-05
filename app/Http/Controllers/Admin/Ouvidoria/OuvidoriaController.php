@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Ouvidoria;
 use Exception;
 use Auth;
+date_default_timezone_set('America/Sao_Paulo');
 
 class OuvidoriaController extends Controller
 {
@@ -36,7 +37,7 @@ class OuvidoriaController extends Controller
             $ouvidoriaInstance = $this->ouvidoria->fill(array_merge(
                 $request->post(),
                 [
-                    'protocolo' =>  uniqid()
+                    'protocolo' =>  date("dmYHis")
                 ]
             ));
             $ouvidoriaInstance->save();
