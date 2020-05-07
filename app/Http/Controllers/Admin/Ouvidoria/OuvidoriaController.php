@@ -25,9 +25,9 @@ class OuvidoriaController extends Controller
     {
 
         $ouvidorias = $this->ouvidoria->listAllOccurrences();
+        $listCountOuvidoria = $this->ouvidoria->getCountOuvidoriaWithStatus();
 
-
-        return view('admin.ouvidoria.home', compact('ouvidorias'));
+        return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria'));
     }
 
     public function store(Request $request)

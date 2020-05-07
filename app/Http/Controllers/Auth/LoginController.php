@@ -23,17 +23,17 @@ class LoginController extends Controller
         try {
             // vazer a validação
 
-            
+
             $dataUser = (object) $request->post();
-            
+
             $userInstance = $this->user->firstOrNew(['username' => $dataUser->username]);
 
             $autenticaUserLdap = $userInstance->autenticaLdap($dataUser->password);
             if($autenticaUserLdap->authenticated){
-                $userInstance->name = $autenticaUserLdap->name;
-                $userInstance->save();
-                Auth::login($userInstance);
-                return view('admin.home');
+                    $userInstance->name = $autenticaUserLdap->name;
+                    $userInstance->save();
+                    Auth::login($userInstance);
+                    return view('admin.home');
             }
             return redirect()->back()->with(['type' => 'danger', 'message' => 'Não foi possível autenticar o usuário. Tente novamente.']);
         } catch (Exeception $e) {

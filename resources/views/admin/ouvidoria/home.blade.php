@@ -1,54 +1,111 @@
 @extends('admin.layouts.master')
+@section('titulo', 'Ouvidoria')
 @section('content')
-    @if(Session::has('message') && Session::has('type'))
-        <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
-    @endif
-    <h1>Home Ouvidoria</h1>
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Data de abertura</th>
-				<th scope="col">Protocolo</th>
-				<th scope="col">Categoria</th>
-				<th scope="col">Status</th>
-                <th scope="col">Setor Responsável</th>
-				<th scope="col">Ações</th>
-			</tr>
-		</thead>
-		<tbody>
-            @foreach ($ouvidorias as $ocorrencia)
-                @if(Auth::user()->setor_id == 4 ||$ocorrencia->setor_responsavel_id == Auth::user()->setor_id )
-                    <tr>
-                        <td>{{ date("d/m/Y H:i", strtotime($ocorrencia->data)) }}</td>
-                        <td>{{ $ocorrencia->protocolo }}</td>
-                        <td>{{ $ocorrencia->categoria }}</td>
-                        <td>{{ $ocorrencia->status }}</td>
-                        <td>{{ $ocorrencia->setor_responsavel  }}</td>
-                        <td>
-                            @if($ocorrencia->setor_responsavel_id == Auth::user()->setor_id)
-                                @if($ocorrencia->status_id == 4)
-                                    <form method="post" action="{{ route('ouvidoria.home.encerrar', $ocorrencia->id) }}" style="display: inline" onsubmit="return confirm('Deseja encerrar esta ocorrência?');" >
-                                        @csrf
-                                        <input name="_method" type="hidden" value="PUT">
-                                        <button class="btn btn-info btn-sm">Encerrar Ocorrência</button>
-                                    </form>
-                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia">Responder</button>
-                                    <button type="button" class="btn btn-success btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia">Encaminhar</button>
-                                @elseif($ocorrencia->status_id == 3)
-                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-primary btn-sm">Histórico</button></a>
-                                 @else
-                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia">Responder</button>
-                                    <button type="button" class="btn btn-success btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia">Encaminhar</button>
+    <div class="d-flex justify-content-between">
+        <h4 style="color: #6a7a8c; font-weight: 600; font-size: 21px;">Gerenciamento de Ouvidorias</h4>
+        <button class="btn btn-success btn-sm"><i class="fas fa-file-pdf"></i> Gerar Relatório</button>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 col-xlg-3">
+                            <div class="card">
+                                <div class="box text-center bg-info">
+                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
+                                    <h6 class="text-white">Total de ocorrências</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xlg-3">
+                            <div class="card">
+                                <div class="box text-center bg-warning">
+                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
+                                    <h6 class="text-white">Encaminhadas</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xlg-3">
+                            <div class="card">
+                                <div class="box text-center bg-success">
+                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
+                                    <h6 class="text-white">Concluídas</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 col-xlg-3">
+                            <div class="card">
+                                <div class="box text-center bg-dark">
+                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
+                                    <h6 class="text-white">Aberto</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if(Session::has('message') && Session::has('type'))
+                        <div class="alert alert-{{ Session::get('type') }} text-center mt-3">{{ Session::get('message') }}</div>
+                    @endif
+                    <div class="table-responsive mt-3">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-black-50">Status</th>
+                                    <th class="text-black-50">Data de abertura</th>
+                                    <th class="text-black-50">Protocolo</th>
+                                    <th class="text-black-50">Categoria</th>
+                                    <th class="text-black-50">Setor Responsável</th>
+                                    <th class="text-black-50">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($ouvidorias as $ocorrencia)
+                                @if(Auth::user()->setor_id == 4 ||$ocorrencia->setor_responsavel_id == Auth::user()->setor_id )
+                                    <tr>
+                                        <td class="text-dark">
+                                            @if($ocorrencia->status == 'Encaminhado')
+                                                <span class="span bg-warning">Encaminhado</span>
+                                            @elseif($ocorrencia->status == 'Aberto')
+                                                <span class="span bg-dark">Aberto</span>
+                                            @elseif($ocorrencia->status == 'Concluido')
+                                                <span class="span bg-success">Concluido</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-dark">{{ date("d/m/Y H:i", strtotime($ocorrencia->data)) }}</td>
+                                        <td class="text-dark">{{ $ocorrencia->protocolo }}</td>
+                                        <td class="text-dark">{{ $ocorrencia->categoria }}</td>
+                                        <td class="text-dark">{{ $ocorrencia->setor_responsavel  }}</td>
+                                        <td>
+                                            @if($ocorrencia->setor_responsavel_id == Auth::user()->setor_id)
+                                                @if($ocorrencia->status_id == 4)
+                                                    <form method="post" action="{{ route('ouvidoria.home.encerrar', $ocorrencia->id) }}" style="display: inline" onsubmit="return confirm('Deseja encerrar esta ocorrência?');" >
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="PUT">
+                                                        <button class="btn btn-info btn-sm">Encerrar Ocorrência</button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia"><i class="fas fa-envelope"></i></button>
+                                                    <button type="button" class="btn btn-warning btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia"><i class="fas fa-forward"></i></button>
+                                                @elseif($ocorrencia->status_id == 3)
+                                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-history"></i></button></a>
+                                                @else
+                                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia"><i class="fas fa-envelope"></i></button>
+                                                    <button type="button" class="btn btn-warning btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia"><i class="fas fa-forward"></i></button>
+                                                @endif
+                                            @else
+                                                <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-history"></i></button></a>
+                                            @endif
+                                        </td>
+                                    </tr>
                                 @endif
-                            @else
-                                <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-primary btn-sm">Histórico</button></a>
-                            @endif
-                        </td>
-                    </tr>
-                @endif
-			@endforeach
-		</tbody>
-	</table>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 <!-- Modal Responder Ocorrencia-->
 <div class="modal fade" id="modalResponderOcorrencia" tabindex="-1" aria-hidden="true">

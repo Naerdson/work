@@ -41,6 +41,16 @@ class Ouvidoria extends Model
 
     }
 
+    public function getCountOuvidoriaWithStatus()
+    {
+        return [
+            'total' => DB::table('ouvidoria_ocorrencia')->count(),
+            'encaminhado' => DB::table('ouvidoria_ocorrencia')->where('status_id', '2')->count(),
+            'concluido' => DB::table('ouvidoria_ocorrencia')->where('status_id', '3')->count(),
+            'aberto' => DB::table('ouvidoria_ocorrencia')->where('status_id', '1')->count(),
+        ];
+    }
+
     public function historic()
     {
         return $this->hasMany(HistoricoOuvidoria::class);
