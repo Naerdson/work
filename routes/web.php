@@ -24,4 +24,6 @@ Route::prefix('admin')->group(function () {
     Route::put('ouvidoria/home/responder', 'Admin\Ouvidoria\HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
     Route::put('ouvidoria/home/encerrar/{id}', 'Admin\Ouvidoria\HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');
     Route::get('ouvidoria/historico/{id}', 'Admin\Ouvidoria\HistoricoController@getHistoric')->name('ouvidoria.historico');
+    Route::get('usuario/home', 'Admin\Usuario\UsuarioController@index')->name('usuarios.home');
+    Route::get('usuario/gerenciar/{id}', 'Admin\Usuario\UsuarioController@show')->name('usuarios.gerenciar');
 });

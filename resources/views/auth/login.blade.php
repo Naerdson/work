@@ -29,8 +29,8 @@
                 <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
             @endif
         <!-- Usuário -->
-            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror mb-4" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="Usuário">
-            @error('username')
+            <input id="usuario" type="text" class="form-control @error('usuario') is-invalid @enderror mb-4" name="usuario" value="{{ old('usuario') }}" required autocomplete="usuario" autofocus placeholder="Usuário">
+            @error('usuario')
             <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

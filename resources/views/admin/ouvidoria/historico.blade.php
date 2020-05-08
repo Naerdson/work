@@ -1,27 +1,35 @@
 @extends('admin.layouts.master')
 @section('content')
-    <div class="container-ouvidoria">
-        <h3>Dados do histórico</h3>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Status</th>
-                    <th scope="col">Setor</th>
-                    <th scope="col">Usuário</th>
-                    <th scope="col">Data</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($historics as $historico)
-                    <tr>
-                        <td>{{ $historico->status }}</td>
-                        <td>{{ $historico->setor }}</td>
-                        <td>{{ $historico->usuario }}</td>
-                        <td>{{ date("d/m/Y H:i", strtotime($historico->criado_em)) }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <?php
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+    ?>
+    <div>
+        <h4 class="title-h">Histórico da ocorrência</h4>
     </div>
+    <div class="row d-flex justify-content-start mt-3 mb-4">
+        <div class="col-xl-12">
+            <div class="card border-0">
+                <div class="card-body">
+                    <ul class="timeline">
+                        @foreach($historics as $historic)
+                            <li>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-uppercase">{{ $historic->status }}</span>
+                                    <p>{{ strftime('%d de %B de %Y', strtotime($historic->criado_em)) }}</p>
+                                </div>
+                                <p>Setor - {{ $historic->setor }}</p>
+                                <p>USuário - {{ $historic->usuario }}</p>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('ouvidoria.home') }}"><button class="btn btn-info m-2"><i class="fas fa-arrow-circle-left"></i></button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection

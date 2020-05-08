@@ -43,8 +43,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
-                        <i class="fas fa-user-edit"></i>
+                    <a href="{{ route('usuarios.home') }}">
+                        <i class="fas fa-users-cog"></i>
                         <span class="title">Usuários</span>
                     </a>
                 </li>
@@ -78,13 +78,14 @@
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
                                 <!-- <span><img src="https://scontent-for1-1.xx.fbcdn.net/v/t1.0-9/69245500_2230340117092318_8648757003797135360_n.jpg?_nc_cat=110&_nc_ohc=3fQdyZtVEAQAX-r6wOV&_nc_ht=scontent-for1-1.xx&oh=ff1da2a5c2a2c31a1cb8f61c3bb7a293&oe=5EC222F4" class="rounded-circle" alt="avatar image" height="40"></span> -->
-                                <span>{{ Auth::user()->name }}</span>
+                                <span class="text-uppercase">{{ Auth::user()->nome }}</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
             <script src="{{ asset('js/script-admin.js') }}"></script>
             <div class="container-fluid">

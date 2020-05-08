@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTableOuvidoriaStatus extends Migration
 {
-    // INSERT INTO ouvidoria_status (id, nome, criado_por, created_at, updated_at) VALUES (1, "Aberto", "MOISES", "2020-05-04 19:40:31", "2020-05-04 19:40:31"), (2, "Encaminhado", "CARLOS", "2020-05-04 19:40:31", "2020-05-04 19:40:31"), (3, "Concluido",  "JOAQUIM", "2020-05-04 19:40:31", "2020-05-04 19:40:31"), (4, "Respondido por email",  "FRANCISCO", "2020-05-04 19:40:31", "2020-05-04 19:40:31");
+    // INSERT INTO ouvidoria_status (id, nome) VALUES (1, "Aberto"), (2, "Encaminhado"), (3, "Concluido"), (4, "Respondido por email");
 
     /**
      * Run the migrations.

@@ -2,47 +2,49 @@
 @section('titulo', 'Ouvidoria')
 @section('content')
     <div class="d-flex justify-content-between">
-        <h4 style="color: #6a7a8c; font-weight: 600; font-size: 21px;">Gerenciamento de Ouvidorias</h4>
+        <h4 class="title-h">Gerenciamento de Ouvidorias</h4>
         <button class="btn btn-success btn-sm"><i class="fas fa-file-pdf"></i> Gerar Relatório</button>
     </div>
     <div class="row mt-4">
         <div class="col-12">
             <div class="card border-0">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3 col-xlg-3">
-                            <div class="card">
-                                <div class="box text-center bg-info">
-                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
-                                    <h6 class="text-white">Total de ocorrências</h6>
+                    @can('isOuvidoria')
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 col-xlg-3">
+                                <div class="card">
+                                    <div class="box text-center bg-info">
+                                        <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
+                                        <h6 class="text-white">Total de ocorrências</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xlg-3">
+                                <div class="card">
+                                    <div class="box text-center bg-warning">
+                                        <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
+                                        <h6 class="text-white">Encaminhadas</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xlg-3">
+                                <div class="card">
+                                    <div class="box text-center bg-success">
+                                        <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
+                                        <h6 class="text-white">Concluídas</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xlg-3">
+                                <div class="card">
+                                    <div class="box text-center bg-dark">
+                                        <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
+                                        <h6 class="text-white">Aberto</h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3 col-xlg-3">
-                            <div class="card">
-                                <div class="box text-center bg-warning">
-                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
-                                    <h6 class="text-white">Encaminhadas</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3 col-xlg-3">
-                            <div class="card">
-                                <div class="box text-center bg-success">
-                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
-                                    <h6 class="text-white">Concluídas</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3 col-xlg-3">
-                            <div class="card">
-                                <div class="box text-center bg-dark">
-                                    <h1 class="text-white" style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
-                                    <h6 class="text-white">Aberto</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endcan
                     @if(Session::has('message') && Session::has('type'))
                         <div class="alert alert-{{ Session::get('type') }} text-center mt-3">{{ Session::get('message') }}</div>
                     @endif
@@ -69,6 +71,8 @@
                                                 <span class="span bg-dark">Aberto</span>
                                             @elseif($ocorrencia->status == 'Concluido')
                                                 <span class="span bg-success">Concluido</span>
+                                            @elseif($ocorrencia->status = 'Respondido por email')
+                                                <span class="span bg-secondary">Respondido por email</span>
                                             @endif
                                         </td>
                                         <td class="text-dark">{{ date("d/m/Y H:i", strtotime($ocorrencia->data)) }}</td>
@@ -81,14 +85,14 @@
                                                     <form method="post" action="{{ route('ouvidoria.home.encerrar', $ocorrencia->id) }}" style="display: inline" onsubmit="return confirm('Deseja encerrar esta ocorrência?');" >
                                                         @csrf
                                                         <input name="_method" type="hidden" value="PUT">
-                                                        <button class="btn btn-info btn-sm">Encerrar Ocorrência</button>
+                                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>
                                                     </form>
                                                     <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia"><i class="fas fa-envelope"></i></button>
                                                     <button type="button" class="btn btn-warning btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia"><i class="fas fa-forward"></i></button>
                                                 @elseif($ocorrencia->status_id == 3)
-                                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-history"></i></button></a>
+                                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fas fa-history"></i></button></a>
                                                 @else
-                                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia"><i class="fas fa-envelope"></i></button>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia" ><i class="fas fa-envelope"></i></button>
                                                     <button type="button" class="btn btn-warning btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia"><i class="fas fa-forward"></i></button>
                                                 @endif
                                             @else
@@ -112,7 +116,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Responder Ocorrência</h5>
+                <h5 class="title-h" id="exampleModalLabel">Responder Ocorrência</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -125,7 +129,7 @@
                     <input type="hidden" name="status_ocorrencia_id" value="4">
                     <div class="form-group">
                         <label for="mensagem">Responder para: </label>
-                        <input type="text" class="form-control" name="email" id="email" />
+                        <input type="text" class="form-control" name="email" id="email" disabled />
                     </div>
                     <div class="form-group">
                         <label for="mensagem">Mensagem</label>
@@ -147,7 +151,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Encaminhar Ocorrência</h5>
+                <h5 class="title-h" id="exampleModalLabel">Encaminhar Ocorrência</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -159,7 +163,7 @@
                     <input type="hidden" name="ocorrencia_id" id="ocorrencia_id">
                     <input type="hidden" name="status_ocorrencia_id" value="2">
                     <div class="form-group">
-                        <label for="setor">Setores</label>
+                        <label for="setor">Selecione o setor</label>
                         <select name="setor_id" id="setor" class="form-control">
                             <option value="1">Técnologia da Informação</option>
                             <option value="2">Atendimento ao Aluno</option>
@@ -171,12 +175,50 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Encaminhar</button>
+                <button type="submit" class="btn btn-success">Encaminhar</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+
+{{--Modal Histórico de ocorrência--}}
+<div class="modal fade" id="modalHistoricoOcorrencia" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="title-h" id="exampleModalLabel">Histórico da ocorrência</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="timeline">
+                    <li>
+                        <a target="_blank" href="https://www.totoprayogo.com/#">New Web Design</a>
+                        <a href="#" class="float-right">21 March, 2014</a>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
+                    </li>
+                    <li>
+                        <a href="#">21 000 Job Seekers</a>
+                        <a href="#" class="float-right">4 March, 2014</a>
+                        <p>Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
+                    </li>
+                    <li>
+                        <a href="#">Awesome Employers</a>
+                        <a href="#" class="float-right">1 April, 2014</a>
+                        <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $('#modalResponderOcorrencia').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal

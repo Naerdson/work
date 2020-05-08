@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableOuvidoriaStatusAddColumns extends Migration
+class AlterTableUserAddColumns extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AlterTableOuvidoriaStatusAddColumns extends Migration
      */
     public function up()
     {
-        Schema::table('ouvidoria_status', function (Blueprint $table) {
-            $table->string('criado_por')->after('nome');
-            $table->timestamps();
+        Schema::table('usuario', function (Blueprint $table) {
+            $table->renameColumn('name', 'nome');
+            $table->renameColumn('username', 'usuario');
+            $table->string('email')->unique()->after('username');
         });
     }
 

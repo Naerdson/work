@@ -12,14 +12,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'USUARIO';
+    protected $table = 'usuario';
 
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'nome', 'usuario', 'email', 'setor_id', 'password'
     ];
 
     public function autenticaLdap($password){
-        return $this->autenticaCredenciaisManual($this->username, $password);
+        return $this->autenticaCredenciaisManual($this->usuario, $password);
     }
 
     private function autenticaCredenciaisManual($username, $password){
@@ -27,7 +27,7 @@ class User extends Authenticatable
 
         $ldap_host = env('LDAP_HOSTS');
 
-        $ldap_usr_dom = '@academico.local';
+        $ldap_usr_dom = '@fametro.com.br';
 
         $ldap = ldap_connect($ldap_host);
 
@@ -39,7 +39,7 @@ class User extends Authenticatable
         if($verificaAutenticacao){
             return (object) [
                 'authenticated' => true,
-                'name' => $this->recuperaDadosUsuarioLdap($username)
+                'user' => $this->recuperaDadosUsuarioLdap($username)
             ];
         }
 
@@ -56,7 +56,7 @@ class User extends Authenticatable
 
         ldap_set_option($connectionServer, LDAP_OPT_REFERRALS, 0);
 
-        @ldap_bind($connectionServer, env('LDAP_USERNAME'), env('LDAP_PASSWORD'));
+        @ldap_bind($connectionServer, 'moises.rodrigues' . '@' . 'fametro.com.br', 'caralho123@#');
 
         $filter = "(&(objectclass=user)(samaccountname={$user}))";
 
@@ -64,11 +64,13 @@ class User extends Authenticatable
 
         $result = @ldap_get_entries($connectionServer, $busca);
 
-        if ($result['count']) {
-            return $result[0]['displayname'][0];
+        if($result){
+            return (object) [
+                'nome' => $result[0]['displayname'][0],
+                'email' => $result[0]["mail"][0]
+            ];
         }
 
-        return null;
     }
 
 }

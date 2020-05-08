@@ -44,7 +44,7 @@ class HistoricoOuvidoria extends Model
             ->join('setor', 'setor.id', '=', 'historico.setor_id')
             ->join('usuario', 'usuario.id', '=', 'historico.user_id')
             ->where('historico.ocorrencia_id', $id)
-            ->select('historico.ocorrencia_id', 'status.nome as status', 'setor.nome as setor', 'usuario.name as usuario', 'historico.created_at as criado_em')
+            ->select('historico.ocorrencia_id', 'status.nome as status', 'setor.nome as setor', 'usuario.nome as usuario', 'historico.created_at as criado_em')
             ->get();
 
         return $historic;

@@ -24,10 +24,10 @@ class ResponderOuvidoria extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, Request $data)
+    public function __construct(User $user, $dataEmail)
     {
         $this->user = $user;
-        $this->data = $data;
+        $this->data = $dataEmail;
 
     }
 

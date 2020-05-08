@@ -23,14 +23,15 @@ class LoginController extends Controller
         try {
             // vazer a validação
 
-
             $dataUser = (object) $request->post();
 
-            $userInstance = $this->user->firstOrNew(['username' => $dataUser->username]);
+            $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
 
             $autenticaUserLdap = $userInstance->autenticaLdap($dataUser->password);
+
             if($autenticaUserLdap->authenticated){
-                    $userInstance->name = $autenticaUserLdap->name;
+                    $userInstance->nome = $autenticaUserLdap->user->nome;
+                    $userInstance->email = $autenticaUserLdap->user->email;
                     $userInstance->save();
                     Auth::login($userInstance);
                     return view('admin.home');
