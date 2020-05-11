@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 
 use App\HistoricoOuvidoria;
 use App\Http\Controllers\Controller;
+use App\Setor;
 use Illuminate\Http\Request;
 use App\Ouvidoria;
 use Exception;
@@ -26,8 +27,9 @@ class OuvidoriaController extends Controller
 
         $ouvidorias = $this->ouvidoria->listAllOccurrences();
         $listCountOuvidoria = $this->ouvidoria->getCountOuvidoriaWithStatus();
+        $setores = Setor::all();
 
-        return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria'));
+        return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria', 'setores'));
     }
 
     public function store(Request $request)
@@ -62,7 +64,10 @@ class OuvidoriaController extends Controller
 
         }
         catch (Exception $e){
-            dd($e->getMessage());
+            return response()->json([
+                'message' => 'Ocorreu um erro ao salvar a ouvidoria. Tente novamente.',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -70,18 +75,29 @@ class OuvidoriaController extends Controller
     {
         try {
             $protocolo = $request->input('protocolo');
+            $ouvidoriaArray = $this->ouvidoria->where('protocolo', $protocolo)->get();
+
+
+            if(count($ouvidoriaArray)){
+                return response()->json([
+                    'message' => 'Ouvidoria selecionada com sucesso',
+                    'docs' => [
+                        'ouvidoria' => $this->ouvidoria->getOuvidoriaWhereProtocol($protocolo),
+                        'historico' => $this->historico->getHistoricWithProtocolo($protocolo)
+                    ]
+                ], 200);
+            }
 
             return response()->json([
-                'message' => 'Ouvidoria selecionada com sucesso',
-                'docs' => [
-                    'ouvidoria' => $this->ouvidoria->getOuvidoriaWhereProtocol($protocolo),
-                    'historico' => $this->historico->getHistoricWithProtocolo($protocolo)
-                ]
-            ], 200);
+                'message' => 'Protocolo Incorreto'
+            ], 422);
 
         }
         catch (Exception $e){
-
+            return response()->json([
+                'message' => 'Ocorreu um erro ao processar a requisição. Tente novamente.',
+                'error' => $e->getMessage()
+            ], 500);
         }
 
 

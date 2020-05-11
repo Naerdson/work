@@ -26,12 +26,14 @@ class HistoricoOuvidoria extends Model
 
     public function getHistoricWithProtocolo($protocolo)
     {
+        // Rodar no mysql para formatar a data em portugues - SET GLOBAL lc_time_names=pt_BR;
+
         $historic = DB::table('ouvidoria_ocorrencia AS ocorrencia')
             ->join('ouvidoria_historico AS historico', 'historico.ocorrencia_id', '=', 'ocorrencia.id')
             ->join('setor', 'setor.id', '=', 'historico.setor_id')
             ->join('ouvidoria_status as status', 'status.id', '=', 'historico.status_ocorrencia_id')
             ->where('protocolo', $protocolo)
-            ->select('historico.id as historico_id', 'setor.nome as setor', 'status.nome as status', 'historico.created_at as data')
+            ->select('historico.id as historico_id', 'setor.nome as setor', 'status.nome as status', DB::raw('DATE_FORMAT(historico.created_at, "%d de %M de %Y") as data'))
             ->get();
 
         return $historic;

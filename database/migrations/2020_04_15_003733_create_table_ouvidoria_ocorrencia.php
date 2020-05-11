@@ -23,7 +23,7 @@ class CreateTableOuvidoriaOcorrencia extends Migration
             $table->unsignedBigInteger('demandante_id');
             $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('campus_id');
-            $table->unsignedBigInteger('setor_responsavel_id')->default(4);
+            $table->unsignedBigInteger('setor_responsavel_id')->default(11);
             $table->timestamps();
 
 

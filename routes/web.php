@@ -26,4 +26,5 @@ Route::prefix('admin')->group(function () {
     Route::get('ouvidoria/historico/{id}', 'Admin\Ouvidoria\HistoricoController@getHistoric')->name('ouvidoria.historico');
     Route::get('usuario/home', 'Admin\Usuario\UsuarioController@index')->name('usuarios.home');
     Route::get('usuario/gerenciar/{id}', 'Admin\Usuario\UsuarioController@show')->name('usuarios.gerenciar');
+    Route::patch('usuario/gerenciar/{id}', 'Admin\Usuario\UsuarioController@update')->name('usuario.gerenciar.atualizar');
 });

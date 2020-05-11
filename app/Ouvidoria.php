@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use DB;
 
 
+
 class Ouvidoria extends Model
 {
     protected $table = 'ouvidoria_ocorrencia';
@@ -19,10 +20,13 @@ class Ouvidoria extends Model
     {
         $ocurrencesOmbudsman = DB::table('ouvidoria_ocorrencia as ocorrencia')
             ->join('ouvidoria_categoria as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
+            ->join('ouvidoria_demandante as demandante', 'demandante.id', '=', 'ocorrencia.demandante_id')
             ->join('ouvidoria_status as status', 'status.id', '=', 'ocorrencia.status_id')
+            ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
             ->join('setor', 'setor.id', '=' , 'ocorrencia.setor_responsavel_id')
-            ->select('ocorrencia.id','ocorrencia.protocolo','ocorrencia.contato as email','categoria.nome as categoria', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
+            ->paginate(5);
 
         return $ocurrencesOmbudsman;
     }

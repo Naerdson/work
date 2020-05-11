@@ -32,4 +32,15 @@ class UsuarioController extends Controller
 
     }
 
+    public function update(Request $request, $id)
+    {
+        $userInstance = $this->user->findOrFail($id);
+
+        $userInstanceUpdated = $userInstance->fill(array_merge($userInstance->toArray(), $request->post()));
+
+        $userInstanceUpdated->update();
+
+        return redirect()->back()->with(['message' => 'Dados atualizados com sucesso', 'type' => 'success']);
+    }
+
 }

@@ -19,7 +19,7 @@
                                     <p>{{ strftime('%d de %B de %Y', strtotime($historic->criado_em)) }}</p>
                                 </div>
                                 <p>Setor - {{ $historic->setor }}</p>
-                                <p>USuário - {{ $historic->usuario }}</p>
+                                <p>Usuário - {{ $historic->usuario }}</p>
                             </li>
                         @endforeach
                     </ul>

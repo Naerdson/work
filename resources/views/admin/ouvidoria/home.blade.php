@@ -5,7 +5,8 @@
         <h4 class="title-h">Gerenciamento de Ouvidorias</h4>
         <button class="btn btn-success btn-sm"><i class="fas fa-file-pdf"></i> Gerar Relatório</button>
     </div>
-    <div class="row mt-4">
+
+    <div class="row mt-3">
         <div class="col-12">
             <div class="card border-0">
                 <div class="card-body">
@@ -62,7 +63,7 @@
                             </thead>
                             <tbody>
                             @foreach ($ouvidorias as $ocorrencia)
-                                @if(Auth::user()->setor_id == 4 ||$ocorrencia->setor_responsavel_id == Auth::user()->setor_id )
+                                @if(Auth::user()->setor_id == 11 ||$ocorrencia->setor_responsavel_id == Auth::user()->setor_id )
                                     <tr>
                                         <td class="text-dark">
                                             @if($ocorrencia->status == 'Encaminhado')
@@ -89,14 +90,18 @@
                                                     </form>
                                                     <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia"><i class="fas fa-envelope"></i></button>
                                                     <button type="button" class="btn btn-warning btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia"><i class="fas fa-forward"></i></button>
+                                                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalDescricaoOcorrencia" data-nome="{{ $ocorrencia->nome }}" data-email="{{ $ocorrencia->email }}" data-categoria="{{ $ocorrencia->categoria }}" data-demandante="{{ $ocorrencia->demandante }}" data-campus="{{ $ocorrencia->campus }}" data-descricao="{{ $ocorrencia->descricao }}"><i class="fas fa-info-circle"></i></button>
                                                 @elseif($ocorrencia->status_id == 3)
-                                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fas fa-history"></i></button></a>
+                                                    <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-history"></i></button></a>
+                                                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalDescricaoOcorrencia" data-nome="{{ $ocorrencia->nome }}" data-email="{{ $ocorrencia->email }}" data-categoria="{{ $ocorrencia->categoria }}" data-demandante="{{ $ocorrencia->demandante }}" data-campus="{{ $ocorrencia->campus }}" data-descricao="{{ $ocorrencia->descricao }}"><i class="fas fa-info-circle"></i></button>
                                                 @else
-                                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia" ><i class="fas fa-envelope"></i></button>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-email="{{ $ocorrencia->email }}" data-toggle="modal" data-target="#modalResponderOcorrencia"><i class="fas fa-envelope"></i></button>
                                                     <button type="button" class="btn btn-warning btn-sm" data-ocorrenciaid="{{ $ocorrencia->id }}" data-toggle="modal" data-target="#modalEncaminharOcorrencia"><i class="fas fa-forward"></i></button>
+                                                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalDescricaoOcorrencia" data-nome="{{ $ocorrencia->nome }}" data-email="{{ $ocorrencia->email }}" data-categoria="{{ $ocorrencia->categoria }}" data-demandante="{{ $ocorrencia->demandante }}" data-campus="{{ $ocorrencia->campus }}" data-descricao="{{ $ocorrencia->descricao }}"><i class="fas fa-info-circle"></i></button>
                                                 @endif
                                             @else
                                                 <a href="{{ route('ouvidoria.historico', $ocorrencia->id) }}"><button type="button" class="btn btn-info btn-sm"><i class="fas fa-history"></i></button></a>
+                                                <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modalDescricaoOcorrencia" data-nome="{{ $ocorrencia->nome }}" data-email="{{ $ocorrencia->email }}" data-categoria="{{ $ocorrencia->categoria }}" data-demandante="{{ $ocorrencia->demandante }}" data-campus="{{ $ocorrencia->campus }}" data-descricao="{{ $ocorrencia->descricao }}"><i class="fas fa-info-circle"></i></button>
                                             @endif
                                         </td>
                                     </tr>
@@ -104,6 +109,18 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="d-md-flex justify-content-between">
+                        <div class="d-flex flex-md-row">
+                            <p class="pr-4"><i class="fas fa-history" style="color: #17a2b8;" ></i> - Histórico</p>
+                            <p class="pr-4"><i class="fas fa-envelope" style="color: #007bff;" ></i> - Responder por email</p>
+                            <p class="pr-4"><i class="fas fa-check" style="color: #28a745;"></i> - Encerrar</p>
+                            <p class="pr-4"><i class="fas fa-forward" style="color: #e0a800;"></i> - Encaminhar</p>
+                            <p class="pr-4"><i class="fas fa-info-circle" style="color: #23272B"></i> - Descrição da ocorrência</p>
+                        </div>
+                        @if($ocorrencia->setor_responsavel_id == Auth::user()->setor_id || Auth::user()->setor_id == 11)
+                            {{ $ouvidorias->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -133,7 +150,7 @@
                     </div>
                     <div class="form-group">
                         <label for="mensagem">Mensagem</label>
-                        <textarea class="form-control" name="mensagem" id="mensagem" rows="6"></textarea>
+                        <textarea class="form-control" name="mensagem" id="mensagem" rows="6" required></textarea>
                     </div>
 
             </div>
@@ -165,10 +182,9 @@
                     <div class="form-group">
                         <label for="setor">Selecione o setor</label>
                         <select name="setor_id" id="setor" class="form-control">
-                            <option value="1">Técnologia da Informação</option>
-                            <option value="2">Atendimento ao Aluno</option>
-                            <option value="3">Financeiro</option>
-                            <option value="4">Ouvidoria</option>
+                            @foreach($setores as $setor)
+                                <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -182,34 +198,58 @@
     </div>
 </div>
 
-{{--Modal Histórico de ocorrência--}}
-<div class="modal fade" id="modalHistoricoOcorrencia" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-lg" id="modalDescricaoOcorrencia">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="title-h" id="exampleModalLabel">Histórico da ocorrência</h5>
+                <h5 class="title-h">Descrição da ocorrência</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <ul class="timeline">
-                    <li>
-                        <a target="_blank" href="https://www.totoprayogo.com/#">New Web Design</a>
-                        <a href="#" class="float-right">21 March, 2014</a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                    </li>
-                    <li>
-                        <a href="#">21 000 Job Seekers</a>
-                        <a href="#" class="float-right">4 March, 2014</a>
-                        <p>Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                    </li>
-                    <li>
-                        <a href="#">Awesome Employers</a>
-                        <a href="#" class="float-right">1 April, 2014</a>
-                        <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                    </li>
-                </ul>
+                <div class="row">
+                    <div class="col-6">
+                        <span>Nome do demandante</span>
+                    </div>
+                    <div class="col-6">
+                        <span>Email</span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <input type="text" id="nomeDemandante" class="form-control border-0" disabled>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="email" class="form-control border-0" disabled>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <span>Demandante</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Campus</span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <input type="text" id="demandante" class="form-control border-0" disabled>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="campus" class="form-control border-0" disabled>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <span>Descrição</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <textarea id="descricao" class="form-control border-0" rows="6" disabled></textarea>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -217,7 +257,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     $('#modalResponderOcorrencia').on('show.bs.modal', function (event) {
@@ -238,6 +277,22 @@
         modal.find('.modal-body #ocorrencia_id').val(ocorrencia_id)
     });
 
+    $('#modalDescricaoOcorrencia').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var nomeDemandante =  (button.data('nome').length <= 0) ? 'Confidencial' : button.data('nome');
+        var emailDemandante = button.data('email');
+        var demandante = button.data('demandante');
+        var campus = button.data('campus');
+        var descricao = button.data('descricao');
+
+
+        var modal = $(this)
+        modal.find('.modal-body #nomeDemandante').val(nomeDemandante)
+        modal.find('.modal-body #email').val(emailDemandante)
+        modal.find('.modal-body #demandante').val(demandante)
+        modal.find('.modal-body #campus').val(campus)
+        modal.find('.modal-body #descricao').val(descricao)
+    });
 
 </script>
 @endsection
