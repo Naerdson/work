@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Ouvidoria;
 use Exception;
 use Auth;
+use Illuminate\Support\Facades\Mail;
 date_default_timezone_set('America/Sao_Paulo');
 
 class OuvidoriaController extends Controller
@@ -45,14 +46,14 @@ class OuvidoriaController extends Controller
             $ouvidoriaInstance->save();
             if($ouvidoriaInstance){
 
-//                $contatoEmail = $ouvidoriaInstance->contato;
-//                $numeroProtocolo = $ouvidoriaInstance->protocolo;
-//
-//                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
-//                    $message->to($contatoEmail);
-//                    $message->from('sistemas@unifametro.edu.br','Unifametro');
-//                    $message->subject('Recebemos sua solicitação.');
-//                });
+                $contatoEmail = $ouvidoriaInstance->contato;
+                $numeroProtocolo = $ouvidoriaInstance->protocolo;
+
+                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
+                    $message->to($contatoEmail);
+                    $message->from('sistemas@unifametro.edu.br','Unifametro');
+                    $message->subject('Recebemos sua solicitação.');
+                });
 
                 return response()->json([
                     'message' => 'Ouvidoria aberta com sucesso',

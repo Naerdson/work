@@ -28,20 +28,23 @@
             @if(Session::has('message') && Session::has('type'))
                 <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
             @endif
-        <!-- Usuário -->
-            <input id="usuario" type="text" class="form-control @error('usuario') is-invalid @enderror mb-4" name="usuario" value="{{ old('usuario') }}" required autocomplete="usuario" autofocus placeholder="Usuário">
+
+            <!-- Usuário -->
+            <input id="usuario" type="text" class="form-control @error('usuario') is-invalid @enderror mb-4" name="usuario" value="{{ old('usuario') }}"  autocomplete="usuario" autofocus placeholder="Usuário">
             @error('usuario')
-            <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
-                    </span>
+                </span>
             @enderror
-        <!-- Senha -->
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror mb-4" name="password" required autocomplete="current-password" placeholder="Senha">
+
+            <!-- Senha -->
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror mb-4" name="password"  autocomplete="current-password" placeholder="Senha">
             @error('password')
-            <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
-                    </span>
+                </span>
             @enderror
+
             <button class="btn btn-success btn-block my-4" type="submit" style="color:white;">{{ __('Entrar') }}</button>
         </form>
     </div>

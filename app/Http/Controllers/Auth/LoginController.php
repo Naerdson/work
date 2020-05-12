@@ -21,24 +21,30 @@ class LoginController extends Controller
     }
     public function login(Request $request){
         try {
-            // vazer a validação
+            $validatedData = $request->validate([
+                'usuario' => 'required',
+                'password' => 'required',
+            ]);
 
             $dataUser = (object) $request->post();
 
             $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
 
-            $autenticaUserLdap = $userInstance->autenticaLdap($dataUser->password);
-
+            $autenticaUserLdap = $userInstance->authenticateLdap($dataUser->password);
             if($autenticaUserLdap->authenticated){
                     $userInstance->nome = $autenticaUserLdap->user->nome;
                     $userInstance->email = $autenticaUserLdap->user->email;
                     $userInstance->save();
+
                     Auth::login($userInstance);
+
                     return view('admin.home');
             }
-            return redirect()->back()->with(['type' => 'danger', 'message' => 'Não foi possível autenticar o usuário. Tente novamente.']);
+
+            return redirect()->back()->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);
+
         } catch (Exeception $e) {
-            return $e->getMessage();
+            return redirect()->back()->with(['type' => 'danger', 'message' => 'Error no servidor' . $e->getMessage()]);
         }
     }
     public function logout()

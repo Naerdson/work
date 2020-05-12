@@ -18,11 +18,11 @@ class User extends Authenticatable
         'nome', 'usuario', 'email', 'setor_id', 'password'
     ];
 
-    public function autenticaLdap($password){
-        return $this->autenticaCredenciaisManual($this->usuario, $password);
+    public function authenticateLdap($password){
+        return $this->_attemptAuthenticatedManuallyInAd($this->usuario, $password);
     }
 
-    private function autenticaCredenciaisManual($username, $password){
+    private function _attemptAuthenticatedManuallyInAd($username, $password){
         if (empty($username) || empty($password)) return false;
 
         $ldap_host = env('LDAP_HOSTS');
@@ -39,7 +39,7 @@ class User extends Authenticatable
         if($verificaAutenticacao){
             return (object) [
                 'authenticated' => true,
-                'user' => $this->recuperaDadosUsuarioLdap($username)
+                'user' => $this->_getUserDataInLdap($password)
             ];
         }
 
@@ -49,16 +49,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function recuperaDadosUsuarioLdap($user){
+    public function _getUserDataInLdap($password){
         $connectionServer = ldap_connect(env('LDAP_HOSTS')) or die("Não foi possível conexão com Active Directory!");
 
         ldap_set_option($connectionServer, LDAP_OPT_PROTOCOL_VERSION, 3);
 
         ldap_set_option($connectionServer, LDAP_OPT_REFERRALS, 0);
 
-        @ldap_bind($connectionServer, 'moises.rodrigues' . '@' . 'fametro.com.br', 'caralho123@#');
+        @ldap_bind($connectionServer, $this->usuario . env('LDAP_DOMAIN'), $password);
 
-        $filter = "(&(objectclass=user)(samaccountname={$user}))";
+        $filter = "(&(objectclass=user)(samaccountname={$this->usuario}))";
 
         $busca  = @ldap_search($connectionServer, env('LDAP_BASE_DN'), $filter);
 
@@ -67,7 +67,7 @@ class User extends Authenticatable
         if($result){
             return (object) [
                 'nome' => $result[0]['displayname'][0],
-                'email' => $result[0]["mail"][0]
+                'email' => @$result[0]["mail"][0]
             ];
         }
 
