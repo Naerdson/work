@@ -8,8 +8,11 @@ use App\Setor;
 use Illuminate\Http\Request;
 use App\Ouvidoria;
 use Exception;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Gate;
+use App\Helpers\helpers;
+
 date_default_timezone_set('America/Sao_Paulo');
 
 class OuvidoriaController extends Controller
@@ -27,33 +30,34 @@ class OuvidoriaController extends Controller
     {
 
         $ouvidorias = $this->ouvidoria->listAllOccurrences();
-        $listCountOuvidoria = $this->ouvidoria->getCountOuvidoriaWithStatus();
+        $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
         $setores = Setor::all();
 
         return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria', 'setores'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, helpers $functions)
     {
 
         try {
             $ouvidoriaInstance = $this->ouvidoria->fill(array_merge(
                 $request->post(),
                 [
-                    'protocolo' =>  date("dmYHis")
+                    'protocolo' => $functions->generateProtocol(2)
                 ]
             ));
+
             $ouvidoriaInstance->save();
             if($ouvidoriaInstance){
 
                 $contatoEmail = $ouvidoriaInstance->contato;
                 $numeroProtocolo = $ouvidoriaInstance->protocolo;
 
-                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
-                    $message->to($contatoEmail);
-                    $message->from('sistemas@unifametro.edu.br','Unifametro');
-                    $message->subject('Recebemos sua solicitação.');
-                });
+//                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
+//                    $message->to($contatoEmail);
+//                    $message->from('sistemas@unifametro.edu.br','Unifametro');
+//                    $message->subject('Recebemos sua solicitação.');
+//                });
 
                 return response()->json([
                     'message' => 'Ouvidoria aberta com sucesso',

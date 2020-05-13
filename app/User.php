@@ -18,6 +18,11 @@ class User extends Authenticatable
         'nome', 'usuario', 'email', 'setor_id', 'password'
     ];
 
+    public function nivel()
+    {
+        return $this->hasOne(NivelUsuario::class, 'id', 'nivel_id');
+    }
+
     public function authenticateLdap($password){
         return $this->_attemptAuthenticatedManuallyInAd($this->usuario, $password);
     }
