@@ -15,7 +15,7 @@ class User extends Authenticatable
     protected $table = 'usuario';
 
     protected $fillable = [
-        'nome', 'usuario', 'email', 'setor_id', 'password'
+        'nome', 'usuario', 'email', 'setor_id', 'nivel_id'
     ];
 
     public function nivel()

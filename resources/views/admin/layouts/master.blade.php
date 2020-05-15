@@ -42,12 +42,14 @@
                         <span class="title">Ouvidorias</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('usuarios.home') }}">
-                        <i class="fas fa-users-cog"></i>
-                        <span class="title">Usuários</span>
-                    </a>
-                </li>
+                @can('isAdmin', Auth::user())
+                    <li>
+                        <a href="{{ route('usuarios.home') }}">
+                            <i class="fas fa-users-cog"></i>
+                            <span class="title">Usuários</span>
+                        </a>
+                    </li>
+                @endcan
                 <li>
                     <a href="{{ route('logout') }}">
                         <i class="fas fa-power-off"></i>

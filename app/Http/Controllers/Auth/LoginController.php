@@ -38,7 +38,7 @@ class LoginController extends Controller
 
                     Auth::login($userInstance);
 
-                    return view('admin.home');
+                    return redirect()->route('admin.home');
             }
 
             return redirect()->back()->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);

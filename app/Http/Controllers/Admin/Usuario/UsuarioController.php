@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin\Usuario;
 
 use App\Http\Controllers\Controller;
+use App\NivelUsuario;
 use App\Setor;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -18,29 +21,54 @@ class UsuarioController extends Controller
 
     public function index()
     {
-        $usuariosCadastrados = $this->user->all();
+        try {
+            $usuariosCadastrados = User::all();
 
-        return view('admin.usuarios.home', compact('usuariosCadastrados'));
+            if (Gate::denies('isAdmin', Auth::user()))
+                abort(403, 'Você não tem permissão de administrador');
+
+            return view('admin.usuarios.home', compact('usuariosCadastrados'));
+
+        }
+        catch (\Exception $e){
+            return redirect()->route('admin.home')->with(['message' => $e->getMessage(), 'type' => 'danger']);
+        }
+
+
     }
 
     public function show($id)
     {
         $user = $this->user->findOrFail($id);
         $setores = Setor::all();
+        $niveisUsuarios = NivelUsuario::all();
 
-        return view('admin.usuarios.gerenciar', compact('user', 'setores'));
+        return view('admin.usuarios.gerenciar', compact('user', 'setores', 'niveisUsuarios'));
 
     }
 
     public function update(Request $request, $id)
     {
-        $userInstance = $this->user->findOrFail($id);
 
-        $userInstanceUpdated = $userInstance->fill(array_merge($userInstance->toArray(), $request->post()));
+        try {
+            $userInstance = $this->user->findOrFail($id);
 
-        $userInstanceUpdated->update();
+                if (!Gate::check('isAdmin', Auth::user())){
 
-        return redirect()->back()->with(['message' => 'Dados atualizados com sucesso', 'type' => 'success']);
+                    $request->offsetUnset('nivel_id');
+                    $request->offsetUnset('setor_id');
+
+                }
+
+            $userInstanceUpdated = $userInstance->fill(array_merge($userInstance->toArray(), $request->post()));
+            $userInstanceUpdated->update();
+            return redirect()->back()->with(['message' => 'Dados atualizados com sucesso', 'type' => 'success']);
+
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with(['message' => $e->getMessage(), 'type' => 'danger']);
+        }
+
     }
 
 }
