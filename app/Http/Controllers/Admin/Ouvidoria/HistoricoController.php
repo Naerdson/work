@@ -25,6 +25,7 @@ class HistoricoController extends Controller
     {
 
         try {
+
             $historicoInstance = $this->historico->fill(array_merge(
                 $request->post(),
                 [

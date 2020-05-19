@@ -40,6 +40,17 @@ class OuvidoriaController extends Controller
     {
 
         try {
+
+            $this->validate($request, [
+                'nome' => 'string|nullable',
+                'contato' => 'email|required',
+                'descricao' => 'string|required',
+                'categoria_id' => 'required|integer',
+                'demandante_id' => 'required|integer',
+                'campus_id' => 'required|integer'
+            ]);
+
+
             $ouvidoriaInstance = $this->ouvidoria->fill(array_merge(
                 $request->post(),
                 [

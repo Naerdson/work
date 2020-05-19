@@ -19,8 +19,10 @@ class LoginController extends Controller
     public function index(){
         return view('auth.login');
     }
+
     public function login(Request $request){
         try {
+
             $validatedData = $request->validate([
                 'usuario' => 'required',
                 'password' => 'required',
@@ -31,6 +33,7 @@ class LoginController extends Controller
             $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
 
             $autenticaUserLdap = $userInstance->authenticateLdap($dataUser->password);
+
             if($autenticaUserLdap->authenticated){
                     $userInstance->nome = $autenticaUserLdap->user->nome;
                     $userInstance->email = $autenticaUserLdap->user->email;
@@ -38,10 +41,10 @@ class LoginController extends Controller
 
                     Auth::login($userInstance);
 
-                    return redirect()->route('admin.home');
+                    return redirect('admin/home', '302');
             }
 
-            return redirect()->back()->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);
+            return redirect('/', 303)->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);
 
         } catch (Exeception $e) {
             return redirect()->back()->with(['type' => 'danger', 'message' => 'Error no servidor' . $e->getMessage()]);

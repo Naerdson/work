@@ -9,22 +9,8 @@ use Tests\TestCase;
 
 class OuvidoriaStoreTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    use RefreshDatabase;
 
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->get('migrations/run');
-    }
-
-
-    public function testSaveOuvidoriaSuccess()
+    public function testCriarOuvidoriaComSucesso()
     {
         $nome = 'Moises abreu rodrigues';
         $contato = 'moises.rodrigues@aluno.unifametro.edu.br';
@@ -58,5 +44,12 @@ class OuvidoriaStoreTest extends TestCase
                 ]
             ]
         ]);
+    }
+
+    public function testErrorCamposObrigatorios()
+    {
+
+        $response = $this->json('POST', 'api/ouvidoria', []);
+        $response->assertStatus(500);
     }
 }

@@ -24,9 +24,9 @@ Route::prefix('admin')->group(function () {
     Route::get('home', 'Admin\HomeController@index')->name('admin.home');
     Route::get('ouvidoria/home', 'Admin\Ouvidoria\OuvidoriaController@index')->name('ouvidoria.home');
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-    Route::put('ouvidoria/home', 'Admin\Ouvidoria\HistoricoController@forwardOccurrence')->name('ouvidoria.home.encaminhar');
-    Route::put('ouvidoria/home/responder', 'Admin\Ouvidoria\HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
-    Route::put('ouvidoria/home/encerrar/{id}', 'Admin\Ouvidoria\HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');
+    Route::put('ouvidoria/encaminhar', 'Admin\Ouvidoria\HistoricoController@forwardOccurrence')->name('ouvidoria.home.encaminhar');
+    Route::put('ouvidoria/responder', 'Admin\Ouvidoria\HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
+    Route::put('ouvidoria/encerrar/{id}', 'Admin\Ouvidoria\HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');
     Route::get('ouvidoria/historico/{id}', 'Admin\Ouvidoria\HistoricoController@getHistoric')->name('ouvidoria.historico');
     Route::get('usuario/home', 'Admin\Usuario\UsuarioController@index')->name('usuarios.home');
     Route::get('usuario/gerenciar/{id}', 'Admin\Usuario\UsuarioController@show')->name('usuarios.gerenciar');
