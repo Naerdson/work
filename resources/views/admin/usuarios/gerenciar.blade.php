@@ -2,28 +2,28 @@
 @section('titulo', 'Gerenciar')
 @section('content')
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header text-center" style="background: #44494D; color:white;">Foto de Perfil</div>
-                <div class="card-body">
-                    <form method="POST" action="" enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
-                        <div class="d-flex justify-content-center" id="img-user">
-                            <img src="{{ asset('img/no_avatar.jpg') }}" name="photo_user" class="img-perfil-user align-self-center" id="user-foto" alt="Foto de perfil">
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-dark" type="submit"><i class="fas fa-sync-alt"></i></button>
-                        </div>
-                        @error('photo_user')
-                            <div class="alert alert-danger alert-danger-form">{{ $message }}</div>
-                        @endif
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
+{{--    <div class="row">--}}
+{{--        <div class="col-md-4">--}}
+{{--            <div class="card">--}}
+{{--                <div class="card-header text-center" style="background: #44494D; color:white;">Foto de Perfil</div>--}}
+{{--                <div class="card-body">--}}
+{{--                    <form method="POST" action="" enctype="multipart/form-data">--}}
+{{--                        @csrf--}}
+{{--                        @method('PATCH')--}}
+{{--                        <div class="d-flex justify-content-center" id="img-user">--}}
+{{--                            <img src="{{ asset('img/no_avatar.jpg') }}" name="photo_user" class="img-perfil-user align-self-center" id="user-foto" alt="Foto de perfil">--}}
+{{--                        </div>--}}
+{{--                        <div class="d-flex justify-content-end">--}}
+{{--                            <button class="btn btn-dark" type="submit"><i class="fas fa-sync-alt"></i></button>--}}
+{{--                        </div>--}}
+{{--                        @error('photo_user')--}}
+{{--                            <div class="alert alert-danger alert-danger-form">{{ $message }}</div>--}}
+{{--                        @endif--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header text-center" style="background: #44494D; color:white;">Dados do Usuário</div>
                 <div class="card-body">
