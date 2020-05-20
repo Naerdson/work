@@ -21,10 +21,18 @@ class HistoricoController extends Controller
         $this->historico = $historico;
     }
 
+    /**
+     * Encaminhar ocorrencia
+     */
     public function forwardOccurrence(Request $request)
     {
-
         try {
+
+            $validatedData = $request->validate([
+                'ocorrencia_id' => 'required',
+                'status_ocorrencia_id' => 'required',
+                'setor_id' => 'required'
+            ]);
 
             $historicoInstance = $this->historico->fill(array_merge(
                 $request->post(),
@@ -48,13 +56,17 @@ class HistoricoController extends Controller
 
     /**
      * Responder ocorrencia por emil
-     *
-     * @return \Illuminate\Http\Response
      */
     public function replyOccurrenceByEmail(Request $request)
     {
 
         try {
+
+            $validatedData = $request->validate([
+                'ocorrencia_id' => 'required',
+                'status_ocorrencia_id' => 'required',
+                'mensagem' => 'required'
+            ]);
 
             $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $request->ocorrencia_id);
 
@@ -81,7 +93,7 @@ class HistoricoController extends Controller
             return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria respondida com sucesso' ]);
 
         }catch (\Exception $e){
-            dd($e->getMessage());
+            return redirect()->route('ouvidoria.home')->with(['type' => 'danger', 'message' => 'Não foi possivel responder ouvidoria por email' . $e->getMessage()]);
         }
     }
 
@@ -109,7 +121,12 @@ class HistoricoController extends Controller
     {
         $historics = $this->historico->getHistoric($id);
 
-        return view('admin.ouvidoria.historico', compact('historics'));
+        if(count($historics)){
+            return view('admin.ouvidoria.historico', compact('historics'));
+        }
+
+        return redirect()->route('ouvidoria.home');
+
     }
 
 

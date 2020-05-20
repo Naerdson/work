@@ -2,15 +2,14 @@
 
 namespace Tests\Feature\Unit\Ouvidoria;
 
+use App\Helpers\helpers;
 use App\Ouvidoria;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class OuvidoriaGetTest extends TestCase
 {
 
-    public function testRecuperaOuvidoriaPeloNumeroDeProtocolo()
+    public function testRecuperaOuvidoriaPeloNumeroDeProtocoloCorreto()
     {
         $form = $this->form();
 
@@ -21,11 +20,19 @@ class OuvidoriaGetTest extends TestCase
 
     }
 
+    public function testRecuperaOuvidoriaPeloNumeroDeProtocoloIncorreto()
+    {
+        $response = $this->get("api/historico?protocolo=1805201816AQ");
+        $response->assertStatus(422);
+    }
+
     private function form()
     {
+        $protocol = new helpers();
+
         return (object) [
             'data' => [
-                'protocolo' => '1805201816AF',
+                'protocolo' => $protocol->generateProtocol(2),
                 'nome' => 'Moises abreu rodrigues',
                 'contato' => 'moises.rodrigues@aluno.unifametro.edu.br',
                 'descricao' => 'Mussum Ipsum, cacilds vidis litro abertis. Sapien in monti palavris qui num significa nadis i pareci latim. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis. Interagi no mé, cursus quis, vehicula ac nisi.',

@@ -2,8 +2,7 @@
 
 namespace Tests\Feature\Unit\SignIn;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
@@ -30,7 +29,6 @@ class SignInStoreTest extends TestCase
             'usuario' => 'moises.rodrigues',
             'password' => 'vpn@2019i#',
         ];
-
 
         $response = $this->post('/', $credentials);
 

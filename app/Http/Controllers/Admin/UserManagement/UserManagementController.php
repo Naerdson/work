@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Usuario;
+namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
 use App\NivelUsuario;
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
-class UsuarioController extends Controller
+class UserManagementController extends Controller
 {
     private $user;
 
@@ -25,7 +25,7 @@ class UsuarioController extends Controller
             $usuariosCadastrados = User::all();
 
             if (Gate::denies('isAdmin', Auth::user()))
-                abort(403, 'Você não tem permissão de administrador');
+                throw new \DomainException('Você não tem permissão de administrador', 403);
 
             return view('admin.usuarios.home', compact('usuariosCadastrados'));
 
@@ -49,8 +49,8 @@ class UsuarioController extends Controller
 
     public function update(Request $request, $id)
     {
-
         try {
+
             $userInstance = $this->user->findOrFail($id);
 
                 if (!Gate::check('isAdmin', Auth::user())){
@@ -62,6 +62,7 @@ class UsuarioController extends Controller
 
             $userInstanceUpdated = $userInstance->fill(array_merge($userInstance->toArray(), $request->post()));
             $userInstanceUpdated->update();
+
             return redirect()->back()->with(['message' => 'Dados atualizados com sucesso', 'type' => 'success']);
 
         }
