@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\ResponderOuvidoria;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
@@ -32,6 +33,4 @@ Route::prefix('admin')->group(function () {
     Route::get('usuario/gerenciar/{id}', 'Admin\UserManagement\UserManagementController@show')->name('usuarios.gerenciar');
     Route::patch('usuario/gerenciar/{id}', 'Admin\UserManagement\UserManagementController@update')->name('usuario.gerenciar.atualizar');
 });
-
-
 

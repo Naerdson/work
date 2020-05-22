@@ -18,6 +18,7 @@ class User extends Authenticatable
         'nome', 'usuario', 'email', 'setor_id', 'nivel_id'
     ];
 
+
     public function nivel()
     {
         return $this->hasOne(NivelUsuario::class, 'id', 'nivel_id');

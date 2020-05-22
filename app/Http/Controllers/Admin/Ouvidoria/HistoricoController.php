@@ -49,7 +49,7 @@ class HistoricoController extends Controller
             return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria encaminhada com sucesso' ]);
 
         } catch (Exception $e) {
-            dd($e->getMessage());
+            return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Não foi possivel encaminhar a ocorrencia' . $e->getMessage() ]);
         }
 
     }
@@ -81,12 +81,10 @@ class HistoricoController extends Controller
             $historicoInstance->save();
 
             $dataEmail = [
-                'email' => $ouvidoriaInstance->contato,
                 'mensagem' => $request->mensagem
             ];
 
-
-//            Mail::send(new ResponderOuvidoria(Auth::user(), $request));
+            new ResponderOuvidoria($ouvidoriaInstance, $dataEmail);
 
             $ouvidoriaInstance->update([ "status_id" => 3, "setor_responsavel_id" => Auth::user()->setor_id ]);
 

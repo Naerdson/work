@@ -28,10 +28,10 @@ class OuvidoriaController extends Controller
 
     public function index()
     {
-
         $ouvidorias = $this->ouvidoria->listAllOccurrences();
         $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
         $setores = Setor::all();
+
 
         return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria', 'setores'));
     }

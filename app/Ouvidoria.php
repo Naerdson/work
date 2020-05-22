@@ -12,10 +12,18 @@ use Illuminate\Support\Facades\Auth;
 class Ouvidoria extends Model
 {
     protected $table = 'ouvidoria_ocorrencia';
+
     protected $fillable = [
         'nome', 'protocolo', 'contato', 'descricao', 'status_id', 'categoria_id', 'demandante_id', 'campus_id', 'setor_responsavel_id'
     ];
 
+    protected $appends = ['data2'];
+
+
+    public function getData2Attribute()
+    {
+        return date('d/m/Y', strtotime($this->attributes['created_at']));
+    }
 
     public function listAllOccurrences()
     {

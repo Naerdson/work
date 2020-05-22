@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex justify-content-between">
         <h4 class="title-h">Gerenciamento de Ouvidorias</h4>
-        <button class="btn btn-success btn-sm"><i class="fas fa-file-pdf"></i> Gerar Relatório</button>
+{{--        <button class="btn btn-success btn-sm"><i class="fas fa-file-pdf"></i> Gerar Relatório</button>--}}
     </div>
 
     <div class="row mt-3">
@@ -148,8 +148,10 @@
                             <p class="pr-4"><i class="fas fa-info-circle" style="color: #23272B"></i> - Descrição da
                                 ocorrência</p>
                         </div>
-                        @if(Auth::user()->can('list-paginate', $ouvidorias))
-                            {{ $ouvidorias->links() }}
+                        @if(count($ouvidorias))
+                            @if(Auth::user()->can('list-paginate', $ouvidorias))
+                                {{ $ouvidorias->links() }}
+                            @endif
                         @endif
                     </div>
                 </div>
