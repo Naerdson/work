@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/', 'Auth\LoginController@index')->name('auth.login');
 Route::post('/', 'Auth\LoginController@login')->name('login');
-Route::get('migrations/run', 'UtilController@run');
-
 
 Route::prefix('admin')->group(function () {
     Route::get('home', 'Admin\HomeController@index')->name('admin.home');
