@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Exeception;
-use App\User;
-use Auth;
+use Exception;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -46,7 +46,7 @@ class LoginController extends Controller
 
             return redirect('/', 303)->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);
 
-        } catch (Exeception $e) {
+        } catch (Exception $e) {
             return redirect()->back()->with(['type' => 'danger', 'message' => 'Error no servidor' . $e->getMessage()]);
         }
     }

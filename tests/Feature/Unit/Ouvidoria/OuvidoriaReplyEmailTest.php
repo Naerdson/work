@@ -3,11 +3,8 @@
 namespace Tests\Feature\Unit\Ouvidoria;
 
 use App\Helpers\helpers;
-use App\HistoricoOuvidoria;
-use App\Ouvidoria;
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Ouvidoria;
+use App\Models\User;
 use Tests\TestCase;
 
 class OuvidoriaReplyEmailTest extends TestCase

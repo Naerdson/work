@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Unit\Ouvidoria;
 
-use App\Helpers\helpers;
-use App\Ouvidoria;
+use App\Models\helpers;
+use App\Models\Ouvidoria;
 use Tests\TestCase;
 
 class OuvidoriaGetTest extends TestCase

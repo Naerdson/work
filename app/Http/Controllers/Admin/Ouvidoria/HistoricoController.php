@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 use App\Http\Controllers\Controller;
 use App\Mail\ResponderOuvidoria;
 use Illuminate\Http\Request;
-use App\Ouvidoria;
-use App\HistoricoOuvidoria;
-use Auth;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Ouvidoria;
+use App\Models\HistoricoOuvidoria;
+use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class HistoricoController extends Controller
 {

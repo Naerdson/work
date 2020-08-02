@@ -27,7 +27,8 @@ class Ouvidoria extends Model
         'demandante',
         'status',
         'campus',
-        'setor_responsavel'
+        'setor_responsavel',
+        'historico'
     ];
 
 
@@ -59,6 +60,11 @@ class Ouvidoria extends Model
     public function getSetorResponsavelAttribute()
     {
         return $this->setorResponsavel()->first()->nome;
+    }
+
+    public function getHistoricoAttribute()
+    {
+        return $this->historic()->first();
     }
 
     public function listAllOccurrences()

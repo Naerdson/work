@@ -14,7 +14,7 @@ class SignInStoreTest extends TestCase
     {
         $credentials = [
             'usuario' => 'moises.rodrigues',
-            'password' => 'caralho123@#',
+            'password' => '@M6!2424',
         ];
 
         $this->post('/', $credentials)
