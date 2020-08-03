@@ -54,7 +54,6 @@ class OuvidoriaController extends Controller
     public function store(Request $request, helpers $functions)
     {
         try {
-
             $this->validate($request, [
                 'nome' => 'string|nullable',
                 'contato' => 'email|required',
@@ -87,7 +86,7 @@ class OuvidoriaController extends Controller
                 return response()->json([
                     'message' => 'Ouvidoria aberta com sucesso',
                     'docs' => [
-                        'ouvidoria' => $ouvidoriaInstance->toArray()
+                        'protocolo' => $ouvidoriaInstance->protocolo
                     ]
                 ], 201);
             }
