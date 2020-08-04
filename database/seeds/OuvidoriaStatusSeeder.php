@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
-class OuvidoriaStatus extends Seeder
+class OuvidoriaStatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.

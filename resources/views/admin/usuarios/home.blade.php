@@ -1,6 +1,11 @@
 @extends('admin.layouts.master')
 @section('titulo', 'Gerenciamento de usuários')
 @section('content')
+
+    @if(Session::has('message') &&  Session::has('type'))
+        <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
+    @endif
+    
     <h4 class="title-h">Gerenciamento de Usuarios</h4>
     <div class="row row-cols-1 row-cols-md-4 p-0">
         @foreach($usuariosCadastrados as $usuario)

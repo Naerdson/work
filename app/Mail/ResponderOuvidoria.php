@@ -42,7 +42,7 @@ class ResponderOuvidoria extends Mailable
        $this->subject('Resposta Ouvidoria - Unifametro');
        $this->to($this->ouvidoria->contato);
        $this->from('sistemas@unifametro.edu.br', 'Ouvidoria Unifametro');
-       $this->markdown('emails.resposta-ouvidoria', [
+       $this->markdown('emails.resposta-ouvidoria-teste', [
            'ouvidoria' => $this->ouvidoria,
            'mensagem' => $this->mensagem,
            'usuario' => Auth::user()

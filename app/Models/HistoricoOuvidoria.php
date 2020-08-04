@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +46,10 @@ class HistoricoOuvidoria extends Model
             ->where('historico.ocorrencia_id', $id)
             ->select('historico.ocorrencia_id', 'status.nome as status', 'setor.nome as setor', 'usuario.nome as usuario', 'historico.created_at as criado_em')
             ->get();
+    }
 
+    public function ouvidoria()
+    {
+        return $this->belongsTo(Ouvidoria::class, 'id', 'ocorrencia_id');
     }
 }

@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 use App\Http\Controllers\Controller;
 use App\Mail\ResponderOuvidoria;
 use Illuminate\Http\Request;
-use App\Ouvidoria;
-use App\HistoricoOuvidoria;
-use Auth;
+use App\Models\Ouvidoria;
+use App\Models\HistoricoOuvidoria;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Exception;
 
 class HistoricoController extends Controller
 {
@@ -84,13 +85,13 @@ class HistoricoController extends Controller
                 'mensagem' => $request->mensagem
             ];
 
-            new ResponderOuvidoria($ouvidoriaInstance, $dataEmail);
+            Mail::send(new ResponderOuvidoria($ouvidoriaInstance, $dataEmail));
 
             $ouvidoriaInstance->update([ "status_id" => 3, "setor_responsavel_id" => Auth::user()->setor_id ]);
 
             return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria respondida com sucesso' ]);
 
-        }catch (\Exception $e){
+        }catch (Exception $e){
             return redirect()->route('ouvidoria.home')->with(['type' => 'danger', 'message' => 'Não foi possivel responder ouvidoria por email' . $e->getMessage()]);
         }
     }

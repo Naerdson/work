@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableOcorrencia extends Migration
+class CreateOuvidoriaCategoriaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AlterTableOcorrencia extends Migration
      */
     public function up()
     {
-        Schema::table('ouvidoria_ocorrencia', function (Blueprint $table) {
-            $table->string('protocolo')->unique()->change();
-            $table->string('nome')->nullable()->change();
-            $table->unsignedBigInteger('status_id')->default(1)->change();
+        Schema::create('ouvidoria_categoria', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->timestamps();
         });
     }
 
@@ -27,7 +27,6 @@ class AlterTableOcorrencia extends Migration
      */
     public function down()
     {
-//        Schema::dropIfExists('ouvidoria_ocorrencia');
-
+        Schema::dropIfExists('ouvidoria_categoria');
     }
 }

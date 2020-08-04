@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\Unit\Ouvidoria;
 
-use App\Helpers\helpers;
-use App\HistoricoOuvidoria;
-use App\Ouvidoria;
+use App\Models\helpers;
+use App\Models\Ouvidoria;
 use Tests\TestCase;
-use App\User;
+use App\Models\User;
 
 class OuvidoriaForwardTest extends TestCase
 {

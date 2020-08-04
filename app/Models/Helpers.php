@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Models;
 
 /**
  * Class helpers
  * @package App\Helpers
  */
-class helpers
+class Helpers
 {
 
 

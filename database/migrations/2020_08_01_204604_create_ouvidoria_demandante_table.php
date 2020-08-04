@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableUsuarioAddNivelusuario extends Migration
+class CreateOuvidoriaDemandanteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class AlterTableUsuarioAddNivelusuario extends Migration
      */
     public function up()
     {
-        Schema::table('usuario', function (Blueprint $table) {
-            $table->unsignedBigInteger('nivel_id')->after('setor_id')->default(1);
-
-            $table->foreign('nivel_id')->references('id')->on('nivel_usuario');
-
+        Schema::create('ouvidoria_demandante', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +27,6 @@ class AlterTableUsuarioAddNivelusuario extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('ouvidoria_demandante');
     }
 }

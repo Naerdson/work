@@ -4,10 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableOuvidoriaStatus extends Migration
+class CreateOuvidoriaStatusTable extends Migration
 {
-    // INSERT INTO ouvidoria_status (id, nome) VALUES (1, "Aberto"), (2, "Encaminhado"), (3, "Respondido por email"), (4, "Concluido");
-
     /**
      * Run the migrations.
      *
@@ -16,8 +14,9 @@ class CreateTableOuvidoriaStatus extends Migration
     public function up()
     {
         Schema::create('ouvidoria_status', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('nome');
+            $table->timestamps();
         });
     }
 

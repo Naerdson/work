@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Ouvidoria;
 
-use App\HistoricoOuvidoria;
 use App\Http\Controllers\Controller;
-use App\Setor;
+use App\Models\Setor;
+use App\Models\Ouvidoria;
+use App\Models\HistoricoOuvidoria;
 use Illuminate\Http\Request;
-use App\Ouvidoria;
-use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Gate;
-use App\Helpers\helpers;
+use App\Models\Helpers;
+use Exception;
+
 
 date_default_timezone_set('America/Sao_Paulo');
 

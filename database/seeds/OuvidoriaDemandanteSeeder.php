@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class OuvidoriaDemandante extends Seeder
+class OuvidoriaDemandanteSeeder extends Seeder
 {
     /**
      * Run the database seeds.

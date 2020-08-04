@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
-use App\NivelUsuario;
-use App\Setor;
-use App\User;
+use App\Models\NivelUsuario;
+use App\Models\Setor;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +63,7 @@ class UserManagementController extends Controller
             $userInstanceUpdated = $userInstance->fill(array_merge($userInstance->toArray(), $request->post()));
             $userInstanceUpdated->update();
 
-            return redirect()->back()->with(['message' => 'Dados atualizados com sucesso', 'type' => 'success']);
+            return redirect()->route('usuarios.home')->with(['message' => 'Dados atualizados com sucesso', 'type' => 'success']);
 
         }
         catch (\Exception $e){

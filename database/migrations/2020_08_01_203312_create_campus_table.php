@@ -4,10 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableOuvidoriaCategoria extends Migration
+class CreateCampusTable extends Migration
 {
-    // INSERT INTO ouvidoria_categoria (id, nome) VALUES (1, "Reclamação"), (2, "Elogio"), (3, "Sugestão"), (4, "Informação"), (5, "Denúncia");
-
     /**
      * Run the migrations.
      *
@@ -15,9 +13,10 @@ class CreateTableOuvidoriaCategoria extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidoria_categoria', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('campus', function (Blueprint $table) {
+            $table->id();
             $table->string('nome');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +27,6 @@ class CreateTableOuvidoriaCategoria extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvidoria_categoria');
+        Schema::dropIfExists('campus');
     }
 }

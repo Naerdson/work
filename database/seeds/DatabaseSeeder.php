@@ -1,5 +1,7 @@
 <?php
 
+use App\NivelUsuario;
+use App\Ouvidoria;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,12 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            Campus::class,
-            NivelUsuario::class,
-            OuvidoriaCategorias::class,
-            OuvidoriaDemandante::class,
-            OuvidoriaStatus::class,
-            Setor::class
+            CampusSeeder::class,
+            NivelUsuarioSeeder::class,
+            OuvidoriaCategoriaSeeder::class,
+            OuvidoriaDemandanteSeeder::class,
+            OuvidoriaStatusSeeder::class,
+            SetorSeeder::class
         ]);
     }
 }
