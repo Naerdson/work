@@ -76,7 +76,7 @@ class Ouvidoria extends Model
             ->join('ouvidoria_status as status', 'status.id', '=', 'ocorrencia.status_id')
             ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
             ->join('setor', 'setor.id', '=' , 'ocorrencia.setor_responsavel_id')
-            ->orderBy('ocorrencia.created_at', 'desc')
+            ->orderBy('ocorrencia.status_id', 'asc')
             ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
             ->paginate(5);
     }
