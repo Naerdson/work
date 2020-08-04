@@ -37,7 +37,7 @@ class HistoricoController extends Controller
             $historicoInstance = $this->historico->fill(array_merge(
                 $request->post(),
                 [
-                    'user_id' => (string) Auth::user()->id,
+                    'user_id' => (string) auth()->user()->id,
                 ]
             ));
 
