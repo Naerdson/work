@@ -6,13 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Setor;
 use App\Models\Ouvidoria;
 use App\Models\HistoricoOuvidoria;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Models\Helpers;
-use Exception;
-
-
-date_default_timezone_set('America/Sao_Paulo');
 
 class OuvidoriaController extends Controller
 {
