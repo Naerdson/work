@@ -1,20 +1,5 @@
 <?php
-
-use App\Mail\ResponderOuvidoria;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::namespace('Auth')->group(function () {
     Route::get('/', 'LoginController@index')->name('auth.login');
@@ -40,10 +25,5 @@ Route::prefix('admin')->group(function () {
             Route::patch('usuario/gerenciar/{id}', 'UserManagementController@update')->name('usuario.gerenciar.atualizar');
         }); 
     });
-    
-   
-    
-   
-
 });
 

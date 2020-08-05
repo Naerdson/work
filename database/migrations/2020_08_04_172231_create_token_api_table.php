@@ -16,6 +16,7 @@ class CreateTokenApiTable extends Migration
         Schema::create('token_api', function (Blueprint $table) {
             $table->id();
             $table->string('token')->unique();
+            $table->string('descricao');
             $table->timestamps();
         });
     }
