@@ -25,7 +25,7 @@ class UserManagementController extends Controller
             $usuariosCadastrados = User::all();
 
             if (Gate::denies('isAdmin', Auth::user()))
-                throw new \DomainException('Você não tem permissão de administrador', 403);
+                throw new \DomainException('Você não tem permissão de super administrador', 403);
 
             return view('admin.usuarios.home', compact('usuariosCadastrados'));
 

@@ -21,7 +21,7 @@ class GerenciaUsuarioPolicy
 
     public function isAdmin(User $user)
     {
-        return $user->nivel_id == 2 || $user->nivel_id == 3;
+        return $user->nivel_id == 3;
     }
 
 
