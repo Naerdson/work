@@ -24,7 +24,7 @@
     <div class="auth-form">
         <form class="p-5" method="POST" action="{{ route('login') }}">
             @csrf
-            <h3 class="mb-4">Insira seus dados:</h3>
+            <h3 class="mb-4">Insira seus dados</h3>
             @if(Session::has('message') && Session::has('type'))
                 <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
             @endif

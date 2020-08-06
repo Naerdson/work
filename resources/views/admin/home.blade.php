@@ -3,5 +3,5 @@
     @if(Session::has('message') && Session::has('type'))
         <div class="alert alert-{{ Session::get('type') }} text-center">{{ Session::get('message') }}</div>
     @endif
-    <h1>Home</h1>
+    <h2 class="title-h">Ouvidoria Unifametro</h2>
 @endsection

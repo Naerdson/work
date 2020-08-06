@@ -31,7 +31,7 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="">
+                    <a href="{{ route('admin.home') }}">
                         <i class="fas fa-home"></i>
                         <span class="title">Inicio</span>
                     </a>
@@ -49,12 +49,12 @@
                             <span class="title">Usuários</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="{{ route('config.create') }}">
                             <i class="fas fa-cogs"></i>
                             <span class="title">Configurações</span>
                         </a>
-                    </li>
+                    </li> -->
                 @endcan
                 <li>
                     <a href="{{ route('logout') }}">

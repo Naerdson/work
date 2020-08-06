@@ -65,8 +65,8 @@
                         </div>
                 </div>
                 <div class="card-footer d-f d-justi-flex-end">
-                    <a href="{{ route('usuarios.home') }}"><button class="btn btn-primary m-l-10" type="button"><i class="fas fa-arrow-circle-left"></i> Voltar</button></a>
-                    <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Salvar</button>
+                    <a href="{{ route('usuarios.home') }}"><button class="btn btn-primary m-l-10 btn-sm" type="button"><i class="fas fa-arrow-circle-left"></i> Voltar</button></a>
+                    <button class="btn btn-success btn-sm" type="submit"><i class="fas fa-save"></i> Salvar</button>
                 </div>
                 </form>
 
