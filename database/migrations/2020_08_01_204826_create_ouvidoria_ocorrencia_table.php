@@ -16,7 +16,7 @@ class CreateOuvidoriaOcorrenciaTable extends Migration
         Schema::create('ouvidoria_ocorrencia', function (Blueprint $table) {
             $table->id();
             $table->string('protocolo');
-            $table->string('nome');
+            $table->string('nome')->nullable();
             $table->string('contato');
             $table->longText('descricao');
             $table->foreignId('categoria_id')->references('id')->on('ouvidoria_categoria');
