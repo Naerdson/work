@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Setor;
 use App\Models\Ouvidoria;
 use App\Models\HistoricoOuvidoria;
+use Illuminate\Http\Request;
 
 class OuvidoriaController extends Controller
 {
@@ -17,9 +18,11 @@ class OuvidoriaController extends Controller
         $this->historico = $historico;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $ouvidorias = $this->ouvidoria->listAllOccurrences();
+        $protocoloOcorrencia = $request->get('protocolo');
+
+        $ouvidorias = $this->ouvidoria->listAllOccurrences($protocoloOcorrencia);
         $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
         $setores = Setor::all();
 

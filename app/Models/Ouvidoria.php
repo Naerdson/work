@@ -67,7 +67,7 @@ class Ouvidoria extends Model
         return $this->historic()->first();
     }
 
-    public function listAllOccurrences()
+    public function listAllOccurrences($protocolo)
     {
 
         return DB::table('ouvidoria_ocorrencia as ocorrencia')
@@ -77,6 +77,7 @@ class Ouvidoria extends Model
             ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
             ->join('setor', 'setor.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
+            ->where('ocorrencia.protocolo', 'LIKE' , '%' . $protocolo . '%')
             ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
             ->paginate(5);
     }

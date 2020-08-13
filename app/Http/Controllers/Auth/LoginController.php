@@ -38,10 +38,14 @@ class LoginController extends Controller
                     $userInstance->nome = $autenticaUserLdap->user->nome;
                     $userInstance->email = $autenticaUserLdap->user->email;
                     $userInstance->save();
-
+            
                     Auth::login($userInstance);
 
-                    return redirect('admin/home', '302');
+                    if($userInstance['setor_id'] == 1){
+                        return redirect('admin/perfil');
+                    }
+                    
+                    return redirect('admin/ouvidoria/home');
             }
 
             return redirect('/', 303)->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);

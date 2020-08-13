@@ -21,20 +21,9 @@ class UserManagementController extends Controller
 
     public function index()
     {
-        try {
-            $usuariosCadastrados = User::all();
+        $usuariosCadastrados = User::all();
 
-            if (Gate::denies('isAdmin', Auth::user()))
-                throw new \DomainException('Você não tem permissão de super administrador', 403);
-
-            return view('admin.usuarios.home', compact('usuariosCadastrados'));
-
-        }
-        catch (\Exception $e){
-            return redirect()->route('admin.home')->with(['message' => $e->getMessage(), 'type' => 'danger']);
-        }
-
-
+        return view('admin.usuarios.home', compact('usuariosCadastrados'));
     }
 
     public function show($id)

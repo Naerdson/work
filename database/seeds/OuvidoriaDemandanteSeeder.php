@@ -16,6 +16,7 @@ class OuvidoriaDemandanteSeeder extends Seeder
             ['nome' => 'Aluno(a)'],
             ['nome' => 'Professor(a)'],
             ['nome' => 'Funcionário(a)'],
+            ['nome' => 'Publico Externo']
         ]);
     }
 }

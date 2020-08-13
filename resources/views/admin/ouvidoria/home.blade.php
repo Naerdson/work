@@ -3,7 +3,14 @@
 @section('content')
     <div class="d-flex justify-content-between">
         <h4 class="title-h">Gerenciamento de Ouvidorias</h4>
-        <!-- <button class="btn btn-success btn-sm"><i class="fas fa-file-pdf"></i> Gerar Relatório</button> -->
+        <div class="row">
+            <form action="">
+                <div class="col d-flex">
+                    <input type="text" name="protocolo" class="form-control form-control-sm" placeholder="Pesquise pelo protocolo">
+                    <button class="btn btn-info btn-sm ml-1"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="row mt-3">
@@ -230,8 +237,11 @@
                         <div class="form-group">
                             <label for="setor">Selecione o setor</label>
                             <select name="setor_id" id="setor" class="form-control">
+                                <option disabled selected>Selecione</option>
                                 @foreach($setores as $setor)
-                                    <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                    @if($setor->id != 1)
+                                        <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                    @endif;
                                 @endforeach
                             </select>
                         </div>
