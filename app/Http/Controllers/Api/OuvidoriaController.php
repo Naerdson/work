@@ -5,21 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Helpers;
-use App\Models\HistoricoOuvidoria;
-use App\Models\Ouvidoria;
 use App\Http\Resources\Ouvidoria as OuvidoriaResource;
+use App\Models\OuvidoriasOcorrencia;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class OuvidoriaController extends Controller
 {
-    private $ouvidoria;
-
-    public function __construct(Ouvidoria $ouvidoria, HistoricoOuvidoria $historico)
-    {
-        $this->ouvidoria = $ouvidoria;
-        $this->historico = $historico;
-    }
 
     public function store(Request $request, helpers $functions)
     {
@@ -33,14 +25,12 @@ class OuvidoriaController extends Controller
                 'campus_id' => 'required|integer'
             ]);
 
-            $ouvidoriaInstance =  $this->ouvidoria->fill(array_merge(
+            $ouvidoriaInstance = OuvidoriasOcorrencia::create(array_merge(
                 $request->post(),
                 [
                     'protocolo' => $functions->generateProtocol(2)
                 ]
             ));
-
-            $ouvidoriaInstance->save();
 
             if($ouvidoriaInstance){
 
@@ -75,7 +65,7 @@ class OuvidoriaController extends Controller
             $protocolo = $request->input('protocolo');
 
             $ouvidoriaComHistorico = OuvidoriaResource::collection(
-                Ouvidoria::where('protocolo', $protocolo)->get()
+                OuvidoriasOcorrencia::where('protocolo', $protocolo)->get()
             );
 
             if(count($ouvidoriaComHistorico)){

@@ -4,21 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campus;
-use App\Models\CategoriaDemandante;
-use App\Models\OuvidoriaCategoriaDemanda;
+use App\Models\OuvidoriaCategoria;
+use App\Models\OuvidoriaDemandante;
 
 class RecursosIniciaisOuvidoriaController extends Controller
 {
     public function index()
     {
-        $demandas = OuvidoriaCategoriaDemanda::all()->toArray();
-        $campus = Campus::all()->toArray();
-        $demandantes = CategoriaDemandante::all()->toArray();
-
         return response()->json([
-            'categorias_demandas' => $demandas,
-            'campus' => $campus,
-            'categorias_demandantes' => $demandantes
+            'categorias_demandas' => OuvidoriaCategoria::all()->toArray(),
+            'campus' => Campus::all()->toArray(),
+            'categorias_demandantes' => OuvidoriaDemandante::all()->toArray()
         ], 200);
     }
 }

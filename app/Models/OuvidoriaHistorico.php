@@ -6,11 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-class HistoricoOuvidoria extends Model
+class OuvidoriaHistorico extends Model
 {
-
-    protected $table = 'ouvidoria_historico';
-
     protected $fillable = [
         'ocorrencia_id', 
         'status_ocorrencia_id', 

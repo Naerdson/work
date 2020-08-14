@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class TokenApi extends Model
 {
-    protected $table = 'token_api';
+    protected $table = 'tokens_api';
 
     protected $fillable = ['token', 'descricao'];
 
