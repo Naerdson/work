@@ -12,7 +12,7 @@ class NivelUsuarioSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('nivel_usuario')->insert([
+        DB::table('niveis_usuarios')->insert([
             ['nome' => 'Funcionário'],
             ['nome' => 'Administrador'],
             ['nome' => 'Super Administrador']

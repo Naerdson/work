@@ -13,7 +13,7 @@ class CreateTokenApiTable extends Migration
      */
     public function up()
     {
-        Schema::create('token_api', function (Blueprint $table) {
+        Schema::create('tokens_api', function (Blueprint $table) {
             $table->id();
             $table->string('token')->unique();
             $table->string('descricao');

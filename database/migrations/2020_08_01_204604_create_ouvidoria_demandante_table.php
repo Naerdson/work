@@ -13,7 +13,7 @@ class CreateOuvidoriaDemandanteTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidoria_demandante', function (Blueprint $table) {
+        Schema::create('ouvidorias_demandantes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->timestamps();

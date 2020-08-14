@@ -13,7 +13,7 @@ class CreateUsuarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->string('usuario');
@@ -21,8 +21,8 @@ class CreateUsuarioTable extends Migration
             $table->string('email')->nullable()->unique();
             $table->unsignedBigInteger('nivel_id')->default(1);
 
-            $table->foreign('nivel_id')->references('id')->on('nivel_usuario');
-            $table->foreign('setor_id')->references('id')->on('setor');
+            $table->foreign('nivel_id')->references('id')->on('niveis_usuarios');
+            $table->foreign('setor_id')->references('id')->on('setores');
             $table->timestamps();
         });
     }

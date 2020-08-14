@@ -13,7 +13,7 @@ class CreateOuvidoriaStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidoria_status', function (Blueprint $table) {
+        Schema::create('ouvidorias_status', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->timestamps();

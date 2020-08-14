@@ -13,12 +13,12 @@ class CreateOuvidoriaHistoricoTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidoria_historico', function (Blueprint $table) {
+        Schema::create('ouvidorias_historicos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ocorrencia_id')->references('id')->on('ouvidoria_ocorrencia');
-            $table->foreignId('status_ocorrencia_id')->references('id')->on('ouvidoria_status');
-            $table->foreignId('setor_id')->references('id')->on('setor');
-            $table->foreignId('user_id')->references('id')->on('usuario');
+            $table->foreignId('ocorrencia_id')->references('id')->on('ouvidorias_ocorrencias');
+            $table->foreignId('status_ocorrencia_id')->references('id')->on('ouvidorias_status');
+            $table->foreignId('setor_id')->references('id')->on('setores');
+            $table->foreignId('user_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

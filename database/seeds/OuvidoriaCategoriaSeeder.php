@@ -12,7 +12,7 @@ class OuvidoriaCategoriaSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('ouvidoria_categoria')->insert([
+        DB::table('ouvidorias_categorias')->insert([
             ['nome' => 'Reclamação'],
             ['nome' => 'Elogio'],
             ['nome' => 'Sugestão'],

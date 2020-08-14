@@ -11,7 +11,7 @@ class OuvidoriaStatusSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('ouvidoria_status')->insert([
+        DB::table('ouvidorias_status')->insert([
             ['nome' => 'Aberto'],
             ['nome' => 'Encaminhado'],
             ['nome' => 'Respondido por email'],

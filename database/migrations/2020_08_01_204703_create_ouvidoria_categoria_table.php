@@ -13,7 +13,7 @@ class CreateOuvidoriaCategoriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidoria_categoria', function (Blueprint $table) {
+        Schema::create('ouvidorias_categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->timestamps();

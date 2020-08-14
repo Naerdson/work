@@ -12,7 +12,7 @@ class OuvidoriaDemandanteSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('ouvidoria_demandante')->insert([
+        DB::table('ouvidorias_demandantes')->insert([
             ['nome' => 'Aluno(a)'],
             ['nome' => 'Professor(a)'],
             ['nome' => 'Funcionário(a)'],

@@ -12,7 +12,7 @@ class SetorSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('setor')->insert([
+        DB::table('setores')->insert([
             ['nome' => 'DEFAULT'],
             ['nome' => 'TECNOLOGIA DA INFORMAÇÃO'],
             ['nome' => 'RH / PESSOAL'],

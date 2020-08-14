@@ -13,7 +13,7 @@ class CreateNivelUsuarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('nivel_usuario', function (Blueprint $table) {
+        Schema::create('niveis_usuarios', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
         });

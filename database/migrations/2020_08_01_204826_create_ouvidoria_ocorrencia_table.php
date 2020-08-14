@@ -13,20 +13,20 @@ class CreateOuvidoriaOcorrenciaTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidoria_ocorrencia', function (Blueprint $table) {
+        Schema::create('ouvidorias_ocorrencias', function (Blueprint $table) {
             $table->id();
             $table->string('protocolo');
             $table->string('nome')->nullable();
             $table->string('contato');
             $table->longText('descricao');
-            $table->foreignId('categoria_id')->references('id')->on('ouvidoria_categoria');
-            $table->foreignId('demandante_id')->references('id')->on('ouvidoria_demandante');
+            $table->foreignId('categoria_id')->references('id')->on('ouvidorias_categorias');
+            $table->foreignId('demandante_id')->references('id')->on('ouvidorias_demandantes');
             $table->unsignedBigInteger('status_id')->default(1);
             $table->foreignId('campus_id')->references('id')->on('campus');
             $table->unsignedBigInteger('setor_responsavel_id')->default(11);
 
-            $table->foreign('status_id')->references('id')->on('ouvidoria_status');
-            $table->foreign('setor_responsavel_id')->references('id')->on('setor');
+            $table->foreign('status_id')->references('id')->on('ouvidorias_status');
+            $table->foreign('setor_responsavel_id')->references('id')->on('setores');
             $table->timestamps();
         });
     }
