@@ -1,15 +1,46 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+
 class HistoricoOuvidoria extends Model
 {
+
     protected $table = 'ouvidoria_historico';
 
-    protected $fillable = ['ocorrencia_id', 'status_ocorrencia_id', 'setor_id', 'user_id'];
+    protected $fillable = [
+        'ocorrencia_id', 
+        'status_ocorrencia_id', 
+        'setor_id', 
+        'user_id'
+    ];
+
+    protected $with = [
+        'status',
+        'setor',
+        'usuario'
+    ];
+
+    protected $hidden = [
+        'status_ocorrencia_id',
+        'setor_id',
+        'user_id',
+        'created_at',
+        'updated_at',
+        'ocorrencia_id',
+    ];
+
+    protected $appends = [
+        'data_criacao'
+    ];
+
+    public function getDataCriacaoAttribute()
+    {
+        return strftime('%d de %B de %Y', strtotime($this->attributes['created_at']));
+    }
 
     public function listAllOccurrencesWithCondition($sector)
     {
@@ -19,20 +50,6 @@ class HistoricoOuvidoria extends Model
             ->join('ouvidoria_status as status', 'status.id', '=', 'ocorrencia.status_id')
             ->where('historico.setor_id', $sector)
             ->select('ocorrencia.id','ocorrencia.protocolo' ,'categoria.nome as categoria', 'status.nome as status', 'ocorrencia.created_at as data')
-            ->get();
-
-    }
-
-    public function getHistoricWithProtocolo($protocolo)
-    {
-        // Rodar no mysql para formatar a data em portugues - SET GLOBAL lc_time_names=pt_BR;
-
-        return DB::table('ouvidoria_ocorrencia AS ocorrencia')
-            ->join('ouvidoria_historico AS historico', 'historico.ocorrencia_id', '=', 'ocorrencia.id')
-            ->join('setor', 'setor.id', '=', 'historico.setor_id')
-            ->join('ouvidoria_status as status', 'status.id', '=', 'historico.status_ocorrencia_id')
-            ->where('protocolo', $protocolo)
-            ->select('historico.id as historico_id', 'setor.nome as setor', 'status.nome as status', DB::raw('DATE_FORMAT(historico.created_at, "%d de %M de %Y") as data'))
             ->get();
 
     }
@@ -51,5 +68,20 @@ class HistoricoOuvidoria extends Model
     public function ouvidoria()
     {
         return $this->belongsTo(Ouvidoria::class, 'id', 'ocorrencia_id');
+    }
+
+    public function status()
+    {
+        return $this->hasOne(StatusOuvidoria::class, 'id', 'status_ocorrencia_id');
+    }
+
+    public function setor()
+    {
+        return $this->hasOne(Setor::class, 'id', 'setor_id');
+    }
+
+    public function usuario()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

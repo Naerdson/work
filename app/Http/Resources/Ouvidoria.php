@@ -15,17 +15,15 @@ class Ouvidoria extends JsonResource
     public function toArray($request)
     {
         return [
-            "protocolo" => $this->protocolo,
-            "nome" => $this->nome,
-            "contato" => $this->contato,
-            "descricao" => $this->descricao,
-            "setor_responsavel_id" => $this->setor_responsavel_id,
-            "data2" => $this->data2,
-            "categoria" => $this->categoria,
-            "demandante" => $this->demandante,
-            "status" => $this->status,
-            "campus" => $this->campus,
-            "setor_responsavel" => $this->setor_responsavel
+            'protocolo' => $this->protocolo,
+            'contato' => $this->contato,
+            'data_criacao' => $this->data_criacao,
+            'setor_responsavel' => $this->setorResponsavel->nome,
+            'categoria' => $this->categoria->nome,
+            'demandante' => $this->demandante->nome,
+            'status' => $this->status->nome,
+            'campus' => $this->campus->nome,
+            'historicos' => $this->historicos
         ];
     }
 }

@@ -7,48 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\Helpers;
 use App\Models\HistoricoOuvidoria;
 use App\Models\Ouvidoria;
+use App\Http\Resources\Ouvidoria as OuvidoriaResource;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class OuvidoriaController extends Controller
 {
     private $ouvidoria;
-    private $historico;
 
     public function __construct(Ouvidoria $ouvidoria, HistoricoOuvidoria $historico)
     {
         $this->ouvidoria = $ouvidoria;
         $this->historico = $historico;
-    }
-
-    public function index(Request $request)
-    {
-        try {
-            $protocolo = $request->input('protocolo');
-            $ouvidoriaArray = $this->ouvidoria->where('protocolo', $protocolo)->get();
-
-
-            if(count($ouvidoriaArray)){
-                return response()->json([
-                    'message' => 'Ouvidoria selecionada com sucesso',
-                    'docs' => [
-                        'ouvidoria' => $this->ouvidoria->getOuvidoriaWhereProtocol($protocolo),
-                        'historico' => $this->historico->getHistoricWithProtocolo($protocolo)
-                    ]
-                ], 200);
-            }
-
-            return response()->json([
-                'message' => 'Protocolo Incorreto'
-            ], 422);
-
-        }
-        catch (Exception $e){
-            return response()->json([
-                'message' => 'Ocorreu um erro ao processar a requisição. Tente novamente.',
-                'error' => $e->getMessage()
-            ], 500);
-        }
     }
 
     public function store(Request $request, helpers $functions)
@@ -63,8 +33,7 @@ class OuvidoriaController extends Controller
                 'campus_id' => 'required|integer'
             ]);
 
-
-            $ouvidoriaInstance = $this->ouvidoria->fill(array_merge(
+            $ouvidoriaInstance =  $this->ouvidoria->fill(array_merge(
                 $request->post(),
                 [
                     'protocolo' => $functions->generateProtocol(2)
@@ -72,6 +41,7 @@ class OuvidoriaController extends Controller
             ));
 
             $ouvidoriaInstance->save();
+
             if($ouvidoriaInstance){
 
                $contatoEmail = $ouvidoriaInstance->contato;
@@ -103,16 +73,15 @@ class OuvidoriaController extends Controller
     {
         try {
             $protocolo = $request->input('protocolo');
-            $ouvidoriaArray = $this->ouvidoria->where('protocolo', $protocolo)->get();
 
+            $ouvidoriaComHistorico = OuvidoriaResource::collection(
+                Ouvidoria::where('protocolo', $protocolo)->get()
+            );
 
-            if(count($ouvidoriaArray)){
+            if(count($ouvidoriaComHistorico)){
                 return response()->json([
                     'message' => 'Ouvidoria selecionada com sucesso',
-                    'docs' => [
-                        'ouvidoria' => $this->ouvidoria->getOuvidoriaWhereProtocol($protocolo),
-                        'historico' => $this->historico->getHistoricWithProtocolo($protocolo)
-                    ]
+                    'ouvidoria' => $ouvidoriaComHistorico
                 ], 200);
             }
 

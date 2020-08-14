@@ -22,49 +22,31 @@ class Ouvidoria extends Model
     ];
 
     protected $appends = [
-        'data2',
+        'data_criacao'
+    ];
+
+    protected $with = [
+        'setorResponsavel',
         'categoria',
         'demandante',
         'status',
         'campus',
-        'setor_responsavel',
-        'historico'
+        'historicos'
     ];
 
+    protected $hidden = [
+        'categoria_id', 
+        'demandante_id', 
+        'status_id', 
+        'campus_id', 
+        'setor_responsavel_id',
+        'created_at',
+        'updated_at'
+    ];
 
-    public function getData2Attribute()
+    public function getDataCriacaoAttribute()
     {
         return date('d/m/Y', strtotime($this->attributes['created_at']));
-    }
-
-    public function getCategoriaAttribute()
-    {
-        return $this->categoria()->first()->nome;
-    }
-
-    public function getDemandanteAttribute()
-    {
-        return $this->demandante()->first()->nome;
-    }
-
-    public function getStatusAttribute()
-    {
-        return $this->status()->first()->nome;
-    }
-
-    public function getCampusAttribute()
-    {
-        return $this->campus()->first()->nome;
-    }
-
-    public function getSetorResponsavelAttribute()
-    {
-        return $this->setorResponsavel()->first()->nome;
-    }
-
-    public function getHistoricoAttribute()
-    {
-        return $this->historic()->first();
     }
 
     public function listAllOccurrences($protocolo)
@@ -95,17 +77,6 @@ class Ouvidoria extends Model
             ->paginate(5);
     }
 
-    public function getOuvidoriaWhereProtocol($protocolo)
-    {
-        return DB::table('ouvidoria_ocorrencia as ocorrencia')
-            ->join('ouvidoria_categoria as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
-            ->join('ouvidoria_status as status', 'status.id', '=', 'ocorrencia.status_id')
-            ->join('setor', 'setor.id', '=' , 'ocorrencia.setor_responsavel_id')
-            ->where('ocorrencia.protocolo', '=', $protocolo)
-            ->select('ocorrencia.id','ocorrencia.protocolo','ocorrencia.contato as email','categoria.nome as categoria', 'status.nome as status','ocorrencia.created_at as data', 'setor.nome as setor_responsavel')
-            ->first();
-    }
-
     public function getCountOuvidoria()
     {
         return [
@@ -116,7 +87,7 @@ class Ouvidoria extends Model
         ];
     }
 
-    public function historic()
+    public function historicos()
     {
         return $this->hasMany(HistoricoOuvidoria::class, 'ocorrencia_id', 'id');
     }
@@ -145,6 +116,4 @@ class Ouvidoria extends Model
     {
         return $this->hasOne(Campus::class, 'id', 'campus_id');
     }
-
-
 }
