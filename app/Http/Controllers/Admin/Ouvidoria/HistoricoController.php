@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 use App\Http\Controllers\Controller;
 use App\Mail\ResponderOuvidoria;
 use Illuminate\Http\Request;
-use App\Models\Ouvidoria;
-use App\Models\HistoricoOuvidoria;
+use App\Models\OuvidoriasHistorico;
+use App\Models\OuvidoriasOcorrencia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Exception;
@@ -16,7 +16,7 @@ class HistoricoController extends Controller
     private $ouvidoria = null;
     private $historico = null;
 
-    public function __construct(Ouvidoria $ouvidoria, HistoricoOuvidoria $historico)
+    public function __construct(OuvidoriasOcorrencia $ouvidoria, OuvidoriasHistorico $historico)
     {
         $this->ouvidoria = $ouvidoria;
         $this->historico = $historico;
@@ -50,7 +50,7 @@ class HistoricoController extends Controller
             return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria encaminhada com sucesso' ]);
 
         } catch (Exception $e) {
-            return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Não foi possivel encaminhar a ocorrencia' . $e->getMessage() ]);
+            return redirect()->route('ouvidoria.home')->with(['type' => 'danger', 'message' => 'Não foi possivel encaminhar a ocorrencia' . $e->getMessage() ]);
         }
 
     }
@@ -118,16 +118,8 @@ class HistoricoController extends Controller
 
     public function getHistoric($id)
     {
-        $historics = $this->historico->getHistoric($id);
+        $historicos = OuvidoriasHistorico::where('ocorrencia_id', $id)->get()->toArray();
 
-        if(count($historics)){
-            return view('admin.ouvidoria.historico', compact('historics'));
-        }
-
-        return redirect()->route('ouvidoria.home');
-
+        return view('admin.ouvidoria.historico', compact('historicos'));
     }
-
-
-
 }

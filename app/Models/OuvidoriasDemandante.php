@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OuvidoriaDemandante extends Model
+class OuvidoriasDemandante extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];
 }

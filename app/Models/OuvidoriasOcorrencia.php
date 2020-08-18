@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class OuvidoriasOcorrencia extends Model
 {
+    protected $table = 'ouvidorias_ocorrencias';
 
     protected $fillable = [
         'nome', 
@@ -59,20 +60,7 @@ class OuvidoriasOcorrencia extends Model
             ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
             ->where('ocorrencia.protocolo', 'LIKE' , '%' . $protocolo . '%')
-            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
-            ->paginate(5);
-    }
-
-    public function getAllOccurrencesWithSectorOuvidoria()
-    {
-        return DB::table('ouvidoria_ocorrencia as ocorrencia')
-            ->join('ouvidoria_categoria as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
-            ->join('ouvidoria_demandante as demandante', 'demandante.id', '=', 'ocorrencia.demandante_id')
-            ->join('ouvidoria_status as status', 'status.id', '=', 'ocorrencia.status_id')
-            ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
-            ->join('setor', 'setor.id', '=' , 'ocorrencia.setor_responsavel_id')
-            ->orderBy('created_at', 'desc')
-            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setor.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
+            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setores.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
             ->paginate(5);
     }
 
@@ -88,7 +76,7 @@ class OuvidoriasOcorrencia extends Model
 
     public function historicos()
     {
-        return $this->hasMany(HistoricoOuvidoria::class, 'ocorrencia_id', 'id');
+        return $this->hasMany(OuvidoriasHistorico::class, 'ocorrencia_id', 'id');
     }
 
     public function setorResponsavel()
@@ -98,17 +86,17 @@ class OuvidoriasOcorrencia extends Model
 
     public function categoria()
     {
-        return $this->hasOne(CategoriaOuvidoria::class, 'id', 'categoria_id');
+        return $this->hasOne(OuvidoriasCategoria::class, 'id', 'categoria_id');
     }
 
     public function demandante()
     {
-        return $this->hasOne(CategoriaDemandante::class, 'id', 'demandante_id');
+        return $this->hasOne(OuvidoriasDemandante::class, 'id', 'demandante_id');
     }
 
     public function status()
     {
-        return $this->hasOne(StatusOuvidoria::class, 'id', 'status_id');
+        return $this->hasOne(OuvidoriaStatus::class, 'id', 'status_id');
     }
 
     public function campus()

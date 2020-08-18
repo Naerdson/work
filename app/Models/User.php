@@ -26,6 +26,7 @@ class User extends Authenticatable
         'created_at',
         'updated_at'
     ];
+    protected $visible = ['nome'];
 
     public function nivel()
     {

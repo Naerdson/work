@@ -15,14 +15,9 @@ class Ouvidoria extends JsonResource
     public function toArray($request)
     {
         return [
-            'protocolo' => $this->protocolo,
-            'contato' => $this->contato,
-            'data_criacao' => $this->data_criacao,
             'setor_responsavel' => $this->setorResponsavel->nome,
             'categoria' => $this->categoria->nome,
-            'demandante' => $this->demandante->nome,
             'status' => $this->status->nome,
-            'campus' => $this->campus->nome,
             'historicos' => $this->historicos
         ];
     }

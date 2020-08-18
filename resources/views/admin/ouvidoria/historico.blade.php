@@ -7,19 +7,20 @@
     <div>
         <h4 class="title-h">Histórico da ocorrência</h4>
     </div>
+
     <div class="row d-flex justify-content-start mt-3 mb-4">
         <div class="col-xl-12">
             <div class="card border-0">
                 <div class="card-body">
                     <ul class="timeline">
-                        @foreach($historics as $historic)
+                        @foreach($historicos as $historico)
                             <li>
                                 <div class="d-flex justify-content-between">
-                                    <span class="text-uppercase">{{ $historic->status }}</span>
-                                    <p>{{ strftime('%d de %B de %Y', strtotime($historic->criado_em)) }}</p>
+                                    <span class="text-uppercase">{{ $historico['status']['nome'] }}</span>
+                                    <p>{{ $historico['data_criacao'] }}</p>
                                 </div>
-                                <p>Setor - {{ $historic->setor }}</p>
-                                <p>Usuário - {{ $historic->usuario }}</p>
+                                <p>Setor - {{ $historico['setor']['nome'] }}</p>
+                                <p>Usuário - {{ $historico['usuario']['nome'] }}</p>
                             </li>
                         @endforeach
                     </ul>
@@ -30,6 +31,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection

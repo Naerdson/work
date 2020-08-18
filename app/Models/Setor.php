@@ -11,6 +11,7 @@ class Setor extends Model
     protected $fillable = ['nome'];
 
     protected $hidden = ['created_at', 'updated_at'];
+    protected $visible = ['nome'];
 
     public function setor_responsavel_ouvidoria()
     {
