@@ -98,15 +98,15 @@ class HistoricoController extends Controller
 
     public function finishOccurrence($id)
     {
-
         $historicoInstance = $this->historico->fill(
             [
                 'ocorrencia_id' => $id,
                 'status_ocorrencia_id' => 4,
-                'user_id' => (string) Auth::user()->id,
-                'setor_id' => (string) Auth::user()->setor_id
+                'user_id' => Auth::user()->id,
+                'setor_id' => Auth::user()->setor_id
             ]
         );
+
 
         $historicoInstance->save();
 
