@@ -37,14 +37,15 @@ class LoginController extends Controller
             if($autenticaUserLdap->authenticated){
                     $userInstance->nome = $autenticaUserLdap->user->nome;
                     $userInstance->email = $autenticaUserLdap->user->email;
+
                     $userInstance->save();
-            
+
                     Auth::login($userInstance);
 
-                    if($userInstance['setor_id'] == 1){
+                    if(is_null($userInstance['setor_id'])){
                         return redirect('admin/perfil');
                     }
-                    
+
                     return redirect('admin/ouvidoria/home');
             }
 

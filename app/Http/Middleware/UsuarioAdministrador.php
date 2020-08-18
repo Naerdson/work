@@ -15,8 +15,8 @@ class UsuarioAdministrador
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::user()->nivel_id != 3){
-            return redirect()->route('admin/home')->with(['message' => 'Você não tem permissão de super administrador', 'type' => 'danger']);
+        if(auth()->user()->nivel_id != 3){
+            return redirect()->route('ouvidoria.home')->with(['message' => 'Você não tem permissão de super administrador', 'type' => 'danger']);
         }
 
         return $next($request);

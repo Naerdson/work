@@ -22,7 +22,6 @@ class UserManagementController extends Controller
     public function index()
     {
         $usuariosCadastrados = User::all();
-
         return view('admin.usuarios.home', compact('usuariosCadastrados'));
     }
 
