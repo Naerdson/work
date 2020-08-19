@@ -2,9 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\TokenApi;
 use Closure;
-use Illuminate\Support\Str;
 
 class Ouvidoria
 {
@@ -17,35 +15,13 @@ class Ouvidoria
      */
     public function handle($request, Closure $next)
     {
-        $authorization = $request->header('Authorization');
+        if($request->getClientIp() == '10.1.15.119' && $request->getPort() == '8082') {
+            return $next($request);
 
-        if (is_null($authorization)) {
-            return response()->json([
-                'error' => [
-                    'Authorization Key not Found'
-                ]
-            ], 401);
-        }
-        if (!Str::contains($authorization, 'Bearer ')) {
-            return response()->json([
-                'error' => [
-                    'Authorization Key format not correctly'
-                ]
-            ], 401);
         }
 
-        [, $access_token] = explode('Bearer ', $authorization);
-
-        $user = TokenApi::where(['token' => $access_token])->get();
-
-        if (is_null($user)) {
-            return response()->json([
-                'error' => [
-                    'Token expiraded or incorrectly'
-                ]
-            ], 401);
-        }
-
-        return $next($request);
+        return response()->json([
+            'error' => 'Não autorizado'
+        ], 401);
     }
 }

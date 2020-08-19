@@ -12,13 +12,14 @@ use Exception;
 
 class OuvidoriaController extends Controller
 {
-
+    
     public function store(Request $request, helpers $functions)
     {
+        define('TIPO_CONTATO_EMAIL', 1);
+        
         try {
             $this->validate($request, [
                 'nome' => 'string|nullable',
-                'contato' => 'email|required',
                 'descricao' => 'string|required',
                 'categoria_id' => 'required|integer',
                 'demandante_id' => 'required|integer',
@@ -32,7 +33,7 @@ class OuvidoriaController extends Controller
                 ]
             ));
 
-            if($ouvidoriaInstance){
+            if($ouvidoriaInstance->tipo_contato_id == TIPO_CONTATO_EMAIL){
 
                $contatoEmail = $ouvidoriaInstance->contato;
                $numeroProtocolo = $ouvidoriaInstance->protocolo;
@@ -42,14 +43,14 @@ class OuvidoriaController extends Controller
                    $message->from('sistemas@unifametro.edu.br','Unifametro');
                    $message->subject('Recebemos sua solicitação.');
                });
-
-                return response()->json([
-                    'message' => 'Ouvidoria aberta com sucesso',
-                    'docs' => [
-                        'protocolo' => $ouvidoriaInstance->protocolo
-                    ]
-                ], 201);
             }
+
+            return response()->json([
+                'message' => 'Ouvidoria aberta com sucesso',
+                'docs' => [
+                    'protocolo' => $ouvidoriaInstance->protocolo
+                ]
+            ], 201);
         }
         catch (Exception $e){
             return response()->json([

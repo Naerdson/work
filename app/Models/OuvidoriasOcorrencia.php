@@ -18,7 +18,8 @@ class OuvidoriasOcorrencia extends Model
         'categoria_id', 
         'demandante_id', 
         'campus_id', 
-        'setor_responsavel_id'
+        'setor_responsavel_id',
+        'tipo_contato_id'
     ];
 
     protected $appends = [
