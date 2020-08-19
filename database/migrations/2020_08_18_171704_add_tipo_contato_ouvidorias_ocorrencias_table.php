@@ -14,7 +14,7 @@ class AddTipoContatoOuvidoriasOcorrenciasTable extends Migration
     public function up()
     {
         Schema::table('ouvidorias_ocorrencias', function (Blueprint $table) {
-            $table->foreignId('tipo_contato_id')->references('id')->on('tipos_contato');
+            $table->foreignId('tipo_contato_id')->references('id')->on('tipos_contatos');
         });
     }
 

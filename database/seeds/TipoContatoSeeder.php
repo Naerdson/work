@@ -12,7 +12,7 @@ class TipoContatoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tipos_contato')->insert([
+        DB::table('tipos_contatos')->insert([
             ['descricao' => 'Email'],
             ['descricao' => 'Telefone/Whatsapp'],
         ]);
