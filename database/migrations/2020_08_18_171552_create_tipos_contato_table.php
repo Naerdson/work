@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOuvidoriaStatusTable extends Migration
+class CreateTiposContatoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateOuvidoriaStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('ouvidorias_status', function (Blueprint $table) {
+        Schema::create('tipos_contato', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('descricao');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateOuvidoriaStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvidorias_status');
+        Schema::dropIfExists('tipos_contato');
     }
 }

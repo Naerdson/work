@@ -27,6 +27,6 @@ class CreateOuvidoriaCategoriaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvidoria_categoria');
+        Schema::dropIfExists('ouvidorias_categorias');
     }
 }

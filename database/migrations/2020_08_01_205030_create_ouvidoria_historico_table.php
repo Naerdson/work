@@ -30,6 +30,6 @@ class CreateOuvidoriaHistoricoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvidoria_historico');
+        Schema::dropIfExists('ouvidorias_historicos');
     }
 }

@@ -27,6 +27,6 @@ class CreateOuvidoriaDemandanteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ouvidoria_demandante');
+        Schema::dropIfExists('ouvidorias_demandantes');
     }
 }

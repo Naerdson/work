@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             OuvidoriaCategoriaSeeder::class,
             OuvidoriaDemandanteSeeder::class,
             OuvidoriaStatusSeeder::class,
-            SetorSeeder::class
+            SetorSeeder::class,
+            TipoContatoSeeder::class,
         ]);
     }
 }
