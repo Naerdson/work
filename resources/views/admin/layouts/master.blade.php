@@ -9,17 +9,11 @@
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/magic-input/dist/magic-input.min.css">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-
-
-    <!-- bootstrap, JQUERY e  script-backoffice JS -->
-
-<!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/e5b2bd6d10.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -63,15 +57,6 @@
                     </a>
                 </li>
             </ul>
-
-            <!-- <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul> -->
         </nav>
 
         <!-- Page Content  -->
@@ -85,7 +70,6 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <!-- <span><img src="https://scontent-for1-1.xx.fbcdn.net/v/t1.0-9/69245500_2230340117092318_8648757003797135360_n.jpg?_nc_cat=110&_nc_ohc=3fQdyZtVEAQAX-r6wOV&_nc_ht=scontent-for1-1.xx&oh=ff1da2a5c2a2c31a1cb8f61c3bb7a293&oe=5EC222F4" class="rounded-circle" alt="avatar image" height="40"></span> -->
                                 <span class="text-uppercase">{{ Auth::user()->nome }}</span>
                             </li>
                         </ul>

@@ -50,7 +50,7 @@ class OuvidoriasOcorrencia extends Model
         return date('d/m/Y', strtotime($this->attributes['created_at']));
     }
 
-    public function listAllOccurrences($protocolo)
+    public function listAllOccurrences($filtro)
     {
 
         return DB::table('ouvidorias_ocorrencias as ocorrencia')
@@ -60,8 +60,9 @@ class OuvidoriasOcorrencia extends Model
             ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
             ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
-            ->where('ocorrencia.protocolo', 'LIKE' , '%' . $protocolo . '%')
-            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setores.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
+            ->where('ocorrencia.protocolo', '=' , $filtro)
+            ->orWhere('ocorrencia.nome', 'LIKE', '%'. $filtro . '%')
+            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as contato', 'ocorrencia.tipo_contato_id', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setores.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
             ->paginate(5);
     }
 

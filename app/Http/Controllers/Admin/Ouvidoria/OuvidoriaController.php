@@ -12,17 +12,16 @@ class OuvidoriaController extends Controller
 {
     private $ouvidoria;
 
-    public function __construct(OuvidoriasOcorrencia $ouvidoria, OuvidoriasHistorico $historico)
+    public function __construct(OuvidoriasOcorrencia $ouvidoria)
     {
         $this->ouvidoria = $ouvidoria;
-        $this->historico = $historico;
     }
 
     public function index(Request $request)
     {
-        $protocoloOcorrencia = $request->get('protocolo');
+        $filtro = $request->get('filtro');
 
-        $ouvidorias = $this->ouvidoria->listAllOccurrences($protocoloOcorrencia);
+        $ouvidorias = $this->ouvidoria->listAllOccurrences($filtro);
         $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
         $setores = Setor::all();
 

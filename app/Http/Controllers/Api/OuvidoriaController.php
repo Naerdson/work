@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OuvidoriaStoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Helpers;
 use App\Http\Resources\Ouvidoria as OuvidoriaResource;
@@ -12,22 +13,14 @@ use Exception;
 
 class OuvidoriaController extends Controller
 {
-    
-    public function store(Request $request, helpers $functions)
+
+    public function store(OuvidoriaStoreRequest $request, helpers $functions)
     {
         define('TIPO_CONTATO_EMAIL', 1);
         
         try {
-            $this->validate($request, [
-                'nome' => 'string|nullable',
-                'descricao' => 'string|required',
-                'categoria_id' => 'required|integer',
-                'demandante_id' => 'required|integer',
-                'campus_id' => 'required|integer'
-            ]);
-
             $ouvidoriaInstance = OuvidoriasOcorrencia::create(array_merge(
-                $request->post(),
+                $request->all(),
                 [
                     'protocolo' => $functions->generateProtocol(2)
                 ]
