@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Ouvidoria;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setor;
-use App\Models\OuvidoriasHistorico;
 use App\Models\OuvidoriasOcorrencia;
 use Illuminate\Http\Request;
 
@@ -24,7 +23,7 @@ class OuvidoriaController extends Controller
         $ouvidorias = $this->ouvidoria->listAllOccurrences($filtro);
         $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
         $setores = Setor::all();
-
+        
         return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria', 'setores'));
     }
 }

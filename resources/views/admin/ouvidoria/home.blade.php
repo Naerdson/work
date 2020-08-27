@@ -16,9 +16,12 @@
     <div class="row mt-3">
         <div class="col-12">
             <div class="card border-0">
-                <div class="card-body">
+                <div class="card-body p-0">
                     @can('isOuvidoria')
-                        <div class="row">
+                        <div class="d-flex justify-content-end p-2">
+                           <a href="{{ route('ouvidoria.gerar.relatorio') }}"><button class="btn btn-success btn-sm" id="btn-relatorio"><i class="fas fa-file-pdf"></i> Gerar Relatório</button></a> 
+                        </div>
+                        <div class="row p-2">
                             <div class="col-md-6 col-lg-3 col-xlg-3">
                                 <div class="card">
                                     <div class="box text-center bg-info">
@@ -60,7 +63,7 @@
                     @if(Session::has('message') && Session::has('type'))
                         <div class="alert alert-{{ Session::get('type') }} text-center mt-3">{{ Session::get('message') }}</div>
                     @endif
-                    <div class="table-responsive mt-3">
+                    <div class="table-responsive mt-3 p-2">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -154,7 +157,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="d-md-flex justify-content-between">
+                    <div class="d-md-flex justify-content-between pl-2 pr-2">
                         <div class="d-flex flex-md-row">
                             <p class="pr-3">
                                 <i class="fas fa-history" style="color: #17a2b8;"></i> 
@@ -165,7 +168,7 @@
                                 - Responder por email
                             </p>
                             <p class="pr-3">
-                                <i class="fab fa-whatsapp" style="color: #007bff;"></i>
+                                <i class="fab fa-whatsapp" style="color: #28a745;"></i>
                                 - Responder por telefone
                             </p>
                             <p class="pr-3">
@@ -362,6 +365,5 @@
             modal.find('.modal-body #campus').val(campus)
             modal.find('.modal-body #descricao').val(descricao)
         });
-
     </script>
 @endsection

@@ -17,6 +17,7 @@ Route::prefix('admin')->group(function () {
             Route::put('ouvidoria/responder', 'HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
             Route::put('ouvidoria/encerrar/{id}', 'HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');
             Route::get('ouvidoria/historico/{id}', 'HistoricoController@getHistoric')->name('ouvidoria.historico');
+            Route::get('ouvidoria/gerar-relatorio-mensal', 'Relatorio\OuvidoriaRelatorioController@index')->name('ouvidoria.gerar.relatorio');
         });
 
        
