@@ -74,6 +74,56 @@ class OuvidoriasOcorrencia extends Model
         ];
     }
 
+    public function report()
+    {
+        return [
+            'DEMANDANTES'   =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
+                                    ->join('ouvidorias_demandantes as demandantes', 'demandantes.id', '=', 'ocorrencias.demandante_id')
+                                    ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE())')
+                                    ->groupBy('demandantes.nome')
+                                    ->orderBy('QTD_DEMANDANTE', 'DESC')
+                                    ->selectRaw('
+                                        demandantes.nome as DEMANDANTES, 
+                                        count(ocorrencias.demandante_id) as QTD_DEMANDANTE, 
+                                        count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM, 
+                                        (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS, 
+                                        (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
+                                    from 
+                                        ouvidorias_ocorrencias as ocorrencias
+                                    join ouvidorias_demandantes as demandantes 
+                                        on demandantes.id = ocorrencias.demandante_id
+                                    where 
+                                        MONTH(ocorrencias.created_at) = MONTH(CURDATE())
+                                    ) as PORCENTAGEM_TOTAL')
+                                    ->get()->toArray(),
+            'DEMANDAS'      =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
+                                    ->join('ouvidorias_categorias as categorias', 'categorias.id' ,'=', 'ocorrencias.categoria_id')
+                                    ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE())')
+                                    ->groupBy('categorias.nome')
+                                    ->orderBy('QTD_CATEGORIA', 'DESC')
+                                    ->selectRaw('
+                                        categorias.nome as CATEGORIAS, 
+                                        count(ocorrencias.categoria_id) as QTD_CATEGORIA, 
+                                        count(ocorrencias.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM, 
+                                        (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS,
+                                        (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
+                                        from 
+                                            ouvidorias_ocorrencias as ocorrencias
+                                        join ouvidorias_demandantes as demandantes 
+                                            on demandantes.id = ocorrencias.demandante_id
+                                        where 
+                                            MONTH(ocorrencias.created_at) = MONTH(CURDATE())
+                                        ) as PORCENTAGEM_TOTAL')
+                                    ->get()->toArray(),
+            'RECLAMACOES'   =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
+                                    ->join('campus', 'campus.id', '=', 'ocorrencias.campus_id')
+                                    ->join('ouvidorias_demandantes as demandantes', 'demandantes.id', '=', 'ocorrencias.demandante_id')
+                                    ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE()) AND ocorrencias.categoria_id = 1')
+                                    ->selectRaw('demandantes.nome as DEMANDANTE, ocorrencias.descricao as DESCRICAO, campus.nome as CAMPUS')
+                                    ->get()
+        ];
+    }
+
     public function historicos()
     {
         return $this->hasMany(OuvidoriasHistorico::class, 'ocorrencia_id', 'id');
