@@ -20,6 +20,6 @@ class OuvidoriaRelatorioController extends Controller
         $report = $this->ouvidoria->report();
         $pdf = PDF::loadView('admin.relatorio.ouvidoria', compact('report'));
         
-        return $pdf->setPaper('a4')->download('ouvidoria_report.pdf');
+        return $pdf->setPaper('a4')->download('relatorio_ouvidoria.pdf');
     }
 }
