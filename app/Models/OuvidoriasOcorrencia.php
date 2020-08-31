@@ -62,7 +62,21 @@ class OuvidoriasOcorrencia extends Model
             ->orderBy('ocorrencia.status_id', 'asc')
             ->where('ocorrencia.protocolo', '=' , $filtro)
             ->orWhere('ocorrencia.nome', 'LIKE', '%'. $filtro . '%')
-            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as contato', 'ocorrencia.tipo_contato_id', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setores.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
+            ->select(
+                    'ocorrencia.id',
+                    'ocorrencia.protocolo', 
+                    'ocorrencia.nome',
+                    'ocorrencia.contato as contato', 
+                    'ocorrencia.tipo_contato_id', 
+                    'ocorrencia.descricao', 
+                    'categoria.nome as categoria',
+                    'demandante.nome as demandante',
+                    'campus.nome as campus', 
+                    'status.nome as status', 
+                    'ocorrencia.status_id',
+                    'ocorrencia.created_at as data', 
+                    'setores.nome as setor_responsavel', 
+                    'ocorrencia.setor_responsavel_id')
             ->paginate(5);
     }
 

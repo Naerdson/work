@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         // Define portão para listar as ocorrencias e as informações  se o setor do usuário for igual ao da ouvidoria(11) ou se o
         // setor responsável pela ocorrencia for igual ao setor do usuário logado
         Gate::define('list-and-info-occurrence', function ($user, $ombudsman){
-            return $user->setor_id == 11 || $ombudsman->setor_responsavel_id == $user->setor_id;
+            return $user->setor_id == 19 || $ombudsman->setor_responsavel_id == $user->setor_id;
         });
 
         // Define portão para listar as opções de encaminhar e responder por email se o setor responsável pela ocorrencia for igual ao
@@ -53,7 +53,7 @@ class AuthServiceProvider extends ServiceProvider
         // 1° Caso - setor do usuário logado for ouvidoria (11) e status da ocorrência for 2 (encaminhado)
         // 2° Caso - setor responsável pela ocorrencia for igual ao setor do usuário logado e status da ocorrencia for igual a 4 ( Concluido )
         Gate::define('historic-occurrence', function ($user, $ombudsman){
-            return $user->setor_id == 11 && $ombudsman->status_id == 2 || $ombudsman->setor_responsavel_id == $user->setor_id && $ombudsman->status_id == 4;
+            return $user->setor_id == 19 && $ombudsman->status_id == 2 || $ombudsman->setor_responsavel_id == $user->setor_id && $ombudsman->status_id == 4;
 
         });
 

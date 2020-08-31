@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Gate::define('isOuvidoria', function ($user) {
-            return $user->setor_id == '11';
+            return $user->setor_id == '19';
         });
     }
 }

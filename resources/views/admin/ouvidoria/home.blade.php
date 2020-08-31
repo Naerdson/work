@@ -253,7 +253,7 @@
                             <select name="setor_id" id="setor" class="form-control">
                                 <option disabled selected>Selecione</option>
                                 @foreach($setores as $setor)
-                                    @if($setor->id != 1)
+                                    @if($setor->id != 1 && $setor->id != 28)
                                         <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
                                     @endif;
                                 @endforeach
