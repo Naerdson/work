@@ -101,7 +101,7 @@ class OuvidoriasOcorrencia extends Model
                                     ->selectRaw('
                                         demandantes.nome as DEMANDANTES, 
                                         count(ocorrencias.demandante_id) as QTD_DEMANDANTE, 
-                                        count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM, 
+                                        TRUNCATE(count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100, 1) as PORCENTAGEM, 
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS, 
                                         (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
                                     from 
@@ -120,7 +120,7 @@ class OuvidoriasOcorrencia extends Model
                                     ->selectRaw('
                                         categorias.nome as CATEGORIAS, 
                                         count(ocorrencias.categoria_id) as QTD_CATEGORIA, 
-                                        count(ocorrencias.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM, 
+                                        TRUNCATE(count(ocorrencias.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100, 1) as PORCENTAGEM, 
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS,
                                         (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
                                         from 

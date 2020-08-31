@@ -90,7 +90,7 @@ setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
                     <tr>
                         <td>{{ $relatorio->DEMANDANTES }}</td>
                         <td>{{ $relatorio->QTD_DEMANDANTE }}</td>
-                        <td>{{ str_replace(".", "", substr(round($relatorio->PORCENTAGEM),0, 3)) }}%</td>
+                        <td>{{ $relatorio->PORCENTAGEM }}%</td>
                     </tr>
                 @endforeach
                 <tr>
@@ -117,7 +117,7 @@ setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
                     <tr>
                         <td>{{ $relatorio->CATEGORIAS }}</td>
                         <td>{{ $relatorio->QTD_CATEGORIA }}</td>
-                        <td>{{ str_replace(".", "", substr(round($relatorio->PORCENTAGEM),0, 3)) }}%</td>
+                        <td>{{ $relatorio->PORCENTAGEM }}%</td>
                     </tr>
                 @endforeach
                 <tr>

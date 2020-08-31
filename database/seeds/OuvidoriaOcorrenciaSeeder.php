@@ -12,6 +12,6 @@ class OuvidoriaOcorrenciaSeeder extends Seeder
      */
     public function run()
     {
-        factory(OuvidoriasOcorrencia::class, 50)->create();
+        factory(OuvidoriasOcorrencia::class, 40)->create();
     }
 }
