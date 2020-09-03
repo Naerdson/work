@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OuvidoriaStatus as StatusModel;
 use Illuminate\Support\Facades\DB;
 
 class OuvidoriasOcorrencia extends Model
@@ -50,9 +51,13 @@ class OuvidoriasOcorrencia extends Model
         return date('d/m/Y', strtotime($this->attributes['created_at']));
     }
 
-    public function listAllOccurrences($filtro)
+    public function listAllOccurrences($filtro, $status)
     {
 
+        $status_id = $this->getIdStatus($status);
+
+        $operador = ($status_id == 0) ? '>' : '='; 
+     
         return DB::table('ouvidorias_ocorrencias as ocorrencia')
             ->join('ouvidorias_categorias as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
             ->join('ouvidorias_demandantes as demandante', 'demandante.id', '=', 'ocorrencia.demandante_id')
@@ -61,7 +66,10 @@ class OuvidoriasOcorrencia extends Model
             ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
             ->where('ocorrencia.protocolo', '=' , $filtro)
-            ->orWhere('ocorrencia.nome', 'LIKE', '%'. $filtro . '%')
+            ->orWhere([
+                ['ocorrencia.nome', 'LIKE', '%'. $filtro . '%'],
+                ['status_id', $operador, $status_id]
+            ])
             ->select(
                     'ocorrencia.id',
                     'ocorrencia.protocolo', 
@@ -77,7 +85,23 @@ class OuvidoriasOcorrencia extends Model
                     'ocorrencia.created_at as data', 
                     'setores.nome as setor_responsavel', 
                     'ocorrencia.setor_responsavel_id')
-            ->paginate(5);
+            ->get();
+    }
+
+    private function getIdStatus($status)
+    {
+        switch ($status) {
+            case 'encaminhado':
+                return StatusModel::STATUS_ENCAMINHADO;
+            case 'concluido':
+                return StatusModel::STATUS_CONCLUIDO;
+            case 'aberto':
+                return StatusModel::STATUS_ABERTO;
+            case 'total':
+                return 0;
+            default:
+                return 0;
+        }
     }
 
     public function getCountOuvidoria()

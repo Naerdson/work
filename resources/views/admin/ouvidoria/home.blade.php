@@ -23,40 +23,48 @@
                         </div>
                         <div class="row p-2">
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-info">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
-                                        <h6 class="text-white">Total de ocorrências</h6>
+                                <a href="?status=todas">
+                                    <div class="card">
+                                        <div class="box text-center bg-info">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
+                                            <h6 class="text-white">Total de ocorrências</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-warning">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
-                                        <h6 class="text-white">Encaminhadas</h6>
+                                <a href="?status=encaminhado">
+                                    <div class="card">
+                                        <div class="box text-center bg-warning">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
+                                            <h6 class="text-white">Encaminhadas</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-success">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
-                                        <h6 class="text-white">Concluídas</h6>
+                                <a href="?status=concluido">
+                                    <div class="card">
+                                        <div class="box text-center bg-success">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
+                                            <h6 class="text-white">Concluídas</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-dark">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
-                                        <h6 class="text-white">Aberto</h6>
+                                <a href="?status=aberto">
+                                    <div class="card">
+                                        <div class="box text-center bg-dark">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
+                                            <h6 class="text-white">Aberto</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     @endcan
@@ -103,7 +111,7 @@
                                                       onsubmit="return confirm('Deseja encerrar esta ocorrência?');">
                                                     @csrf
                                                     <input name="_method" type="hidden" value="PUT">
-                                                    <button class="btn btn-success btn-sm">
+                                                    <button class="btn btn-sm" style="background: #006767; color: #fff;">
                                                         <i class="fas fa-check"></i>
                                                     </button>
                                                 </form>
@@ -121,6 +129,16 @@
                                                     <a href="https://wa.me/55{{$ocorrencia->contato}}" target="_blank" class="btn btn-success btn-sm">
                                                         <i class="fab fa-whatsapp"></i>
                                                     </a>
+                                                    <form method="post"
+                                                      action="{{ route('ouvidoria.home.encerrar', $ocorrencia->id) }}"
+                                                      style="display: inline"
+                                                      onsubmit="return confirm('Deseja encerrar esta ocorrência?');">
+                                                    @csrf
+                                                        <input name="_method" type="hidden" value="PUT">
+                                                        <button class="btn btn-sm"  style="background: #006767; color: #fff;">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    </form>
                                                 @endif
                                                 <button type="button" class="btn btn-warning btn-sm"
                                                         data-ocorrenciaid="{{ $ocorrencia->id }}"
@@ -172,7 +190,7 @@
                                 - Responder por telefone
                             </p>
                             <p class="pr-3">
-                                <i class="fas fa-check" style="color: #28a745;"></i> 
+                                <i class="fas fa-check" style="color: #006767;"></i> 
                                 - Encerrar
                             </p>
                             <p class="pr-3">
@@ -184,11 +202,6 @@
                                 - Descrição da ocorrência
                             </p>
                         </div>
-                        @if(count($ouvidorias))
-                            @if(Auth::user()->can('list-paginate', $ouvidorias))
-                                {{ $ouvidorias->links() }}
-                            @endif
-                        @endif
                     </div>
                 </div>
             </div>
