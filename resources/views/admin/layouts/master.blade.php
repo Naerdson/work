@@ -30,18 +30,20 @@
                 <img src="{{ asset('img/logo-branca.png') }}" style="width: 60%;" class="logo">
             </div>
             <ul class="list-unstyled components">
-                <!-- <li class="active">
-                    <a href="{{ route('admin.home') }}">
-                        <i class="fas fa-home"></i>
-                        <span class="title">Inicio</span>
-                    </a>
-                </li> -->
                 <li>
                     <a href="{{ route('ouvidoria.home') }}">
                         <i class="fas fa-bullhorn"></i>
                         <span class="title">Ouvidorias</span>
                     </a>
                 </li>
+                @can('isOuvidoria')
+                    <li>
+                        <a href="{{ route('ouvidoria.relatorio') }}">
+                        <i class="fas fa-chart-pie"></i>
+                            <span class="title">Relatórios</span>
+                        </a>
+                    </li>
+                @endcan
                 @can('isAdmin', Auth::user())
                     <li>
                         <a href="{{ route('usuarios.home') }}">
@@ -63,15 +65,6 @@
                     </a>
                 </li>
             </ul>
-
-            <!-- <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul> -->
         </nav>
 
         <!-- Page Content  -->
@@ -85,7 +78,6 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <!-- <span><img src="https://scontent-for1-1.xx.fbcdn.net/v/t1.0-9/69245500_2230340117092318_8648757003797135360_n.jpg?_nc_cat=110&_nc_ohc=3fQdyZtVEAQAX-r6wOV&_nc_ht=scontent-for1-1.xx&oh=ff1da2a5c2a2c31a1cb8f61c3bb7a293&oe=5EC222F4" class="rounded-circle" alt="avatar image" height="40"></span> -->
                                 <span class="text-uppercase">{{ Auth::user()->nome }}</span>
                             </li>
                         </ul>
