@@ -4,9 +4,9 @@
     <div class="d-flex justify-content-between">
         <h4 class="title-h">Gerenciamento de Ouvidorias</h4>
         <div class="row">
-            <form action="">
+            <form action="{{ route('ouvidoria.home') }}">
                 <div class="col d-flex">
-                    <input type="text" name="protocolo" class="form-control form-control-sm" placeholder="Pesquise pelo protocolo">
+                    <input type="text" name="filtro" class="form-control form-control-sm" placeholder="Protocolo ou nome">
                     <button class="btn btn-info btn-sm ml-1"><i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -16,51 +16,62 @@
     <div class="row mt-3">
         <div class="col-12">
             <div class="card border-0">
-                <div class="card-body">
+                <div class="card-body p-0">
                     @can('isOuvidoria')
-                        <div class="row">
+                        <div class="d-flex justify-content-end p-2">
+                           <a href="{{ route('ouvidoria.gerar.relatorio') }}"><button class="btn btn-success btn-sm" id="btn-relatorio"><i class="fas fa-file-pdf"></i> Gerar Relatório</button></a> 
+                        </div>
+                        <div class="row p-2">
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-info">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
-                                        <h6 class="text-white">Total de ocorrências</h6>
+                                <a href="?status=todas">
+                                    <div class="card">
+                                        <div class="box text-center bg-info">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
+                                            <h6 class="text-white">Total de ocorrências</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-warning">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
-                                        <h6 class="text-white">Encaminhadas</h6>
+                                <a href="?status=encaminhado">
+                                    <div class="card">
+                                        <div class="box text-center bg-warning">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
+                                            <h6 class="text-white">Encaminhadas</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-success">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
-                                        <h6 class="text-white">Concluídas</h6>
+                                <a href="?status=concluido">
+                                    <div class="card">
+                                        <div class="box text-center bg-success">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
+                                            <h6 class="text-white">Concluídas</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
-                                <div class="card">
-                                    <div class="box text-center bg-dark">
-                                        <h1 class="text-white"
-                                            style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
-                                        <h6 class="text-white">Aberto</h6>
+                                <a href="?status=aberto">
+                                    <div class="card">
+                                        <div class="box text-center bg-dark">
+                                            <h1 class="text-white"
+                                                style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
+                                            <h6 class="text-white">Aberto</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     @endcan
                     @if(Session::has('message') && Session::has('type'))
                         <div class="alert alert-{{ Session::get('type') }} text-center mt-3">{{ Session::get('message') }}</div>
                     @endif
-                    <div class="table-responsive mt-3">
+                    <div class="table-responsive mt-3 p-2">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -100,19 +111,35 @@
                                                       onsubmit="return confirm('Deseja encerrar esta ocorrência?');">
                                                     @csrf
                                                     <input name="_method" type="hidden" value="PUT">
-                                                    <button class="btn btn-success btn-sm">
+                                                    <button class="btn btn-sm" style="background: #006767; color: #fff;">
                                                         <i class="fas fa-check"></i>
                                                     </button>
                                                 </form>
                                             @endif
 
                                             @if(Auth::user()->can('forward-and-replyEmail-occurrence', $ocorrencia))
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                        data-ocorrenciaid="{{ $ocorrencia->id }}"
-                                                        data-email="{{ $ocorrencia->email }}" data-toggle="modal"
-                                                        data-target="#modalResponderOcorrencia">
-                                                        <i class="fas fa-envelope"></i>
-                                                </button>
+                                                @if($ocorrencia->tipo_contato_id == 1)
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                            data-ocorrenciaid="{{ $ocorrencia->id }}"
+                                                            data-email="{{ $ocorrencia->contato }}" data-toggle="modal"
+                                                            data-target="#modalResponderOcorrencia">
+                                                            <i class="fas fa-envelope"></i>
+                                                    </button>
+                                                @else
+                                                    <a href="https://wa.me/55{{$ocorrencia->contato}}" target="_blank" class="btn btn-success btn-sm">
+                                                        <i class="fab fa-whatsapp"></i>
+                                                    </a>
+                                                    <form method="post"
+                                                      action="{{ route('ouvidoria.home.encerrar', $ocorrencia->id) }}"
+                                                      style="display: inline"
+                                                      onsubmit="return confirm('Deseja encerrar esta ocorrência?');">
+                                                    @csrf
+                                                        <input name="_method" type="hidden" value="PUT">
+                                                        <button class="btn btn-sm"  style="background: #006767; color: #fff;">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                                 <button type="button" class="btn btn-warning btn-sm"
                                                         data-ocorrenciaid="{{ $ocorrencia->id }}"
                                                         data-toggle="modal"
@@ -133,7 +160,7 @@
                                                 <button type="button" class="btn btn-dark btn-sm"
                                                         data-toggle="modal" data-target="#modalDescricaoOcorrencia"
                                                         data-nome="{{ $ocorrencia->nome }}"
-                                                        data-email="{{ $ocorrencia->email }}"
+                                                        data-email="{{ $ocorrencia->contato }}"
                                                         data-categoria="{{ $ocorrencia->categoria }}"
                                                         data-demandante="{{ $ocorrencia->demandante }}"
                                                         data-campus="{{ $ocorrencia->campus }}"
@@ -148,34 +175,33 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="d-md-flex justify-content-between">
+                    <div class="d-md-flex justify-content-between pl-2 pr-2">
                         <div class="d-flex flex-md-row">
-                            <p class="pr-4">
+                            <p class="pr-3">
                                 <i class="fas fa-history" style="color: #17a2b8;"></i> 
                                 - Histórico
                             </p>
-                            <p class="pr-4">
-                                <i class="fas fa-envelope" style="color: #007bff;"></i> 
+                            <p class="pr-3">
+                                <i class="fas fa-envelope" style="color: #007bff;"></i>
                                 - Responder por email
                             </p>
-                            <p class="pr-4">
-                                <i class="fas fa-check" style="color: #28a745;"></i> 
+                            <p class="pr-3">
+                                <i class="fab fa-whatsapp" style="color: #28a745;"></i>
+                                - Responder por telefone
+                            </p>
+                            <p class="pr-3">
+                                <i class="fas fa-check" style="color: #006767;"></i> 
                                 - Encerrar
                             </p>
-                            <p class="pr-4">
+                            <p class="pr-3">
                                 <i class="fas fa-forward" style="color: #e0a800;"></i> 
                                 - Encaminhar
                             </p>
-                            <p class="pr-4">
+                            <p class="pr-3">
                                 <i class="fas fa-info-circle" style="color: #23272B"></i> 
                                 - Descrição da ocorrência
                             </p>
                         </div>
-                        @if(count($ouvidorias))
-                            @if(Auth::user()->can('list-paginate', $ouvidorias))
-                                {{ $ouvidorias->links() }}
-                            @endif
-                        @endif
                     </div>
                 </div>
             </div>
@@ -194,6 +220,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    
                     <form method="post" action="{{ route('ouvidoria.home.responder.email')  }}">
                         @csrf
                         <input name="_method" type="hidden" value="PUT">
@@ -239,7 +266,7 @@
                             <select name="setor_id" id="setor" class="form-control">
                                 <option disabled selected>Selecione</option>
                                 @foreach($setores as $setor)
-                                    @if($setor->id != 1)
+                                    @if($setor->id != 1 && $setor->id != 28)
                                         <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
                                     @endif;
                                 @endforeach
@@ -271,7 +298,7 @@
                             <span>Nome do demandante</span>
                         </div>
                         <div class="col-6">
-                            <span>Email</span>
+                            <span>Contato</span>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -351,6 +378,5 @@
             modal.find('.modal-body #campus').val(campus)
             modal.find('.modal-body #descricao').val(descricao)
         });
-
     </script>
 @endsection

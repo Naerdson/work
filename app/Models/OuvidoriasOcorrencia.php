@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OuvidoriaStatus as StatusModel;
 use Illuminate\Support\Facades\DB;
 
 class OuvidoriasOcorrencia extends Model
@@ -18,7 +19,8 @@ class OuvidoriasOcorrencia extends Model
         'categoria_id', 
         'demandante_id', 
         'campus_id', 
-        'setor_responsavel_id'
+        'setor_responsavel_id',
+        'tipo_contato_id'
     ];
 
     protected $appends = [
@@ -49,9 +51,13 @@ class OuvidoriasOcorrencia extends Model
         return date('d/m/Y', strtotime($this->attributes['created_at']));
     }
 
-    public function listAllOccurrences($protocolo)
+    public function listAllOccurrences($filtro, $status)
     {
 
+        $status_id = $this->getIdStatus($status);
+
+        $operador = ($status_id == 0) ? '>' : '='; 
+     
         return DB::table('ouvidorias_ocorrencias as ocorrencia')
             ->join('ouvidorias_categorias as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
             ->join('ouvidorias_demandantes as demandante', 'demandante.id', '=', 'ocorrencia.demandante_id')
@@ -59,9 +65,43 @@ class OuvidoriasOcorrencia extends Model
             ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
             ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
-            ->where('ocorrencia.protocolo', 'LIKE' , '%' . $protocolo . '%')
-            ->select('ocorrencia.id','ocorrencia.protocolo', 'ocorrencia.nome','ocorrencia.contato as email', 'ocorrencia.descricao','categoria.nome as categoria','demandante.nome as demandante', 'campus.nome as campus', 'status.nome as status', 'ocorrencia.status_id','ocorrencia.created_at as data', 'setores.nome as setor_responsavel', 'ocorrencia.setor_responsavel_id')
-            ->paginate(5);
+            ->where('ocorrencia.protocolo', '=' , $filtro)
+            ->orWhere([
+                ['ocorrencia.nome', 'LIKE', '%'. $filtro . '%'],
+                ['status_id', $operador, $status_id]
+            ])
+            ->select(
+                    'ocorrencia.id',
+                    'ocorrencia.protocolo', 
+                    'ocorrencia.nome',
+                    'ocorrencia.contato as contato', 
+                    'ocorrencia.tipo_contato_id', 
+                    'ocorrencia.descricao', 
+                    'categoria.nome as categoria',
+                    'demandante.nome as demandante',
+                    'campus.nome as campus', 
+                    'status.nome as status', 
+                    'ocorrencia.status_id',
+                    'ocorrencia.created_at as data', 
+                    'setores.nome as setor_responsavel', 
+                    'ocorrencia.setor_responsavel_id')
+            ->get();
+    }
+
+    private function getIdStatus($status)
+    {
+        switch ($status) {
+            case 'encaminhado':
+                return StatusModel::STATUS_ENCAMINHADO;
+            case 'concluido':
+                return StatusModel::STATUS_CONCLUIDO;
+            case 'aberto':
+                return StatusModel::STATUS_ABERTO;
+            case 'total':
+                return 0;
+            default:
+                return 0;
+        }
     }
 
     public function getCountOuvidoria()
@@ -85,7 +125,7 @@ class OuvidoriasOcorrencia extends Model
                                     ->selectRaw('
                                         demandantes.nome as DEMANDANTES, 
                                         count(ocorrencias.demandante_id) as QTD_DEMANDANTE, 
-                                        count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM, 
+                                        TRUNCATE(count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100, 1) as PORCENTAGEM, 
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS, 
                                         (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
                                     from 
@@ -95,7 +135,7 @@ class OuvidoriasOcorrencia extends Model
                                     where 
                                         MONTH(ocorrencias.created_at) = MONTH(CURDATE())
                                     ) as PORCENTAGEM_TOTAL')
-                                    ->get()->toArray(),
+                                    ->get(),
             'DEMANDAS'      =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
                                     ->join('ouvidorias_categorias as categorias', 'categorias.id' ,'=', 'ocorrencias.categoria_id')
                                     ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE())')
@@ -104,7 +144,7 @@ class OuvidoriasOcorrencia extends Model
                                     ->selectRaw('
                                         categorias.nome as CATEGORIAS, 
                                         count(ocorrencias.categoria_id) as QTD_CATEGORIA, 
-                                        count(ocorrencias.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM, 
+                                        TRUNCATE(count(ocorrencias.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100, 1) as PORCENTAGEM, 
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS,
                                         (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
                                         from 
@@ -114,7 +154,7 @@ class OuvidoriasOcorrencia extends Model
                                         where 
                                             MONTH(ocorrencias.created_at) = MONTH(CURDATE())
                                         ) as PORCENTAGEM_TOTAL')
-                                    ->get()->toArray(),
+                                    ->get(),
             'RECLAMACOES'   =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
                                     ->join('campus', 'campus.id', '=', 'ocorrencias.campus_id')
                                     ->join('ouvidorias_demandantes as demandantes', 'demandantes.id', '=', 'ocorrencias.demandante_id')

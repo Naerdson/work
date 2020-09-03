@@ -17,7 +17,7 @@
                                 <select name="setor_id" class="form-control">
                                     <option disabled selected></option>
                                     @foreach($setores as $setor)
-                                        @if($setor->id != 1)
+                                        @if($setor->id != 1 && $setor->id != 28)
                                             <option value="{{ $setor->id }}" <?= (auth()->user()->setor_id == $setor->id) ? 'selected' : '' ?>>{{ $setor->nome }}</option>
                                         @endif
                                     @endforeach

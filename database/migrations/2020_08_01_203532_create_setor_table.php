@@ -27,6 +27,6 @@ class CreateSetorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('setor');
+        Schema::dropIfExists('setores');
     }
 }

@@ -26,6 +26,6 @@ class CreateNivelUsuarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nivel_usuario');
+        Schema::dropIfExists('niveis_usuarios');
     }
 }

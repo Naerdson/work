@@ -58,7 +58,9 @@
                                 <select name="setor_id" class="form-control" @cannot('isAdmin', $user) disabled @endcannot>
                                     <option disabled selected></option>
                                     @foreach($setores as $setor)
-                                        <option value="{{ $setor->id }}" <?= ($user->setor_id == $setor->id) ? 'selected' : '' ?>>{{ $setor->nome }}</option>
+                                        @if($setor->id != 1 && $setor->id != 28)
+                                            <option value="{{ $setor->id }}" <?= ($user->setor_id == $setor->id) ? 'selected' : '' ?>>{{ $setor->nome }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

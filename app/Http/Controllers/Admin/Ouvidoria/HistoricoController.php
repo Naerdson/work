@@ -111,7 +111,7 @@ class HistoricoController extends Controller
         $historicoInstance->save();
 
         $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $id);
-        $ouvidoriaInstance->update([ "status_id" => 4, "setor_responsavel_id" => 11 ]);
+        $ouvidoriaInstance->update([ "status_id" => 4, "setor_responsavel_id" => 19 ]);
 
         return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria encerrada com sucesso' ]);
     }

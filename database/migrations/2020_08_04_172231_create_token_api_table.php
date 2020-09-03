@@ -28,6 +28,6 @@ class CreateTokenApiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('token_api');
+        Schema::dropIfExists('tokens_api');
     }
 }

@@ -42,7 +42,7 @@ class LoginController extends Controller
 
                     Auth::login($userInstance);
 
-                    if(is_null($userInstance['setor_id'])){
+                    if(is_null($userInstance['setor_id']) || $userInstance['setor_id'] == 1){
                         return redirect('admin/perfil');
                     }
 

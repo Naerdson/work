@@ -9,17 +9,11 @@
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/magic-input/dist/magic-input.min.css">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-
-
-    <!-- bootstrap, JQUERY e  script-backoffice JS -->
-
-<!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/e5b2bd6d10.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -40,7 +34,7 @@
                     <li>
                         <a href="{{ route('ouvidoria.relatorio') }}">
                         <i class="fas fa-chart-pie"></i>
-                            <span class="title">Relatórios</span>
+                            <span class="title">Relatório</span>
                         </a>
                     </li>
                 @endcan
