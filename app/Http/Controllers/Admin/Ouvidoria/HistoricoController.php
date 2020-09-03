@@ -74,8 +74,8 @@ class HistoricoController extends Controller
             $historicoInstance = $this->historico->fill(array_merge(
                 $request->post(),
                 [
-                    'user_id' => (string) Auth::user()->id,
-                    'setor_id' => (string) Auth::user()->setor_id
+                    'user_id' => (string) auth()->user()->id,
+                    'setor_id' => (string) auth()->user()->setor_id
                 ]
             ));
 
@@ -87,7 +87,7 @@ class HistoricoController extends Controller
 
             Mail::send(new ResponderOuvidoria($ouvidoriaInstance, $dataEmail));
 
-            $ouvidoriaInstance->update([ "status_id" => 3, "setor_responsavel_id" => Auth::user()->setor_id ]);
+            $ouvidoriaInstance->update([ "status_id" => 3, "setor_responsavel_id" => auth()->user()->setor_id ]);
 
             return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria respondida com sucesso' ]);
 
@@ -102,8 +102,8 @@ class HistoricoController extends Controller
             [
                 'ocorrencia_id' => $id,
                 'status_ocorrencia_id' => 4,
-                'user_id' => Auth::user()->id,
-                'setor_id' => Auth::user()->setor_id
+                'user_id' => auth()->user()->id,
+                'setor_id' => auth()->user()->setor_id
             ]
         );
 

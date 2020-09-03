@@ -19,7 +19,7 @@
                <table cellpadding="0" cellspacing="0" width="100%">
                    <tr>
                         <td>
-                            <p style="font-family: 'Open Sans', sans-serif;color: rgb(92, 86, 86);font-weight: 300; font-size: 21px;">Prezado(a), me chamo {{ $usuario->nome }}, estou entrando em contato para tratar a demanda aberta no dia {{ $ouvidoria->data2}}.</p>
+                            <p style="font-family: 'Open Sans', sans-serif;color: rgb(92, 86, 86);font-weight: 300; font-size: 21px;">Prezado(a), me chamo {{ $usuario->nome }}, estou entrando em contato para tratar a demanda aberta no dia {{ $ouvidoria->data_criacao}}.</p>
                         </td>
                    </tr>
                    <tr>
