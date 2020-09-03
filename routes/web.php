@@ -12,7 +12,7 @@ Route::prefix('admin')->group(function () {
         
         Route::get('home', 'HomeController@index')->name('admin.home');
         Route::namespace('Ouvidoria')->group(function () {
-            Route::get('ouvidoria/home', 'OuvidoriaController@index')->name('ouvidoria.home');
+            Route::get('ouvidoria/home?{status?}', 'OuvidoriaController@index')->name('ouvidoria.home');
             Route::put('ouvidoria/encaminhar', 'HistoricoController@forwardOccurrence')->name('ouvidoria.home.encaminhar');
             Route::put('ouvidoria/responder', 'HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
             Route::put('ouvidoria/encerrar/{id}', 'HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');

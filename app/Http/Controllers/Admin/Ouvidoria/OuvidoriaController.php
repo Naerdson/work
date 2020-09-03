@@ -19,8 +19,9 @@ class OuvidoriaController extends Controller
     public function index(Request $request)
     {
         $filtro = $request->get('filtro');
+        $status = $request->get('status');
 
-        $ouvidorias = $this->ouvidoria->listAllOccurrences($filtro);
+        $ouvidorias = $this->ouvidoria->listAllOccurrences($filtro, $status);
         $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
         $setores = Setor::all();
         
