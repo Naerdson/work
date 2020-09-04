@@ -202,6 +202,7 @@
                                 - Descrição da ocorrência
                             </p>
                         </div>
+                        {{ $ouvidorias->links() }}
                     </div>
                 </div>
             </div>
