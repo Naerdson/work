@@ -6,7 +6,7 @@
         <div class="row">
             <form action="{{ route('ouvidoria.home') }}">
                 <div class="col d-flex">
-                    <input type="text" name="filtro" class="form-control form-control-sm" placeholder="Protocolo ou nome">
+                    <input type="text" name="filtro" class="form-control form-control-sm" placeholder="Pesquise pelo protocolo">
                     <button class="btn btn-info btn-sm ml-1"><i class="fas fa-search"></i></button>
                 </div>
             </form>

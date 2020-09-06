@@ -21,7 +21,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <img src="{{ asset('img/logo-branca.png') }}" style="width: 60%;" class="logo">
+                <img src="{{ asset('img/logo-branca.png') }}">
             </div>
             <ul class="list-unstyled components">
                 <!-- <li class="active">
