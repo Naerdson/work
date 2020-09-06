@@ -54,12 +54,12 @@ class OuvidoriasOcorrencia extends Model
 
     public function listAllOccurrences($filtro, $status)
     {
-
+        $operadorFiltroProtoloco = (is_null($filtro)) ? '!=' : '=';
         $status_id = $this->getIdStatus($status);
 
-        $operador = ($status_id == 0) ? '>' : '='; 
-        $operadorOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '='; 
-        $setorPesquisa = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
+        $operadorFiltroStatus = ($status_id == 0) ? '>' : '='; 
+        $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '='; 
+        $filtroSetor = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
      
         return DB::table('ouvidorias_ocorrencias as ocorrencia')
             ->join('ouvidorias_categorias as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
@@ -69,12 +69,9 @@ class OuvidoriasOcorrencia extends Model
             ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
             ->where([
-                ['ocorrencia.setor_responsavel_id', $operadorOuvidoria, $setorPesquisa],
-                ['ocorrencia.nome', 'LIKE', '%'. $filtro . '%'],
-                ['status_id', $operador, $status_id]
-            ])
-            ->orWhere([
-                ['ocorrencia.protocolo', '=' , $filtro]
+                ['ocorrencia.setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor],
+                ['status_id', $operadorFiltroStatus, $status_id],
+                ['ocorrencia.protocolo', $operadorFiltroProtoloco , $filtro],
             ])
             ->select(
                     'ocorrencia.id',
