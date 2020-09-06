@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OuvidoriaStatus as StatusModel;
 use Illuminate\Support\Facades\DB;
+USE App\Models\Setor as SetorModel;
 
 class OuvidoriasOcorrencia extends Model
 {
@@ -57,6 +58,8 @@ class OuvidoriasOcorrencia extends Model
         $status_id = $this->getIdStatus($status);
 
         $operador = ($status_id == 0) ? '>' : '='; 
+        $operadorOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '='; 
+        $setorPesquisa = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
      
         return DB::table('ouvidorias_ocorrencias as ocorrencia')
             ->join('ouvidorias_categorias as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
@@ -65,10 +68,13 @@ class OuvidoriasOcorrencia extends Model
             ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
             ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
             ->orderBy('ocorrencia.status_id', 'asc')
-            ->where('ocorrencia.protocolo', '=' , $filtro)
-            ->orWhere([
+            ->where([
+                ['ocorrencia.setor_responsavel_id', $operadorOuvidoria, $setorPesquisa],
                 ['ocorrencia.nome', 'LIKE', '%'. $filtro . '%'],
                 ['status_id', $operador, $status_id]
+            ])
+            ->orWhere([
+                ['ocorrencia.protocolo', '=' , $filtro]
             ])
             ->select(
                     'ocorrencia.id',
@@ -85,7 +91,7 @@ class OuvidoriasOcorrencia extends Model
                     'ocorrencia.created_at as data', 
                     'setores.nome as setor_responsavel', 
                     'ocorrencia.setor_responsavel_id')
-            ->get();
+            ->paginate(5);
     }
 
     private function getIdStatus($status)
@@ -108,9 +114,9 @@ class OuvidoriasOcorrencia extends Model
     {
         return [
             'total' => DB::table('ouvidorias_ocorrencias')->count(),
-            'encaminhado' => DB::table('ouvidorias_ocorrencias')->where('status_id', '2')->count(),
-            'concluido' => DB::table('ouvidorias_ocorrencias')->where('status_id', '4')->count(),
-            'aberto' => DB::table('ouvidorias_ocorrencias')->where('status_id', '1')->count(),
+            'encaminhado' => DB::table('ouvidorias_ocorrencias')->where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
+            'concluido' => DB::table('ouvidorias_ocorrencias')->where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
+            'aberto' => DB::table('ouvidorias_ocorrencias')->where('status_id',  StatusModel::STATUS_ABERTO)->count(),
         ];
     }
 
