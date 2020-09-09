@@ -148,6 +148,10 @@ span {
 #sidebar ul li a i {
     margin-right: 10px;
 }
+
+#sidebar ul li ul li i {
+    margin-right: 5px;
+}
 #sidebar.active ul li a .title {
     display: none;
 }
@@ -171,7 +175,7 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
+    font-size: 1em !important;
     padding-left: 30px !important;
     background: #233242;
 }

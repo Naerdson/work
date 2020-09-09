@@ -119,6 +119,8 @@ class OuvidoriasOcorrencia extends Model
 
     public function report()
     {
+        $reclamacaoOuvidoriaID = OuvidoriasCategoria::RECLAMACAO;
+
         return [
             'DEMANDANTES'   =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
                                     ->join('ouvidorias_demandantes as demandantes', 'demandantes.id', '=', 'ocorrencias.demandante_id')
@@ -158,11 +160,7 @@ class OuvidoriasOcorrencia extends Model
                                             MONTH(ocorrencias.created_at) = MONTH(CURDATE())
                                         ) as PORCENTAGEM_TOTAL')
                                     ->get(),
-            'RECLAMACOES'   =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
-                                    ->join('campus', 'campus.id', '=', 'ocorrencias.campus_id')
-                                    ->join('ouvidorias_demandantes as demandantes', 'demandantes.id', '=', 'ocorrencias.demandante_id')
-                                    ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE()) AND ocorrencias.categoria_id = 1')
-                                    ->selectRaw('demandantes.nome as DEMANDANTE, ocorrencias.descricao as DESCRICAO, campus.nome as CAMPUS')
+            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = MONTH(CURDATE()) AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")
                                     ->get()
         ];
     }

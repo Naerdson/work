@@ -24,18 +24,34 @@
                 <img src="{{ asset('img/logo-branca.png') }}">
             </div>
             <ul class="list-unstyled components">
-                <!-- <li class="active">
-                    <a href="{{ route('admin.home') }}">
-                        <i class="fas fa-home"></i>
-                        <span class="title">Inicio</span>
-                    </a>
-                </li> -->
                 <li>
                     <a href="{{ route('ouvidoria.home') }}">
                         <i class="fas fa-bullhorn"></i>
                         <span class="title">Ouvidorias</span>
                     </a>
                 </li>
+                @can('isOuvidoria')
+                <li>
+                    <a href="#dropRelatorio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-pie"></i>
+                        <span class="title">Relatório</span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="dropRelatorio">
+                        <li>
+                            <a href="{{ route('ouvidoria.relatorio') }}">
+                                <i class="far fa-eye"></i>
+                                <span class="title">Visualizar relatório</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ouvidoria.gerar.relatorio') }}">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="title">&nbspImprimir relatório</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endcan
                 @can('isAdmin', Auth::user())
                     <li>
                         <a href="{{ route('usuarios.home') }}">
@@ -85,5 +101,6 @@
             </div>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>
