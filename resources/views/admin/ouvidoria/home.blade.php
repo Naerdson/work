@@ -16,11 +16,8 @@
     <div class="row mt-3">
         <div class="col-12">
             <div class="card border-0">
-                <div class="card-body p-0">
+                <div class="card-body p-1">
                     @can('isOuvidoria')
-                        <div class="d-flex justify-content-end p-2">
-                           <a href="{{ route('ouvidoria.gerar.relatorio') }}"><button class="btn btn-success btn-sm" id="btn-relatorio"><i class="fas fa-file-pdf"></i> Gerar Relatório</button></a> 
-                        </div>
                         <div class="row p-2">
                             <div class="col-md-6 col-lg-3 col-xlg-3">
                                 <a href="?status=todas">

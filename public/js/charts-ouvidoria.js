@@ -43,29 +43,40 @@ $(function () {
                 datasets: [{
                     label: 'Demandas',
                     data: data,
-                    backgroundColor: ['#81B639','#ef7771','#00A593'],
+                    backgroundColor: ['#791000','#ef7771','#00A593', '#157DB2', '#41AEF2'],
                 }],
             },
             options: {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        fontSize: 14,
-                        render: 'percentage',
-                        fontColor: function (data) {
-                          var rgb = hexToRgb(data.dataset.backgroundColor[data.index]);
-                          var threshold = 140;
-                          var luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-                          return luminance > threshold ? 'black' : 'white';
-                        },
-                        precision: 2
+                        fontSize: 13
                     }
                 },
                 title: {
-                    fontSize: 20,
+                    fontSize: 18,
                     display: true,
                     text: 'Categoria Demandas'
-                }
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: (value, ctx) => {
+                           let sum = 0;
+                           let dataArr = ctx.chart.data.datasets[0].data;
+                           dataArr.map(data => {
+                               sum += data;
+                           });
+                           let percentage = (value*100 / sum).toFixed(2)+"%";
+                           return percentage;
+                        },
+                        color: '#000',
+                        font: {
+                            weight: '600',
+                            size: 12
+                        }
+                    },
+     
+                },
             }
         });
     }
@@ -86,14 +97,32 @@ $(function () {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        fontSize: 14
+                        fontSize: 13
                     }
                 },
                 title: {
-                    fontSize: 20,
+                    fontSize: 18,
                     display: true,
                     text: 'Categoria Demandantes'
-                }
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: (value, ctx) => {
+                           let sum = 0;
+                           let dataArr = ctx.chart.data.datasets[0].data;
+                           dataArr.map(data => {
+                               sum += data;
+                           });
+                           let percentage = (value*100 / sum).toFixed(2)+"%";
+                           return percentage;
+                        },
+                        color: '#000',
+                        font: {
+                            weight: '600',
+                            size: 12
+                        }
+                    },
+                },
             }
         });
     }

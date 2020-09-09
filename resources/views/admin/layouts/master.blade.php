@@ -31,12 +31,26 @@
                     </a>
                 </li>
                 @can('isOuvidoria')
-                    <li>
-                        <a href="{{ route('ouvidoria.relatorio') }}">
+                <li>
+                    <a href="#dropRelatorio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-chart-pie"></i>
-                            <span class="title">Relatório</span>
-                        </a>
-                    </li>
+                        <span class="title">Relatório</span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="dropRelatorio">
+                        <li>
+                            <a href="{{ route('ouvidoria.relatorio') }}">
+                                <i class="far fa-eye"></i>
+                                <span class="title">Visualizar relatório</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ouvidoria.gerar.relatorio') }}">
+                                <i class="fas fa-file-pdf"></i>
+                                <span class="title">&nbspImprimir relatório</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @endcan
                 @can('isAdmin', Auth::user())
                     <li>

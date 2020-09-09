@@ -3,14 +3,23 @@
 namespace App\Http\Controllers\Admin\Ouvidoria;
 
 use App\Http\Controllers\Controller;
+use App\Models\OuvidoriasOcorrencia;
 use App\Services\GraficoOuvidoria as GraficoService;
-use Illuminate\Http\Request;
 
 class RelatorioController extends Controller
 {
+    private $ocorrencias;
+
+    public function __construct(OuvidoriasOcorrencia $ocorrencias)
+    {
+        $this->ocorrencias = $ocorrencias;
+    }
+    
     public function index()
     {
-        return view('admin.ouvidoria.graficos');
+        $relatorios = $this->ocorrencias->report();
+        
+        return view('admin.ouvidoria.graficos', compact('relatorios'));
     }
 
     public function getCharts(GraficoService $chartsService)

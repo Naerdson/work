@@ -142,9 +142,9 @@ setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
             <tbody>
                 @foreach($report['RECLAMACOES'] as $reclamacao)
                     <tr>
-                        <td>{{ $reclamacao->DEMANDANTE }}</td>
-                        <td>{{ $reclamacao->DESCRICAO }}</td>
-                        <td>{{ $reclamacao->CAMPUS }}</td>
+                        <td>{{ $reclamacao->demandante->nome }}</td>
+                        <td>{{ $reclamacao->descricao }}</td>
+                        <td>{{ $reclamacao->campus->nome }}</td>
                     </tr>
                 @endforeach
             </tbody>
