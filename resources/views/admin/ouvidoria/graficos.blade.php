@@ -1,6 +1,15 @@
 @extends('admin.layouts.master')
 @section('content')
 
+    <div class="bg-light mb-2 p-2 d-flex justify-content-between align-items-center">
+        <a href="{{ route('ouvidoria.gerar.relatorio') }}">
+            <button type="button" class="btn btn-info btn-sm">
+                <i class="fas fa-file-pdf"></i> 
+                Imprimir relatório
+            </button>
+        </a>
+    </div>
+
     <div class="row mt-3">
         <div class="col-md-6">
             <canvas id="demandas"></canvas>
