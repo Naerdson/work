@@ -11,7 +11,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="init()">
     @include('admin.pdf._header')
 
     @yield('title')

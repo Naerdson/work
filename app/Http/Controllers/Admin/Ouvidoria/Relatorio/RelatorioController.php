@@ -35,13 +35,20 @@ class RelatorioController extends Controller
     {
 
         $pdf = PDF::loadView('admin.ouvidoria.relatorio.mensal', [
-            'data' => $this->ouvidoria->report()
+            'data' => $this->ouvidoria->report(),
+            'graficos' => $this->graficos->getDataDemandasAndDemandantes()
         ]);
-
+  
         $pdf->setOptions([
+            'enable-javascript' => true,
+            'javascript-delay' => 1000,
+            'no-stop-slow-scripts' => true,
+            'enable-smart-shrinking' => true,
             'page-size' => 'a4',
             'footer-center' => '[page]'
         ]);
+
+        return $pdf->stream();
         
         return $pdf->download('RelatorioOuvidoria.pdf');
     }

@@ -5,6 +5,44 @@
         <h4 class="text-center text-uppercase mt-3 mb-1">RELATÓRIO OUVIDORIA - {{ strftime('%B', strtotime('today')) }}</h4>
     @endsection
 
+    <script src="http://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        function init() {
+            google.load("visualization", "44", {packages:["corechart"]});
+            var interval = setInterval(function () {
+            if (google.visualization !== undefined && google.visualization.DataTable !== undefined 
+                && google.visualization.PieChart !== undefined) {
+                clearInterval(interval);
+                window.status = 'ready';
+                ChartDemandantes();
+            }
+            }, 100);
+
+            function ChartDemandantes() {
+                var data = new google.visualization.arrayToDataTable();
+                data.addColumn('string', 'Element');
+                data.addColumn('number', 'Percentage');
+                    data.addRows([
+                    ['Nitrogen', 0.78],
+                    ['Oxygen', 0.21],
+                    ['Other', 0.01]
+                ]);
+
+                var options = {
+                    title: 'Categoria Demandantes',
+                    titleTextStyle: {
+                        fontSize: 17
+                    }
+                };
+                
+                var chart = new google.visualization.PieChart(document.getElementById('chartDemandantes'));
+                chart.draw(data, options);
+            }
+        }
+    </script>
+    
+    <div id="chartDemandantes" style="width: 520px; height: 300px;"></div>
+
     <div class="content">
         <div class="mb-2">
             <h5>DEMANDANTES</h5>
@@ -62,7 +100,7 @@
             </tbody>
         </table>
 
-        <div class="mb-2">
+        <div class="mb-2 mt-4">
             <h5>RECLAMAÇÕES</h5>
         </div>
 
@@ -85,4 +123,5 @@
             </tbody>
         </table>
     </div>
+    
 @endsection
