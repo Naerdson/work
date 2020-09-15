@@ -18,12 +18,14 @@ class GraficoOuvidoria
 
         $arrayCategoriaDemandas = [];
 
+        $arrayCategoriaDemandas['Demandas'] = 'Quantidade';
         foreach ($data['DEMANDAS'] as $demanda) {
             $arrayCategoriaDemandas[$demanda->CATEGORIAS] = $demanda->QTD_CATEGORIA;
         }
+        
 
         $arrayCategoriaDemandates = [];
-
+        $arrayCategoriaDemandates['Demandantes'] = 'Quantidade';
         foreach ($data['DEMANDANTES'] as $demandante) {
             $arrayCategoriaDemandates[$demandante->DEMANDANTES] = $demandante->QTD_DEMANDANTE;
         }

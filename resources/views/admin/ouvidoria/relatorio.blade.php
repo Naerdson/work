@@ -12,11 +12,11 @@
 
     <div class="row mt-3">
         <div class="col-md-6">
-            <canvas id="demandas"></canvas>
+            <div id="piechart" style="width: 520px; height: 300px;"></div>
         </div>
 
         <div class="col-md-6">
-            <canvas id="demandantes"></canvas>
+            <div id="piechart-demandantes" style="width: 520px; height: 300px;"></div>
         </div>
     </div>
 

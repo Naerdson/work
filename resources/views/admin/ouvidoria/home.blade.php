@@ -24,7 +24,7 @@
                                     <div class="card">
                                         <div class="box text-center bg-info">
                                             <h1 class="text-white"
-                                                style="font-weight: 300;">{{ $listCountOuvidoria['total'] }}</h1>
+                                                style="font-weight: 300;">{{ $countOuvidoria['total'] }}</h1>
                                             <h6 class="text-white">Total de ocorrências</h6>
                                         </div>
                                     </div>
@@ -35,7 +35,7 @@
                                     <div class="card">
                                         <div class="box text-center bg-warning">
                                             <h1 class="text-white"
-                                                style="font-weight: 300;">{{ $listCountOuvidoria['encaminhado'] }}</h1>
+                                                style="font-weight: 300;">{{ $countOuvidoria['encaminhado'] }}</h1>
                                             <h6 class="text-white">Encaminhadas</h6>
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                                     <div class="card">
                                         <div class="box text-center bg-success">
                                             <h1 class="text-white"
-                                                style="font-weight: 300;">{{ $listCountOuvidoria['concluido'] }}</h1>
+                                                style="font-weight: 300;">{{ $countOuvidoria['concluido'] }}</h1>
                                             <h6 class="text-white">Concluídas</h6>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                     <div class="card">
                                         <div class="box text-center bg-dark">
                                             <h1 class="text-white"
-                                                style="font-weight: 300;">{{ $listCountOuvidoria['aberto'] }}</h1>
+                                                style="font-weight: 300;">{{ $countOuvidoria['aberto'] }}</h1>
                                             <h6 class="text-white">Aberto</h6>
                                         </div>
                                     </div>
