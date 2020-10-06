@@ -46,8 +46,6 @@ class RelatorioController extends Controller
             'footer-center' => '[page]'
         ]);
 
-        return $pdf->stream();
-        
         return $pdf->download('RelatorioOuvidoria.pdf');
     }
 }
