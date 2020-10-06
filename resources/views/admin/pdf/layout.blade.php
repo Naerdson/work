@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <script src="{{ asset('js/loader.js') }}"></script>
     <style>
         .page-break {
             page-break-after: always;
@@ -16,6 +17,7 @@
 
     @yield('title')
     @yield('content')
-
+    
+    @stack('scripts')
 </body>
 </html>

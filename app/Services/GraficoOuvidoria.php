@@ -12,27 +12,37 @@ class GraficoOuvidoria
         $this->ouvidoria = $ouvidoria;
     }
 
-    public function getDataDemandasAndDemandantes()
+    public function getDataDemandasAndDemandantesGoogleCharts()
     {
         $data = $this->ouvidoria->report();
 
+        return [
+            'demandas' => $this->transformDataDemandas($data),
+            'demandantes' => $this->transformDataDemandantes($data)
+        ];
+    }
+
+    private function transformDataDemandas($data)
+    {
         $arrayCategoriaDemandas = [];
 
         $arrayCategoriaDemandas['Demandas'] = 'Quantidade';
         foreach ($data['DEMANDAS'] as $demanda) {
             $arrayCategoriaDemandas[$demanda->CATEGORIAS] = $demanda->QTD_CATEGORIA;
         }
-        
 
+        return $arrayCategoriaDemandas;
+    }
+
+    private function transformDataDemandantes($data)
+    {
         $arrayCategoriaDemandates = [];
+
         $arrayCategoriaDemandates['Demandantes'] = 'Quantidade';
         foreach ($data['DEMANDANTES'] as $demandante) {
             $arrayCategoriaDemandates[$demandante->DEMANDANTES] = $demandante->QTD_DEMANDANTE;
         }
 
-        return [
-            'demandas' => $arrayCategoriaDemandas, 
-            'demandantes' => $arrayCategoriaDemandates
-        ];
+        return $arrayCategoriaDemandates;
     }
 }

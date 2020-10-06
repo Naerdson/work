@@ -21,24 +21,22 @@ class RelatorioController extends Controller
     public function index()
     {
         return view('admin.ouvidoria.relatorio', [
-            'relatorios' => $this->ouvidoria->report(),
-            'graficos' => $this->graficos->getDataDemandasAndDemandantes()
+            'relatorios' => $this->ouvidoria->report()
         ]);
     }
 
     public function getCharts()
     {
-        return response()->json($this->graficos->getDataDemandasAndDemandantes());
+        return response()->json($this->graficos->getDataDemandasAndDemandantesGoogleCharts());
     }
 
     public function downloadReport() 
     {
-
         $pdf = PDF::loadView('admin.ouvidoria.relatorio.mensal', [
             'data' => $this->ouvidoria->report(),
-            'graficos' => $this->graficos->getDataDemandasAndDemandantes()
+            'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts()
         ]);
-  
+
         $pdf->setOptions([
             'enable-javascript' => true,
             'javascript-delay' => 1000,

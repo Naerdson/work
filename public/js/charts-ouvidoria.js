@@ -31,8 +31,25 @@ $(function () {
         
             var options = {
                 title: 'Categoria Demandas',
+                backgroundColor: 'transparent',
+                width: '100%',
+                height: 400,
                 titleTextStyle: {
-                    fontSize: 17
+                    fontSize: 18
+                },
+                chartArea: {
+                    width: '80%', 
+                    height: '80%'
+                },
+                legend: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                tooltip: {
+                    textStyle: {
+                        fontSize: 13,
+                    }
                 }
             };
         
@@ -51,8 +68,25 @@ $(function () {
         
             var options = {
                 title: 'Categoria Demandantes',
+                backgroundColor: 'transparent',
+                width: '100%',
+                height: 400,
                 titleTextStyle: {
-                    fontSize: 17
+                    fontSize: 18
+                },
+                chartArea: {
+                    width: '80%', 
+                    height: '80%'
+                },
+                legend: {
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
+                tooltip: {
+                    textStyle: {
+                        fontSize: 13,
+                    }
                 }
             };
         

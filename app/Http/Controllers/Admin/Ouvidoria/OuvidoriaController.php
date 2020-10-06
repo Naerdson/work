@@ -21,7 +21,7 @@ class OuvidoriaController extends Controller
         $filtro = $request->get('filtro');
         $status = $request->get('status');
 
-        // dd($this->ouvidoria->listAllOccurrences($filtro, $status));
+
         return view('admin.ouvidoria.home', [
             'ouvidorias' => $this->ouvidoria->listAllOccurrences($filtro, $status),
             'countOuvidoria' => $this->ouvidoria->getCountOuvidoria(),
