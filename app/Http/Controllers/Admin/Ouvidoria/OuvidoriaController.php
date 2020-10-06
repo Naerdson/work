@@ -21,11 +21,11 @@ class OuvidoriaController extends Controller
         $filtro = $request->get('filtro');
         $status = $request->get('status');
 
-        $ouvidorias = $this->ouvidoria->listAllOccurrences($filtro, $status);
-        $listCountOuvidoria = $this->ouvidoria->getCountOuvidoria();
-        $setores = Setor::all();
 
-
-        return view('admin.ouvidoria.home', compact('ouvidorias', 'listCountOuvidoria', 'setores'));
+        return view('admin.ouvidoria.home', [
+            'ouvidorias' => $this->ouvidoria->listAllOccurrences($filtro, $status),
+            'countOuvidoria' => $this->ouvidoria->getCountOuvidoria(),
+            'setores' => Setor::all()
+        ]);
     }
 }

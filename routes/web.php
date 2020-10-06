@@ -17,9 +17,9 @@ Route::prefix('admin')->group(function () {
             Route::put('ouvidoria/responder', 'HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
             Route::put('ouvidoria/encerrar/{id}', 'HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');
             Route::get('ouvidoria/historico/{id}', 'HistoricoController@getHistoric')->name('ouvidoria.historico');
-            Route::get('ouvidoria/relatorio', 'RelatorioController@index')->name('ouvidoria.relatorio');
-            Route::get('ouvidoria/graficos', 'RelatorioController@getCharts');
-            Route::get('ouvidoria/gerar-relatorio-mensal', 'Relatorio\OuvidoriaRelatorioController@index')->name('ouvidoria.gerar.relatorio');
+            Route::get('ouvidoria/relatorio', 'Relatorio\RelatorioController@index')->name('ouvidoria.relatorio');
+            Route::get('ouvidoria/graficos', 'Relatorio\RelatorioController@getCharts');
+            Route::get('ouvidoria/gerar-relatorio-mensal', 'Relatorio\RelatorioController@downloadReport')->name('ouvidoria.gerar.relatorio');
         });
 
        

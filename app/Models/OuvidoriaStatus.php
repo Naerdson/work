@@ -12,6 +12,9 @@ class OuvidoriaStatus extends Model
     public const STATUS_CONCLUIDO = 4;
 
     protected $table = 'ouvidorias_status';
+
+    protected $fillable = ['nome'];
+    
     protected $hidden = ['created_at', 'updated_at'];
-    protected $visible = ['nome'];
+
 }

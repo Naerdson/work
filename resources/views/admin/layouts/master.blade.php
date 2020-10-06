@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/e5b2bd6d10.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
 <div class="wrapper">
@@ -76,6 +75,7 @@
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
             <script src="{{ asset('js/script-admin.js') }}"></script>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
             <div class="container-fluid">
                 @yield('content')
             </div>

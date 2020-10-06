@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('titulo', 'Relatório Mensal')
 @section('content')
 
     <div class="bg-light mb-2 p-2 d-flex justify-content-between align-items-center">
@@ -8,15 +9,18 @@
                 Imprimir relatório
             </button>
         </a>
+
+        
+
     </div>
 
     <div class="row mt-3">
         <div class="col-md-6">
-            <canvas id="demandas"></canvas>
+            <div id="piechart"></div>
         </div>
 
         <div class="col-md-6">
-            <canvas id="demandantes"></canvas>
+            <div id="piechart-demandantes"></div>
         </div>
     </div>
 

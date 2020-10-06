@@ -49,7 +49,7 @@ class OuvidoriasOcorrencia extends Model
 
     public function getDataCriacaoAttribute()
     {
-        return date('d/m/Y', strtotime($this->attributes['created_at']));
+        return date('d/m/Y H:i:s', strtotime($this->attributes['created_at']));
     }
 
     public function listAllOccurrences($filtro, $status)
@@ -60,35 +60,12 @@ class OuvidoriasOcorrencia extends Model
         $operadorFiltroStatus = ($status_id == 0) ? '>' : '='; 
         $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '='; 
         $filtroSetor = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
-     
-        return DB::table('ouvidorias_ocorrencias as ocorrencia')
-            ->join('ouvidorias_categorias as categoria', 'categoria.id', '=', 'ocorrencia.categoria_id')
-            ->join('ouvidorias_demandantes as demandante', 'demandante.id', '=', 'ocorrencia.demandante_id')
-            ->join('ouvidorias_status as status', 'status.id', '=', 'ocorrencia.status_id')
-            ->join('campus', 'campus.id', '=', 'ocorrencia.campus_id')
-            ->join('setores', 'setores.id', '=' , 'ocorrencia.setor_responsavel_id')
-            ->orderBy('ocorrencia.status_id', 'asc')
-            ->where([
-                ['ocorrencia.setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor],
-                ['status_id', $operadorFiltroStatus, $status_id],
-                ['ocorrencia.protocolo', $operadorFiltroProtoloco , $filtro],
-            ])
-            ->select(
-                    'ocorrencia.id',
-                    'ocorrencia.protocolo', 
-                    'ocorrencia.nome',
-                    'ocorrencia.contato as contato', 
-                    'ocorrencia.tipo_contato_id', 
-                    'ocorrencia.descricao', 
-                    'categoria.nome as categoria',
-                    'demandante.nome as demandante',
-                    'campus.nome as campus', 
-                    'status.nome as status', 
-                    'ocorrencia.status_id',
-                    'ocorrencia.created_at as data', 
-                    'setores.nome as setor_responsavel', 
-                    'ocorrencia.setor_responsavel_id')
-            ->paginate(5);
+
+        return OuvidoriasOcorrencia::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id', 'status_id')
+                ->where('setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor)
+                ->where('status_id', $operadorFiltroStatus, $status_id)
+                ->where('protocolo', $operadorFiltroProtoloco , $filtro)
+                ->paginate(5);
     }
 
     private function getIdStatus($status)
@@ -110,10 +87,10 @@ class OuvidoriasOcorrencia extends Model
     public function getCountOuvidoria()
     {
         return [
-            'total' => DB::table('ouvidorias_ocorrencias')->count(),
-            'encaminhado' => DB::table('ouvidorias_ocorrencias')->where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
-            'concluido' => DB::table('ouvidorias_ocorrencias')->where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
-            'aberto' => DB::table('ouvidorias_ocorrencias')->where('status_id',  StatusModel::STATUS_ABERTO)->count(),
+            'total' => OuvidoriasOcorrencia::count(),
+            'encaminhado' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
+            'concluido' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
+            'aberto' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_ABERTO)->count(),
         ];
     }
 
