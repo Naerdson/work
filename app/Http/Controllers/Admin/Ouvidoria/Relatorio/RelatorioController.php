@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Ouvidoria\Relatorio;
 use App\Http\Controllers\Controller;
 use App\Models\OuvidoriasOcorrencia;
 use App\Services\GraficoOuvidoria as ChartsOuvidoriaService;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 use PDF;
 
 class RelatorioController extends Controller
@@ -18,23 +20,24 @@ class RelatorioController extends Controller
         $this->graficos = $chartsService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         return view('admin.ouvidoria.relatorio', [
-            'relatorios' => $this->ouvidoria->report()
+            'relatorios' => $this->ouvidoria->report($request->input('mes')),
+            'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts($request->input('mes')),
+            'meses' => $this->getMonth()
         ]);
     }
 
-    public function getCharts()
+    public function downloadReport(Request $request) 
     {
-        return response()->json($this->graficos->getDataDemandasAndDemandantesGoogleCharts());
-    }
+        $filtroMes = (is_null($request->input('mes')) ? Carbon::now()->month : (int) $request->input('mes'));
 
-    public function downloadReport() 
-    {
         $pdf = PDF::loadView('admin.ouvidoria.relatorio.mensal', [
-            'data' => $this->ouvidoria->report(),
-            'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts()
+            'data' => $this->ouvidoria->report($request->input('mes')),
+            'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts($request->input('mes')),
+            'mes' => $filtroMes,
+            'meses' => $this->getMonth()
         ]);
 
         $pdf->setOptions([
@@ -47,5 +50,23 @@ class RelatorioController extends Controller
         ]);
 
         return $pdf->download('RelatorioOuvidoria.pdf');
+    }
+
+    public function getMonth()
+    {
+        return [
+            "1" => "Janeiro",
+            "2" => "Fevereiro",
+            "3" => "Março",
+            "4" => "Abril",
+            "5" => "Maio",
+            "6" => "Junho",
+            "7" => "Julho",
+            "8" => "Agosto",
+            "9" => "Setembro",
+            "10" => "Outubro",
+            "11" => "Novembro",
+            "12" => "Dezembro"
+        ];
     }
 }

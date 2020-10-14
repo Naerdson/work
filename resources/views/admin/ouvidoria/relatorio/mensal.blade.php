@@ -2,11 +2,13 @@
 
 @section('content')
     @section('title')
-        <?php
-            setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-            date_default_timezone_set('America/Sao_Paulo');
-        ?>
-        <h4 class="text-center text-uppercase mt-3 mb-4">RELATÓRIO OUVIDORIA - {{ strftime('%B', strtotime('today')) }}</h4>
+        <h4 class="text-center text-uppercase mt-3 mb-4">RELATÓRIO OUVIDORIA - 
+            @foreach ($meses as $keyMonth => $month)
+                @if ($mes == $keyMonth)
+                    {{ $month }}
+                @endif
+            @endforeach
+        </h4>
     @endsection
     
     <div class="row">
@@ -35,16 +37,12 @@
             <tbody>
                 @foreach($data['DEMANDANTES'] as $relatorio)
                     <tr>
-                        <td>{{ $relatorio->DEMANDANTES }}</td>
-                        <td>{{ $relatorio->QTD_DEMANDANTE }}</td>
-                        <td>{{ $relatorio->PORCENTAGEM }}%</td>
+                        <td>{{ $relatorio->nome }}</td>
+                        <td>{{ $relatorio->qtd_demandante_especifico }}</td>
+                        <td>{{ $relatorio->porcentagem_individual }}%</td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td><b>Totais</b></td>
-                    <td><b>{{$data['DEMANDANTES'][0]->TOTAL_OCORRENCIAS}}</b></td>
-                    <td><b>{{ str_replace(".", "", substr($data['DEMANDANTES'][0]->PORCENTAGEM_TOTAL,0, 3)) }}%</b></td>
-                </tr>
+
             </tbody>
         </table>
 
@@ -63,16 +61,11 @@
             <tbody>
                 @foreach($data['DEMANDAS'] as $relatorio)
                     <tr>
-                        <td>{{ $relatorio->CATEGORIAS }}</td>
-                        <td>{{ $relatorio->QTD_CATEGORIA }}</td>
-                        <td>{{ $relatorio->PORCENTAGEM }}%</td>
+                        <td>{{ $relatorio->nome }}</td>
+                        <td>{{ $relatorio->qtd_categoria_especifica }}</td>
+                        <td>{{ $relatorio->porcentagem_individual }}%</td>
                     </tr>
                 @endforeach
-                <tr>
-                    <td><b>Totais</b></td>
-                    <td><b>{{$data['DEMANDANTES'][0]->TOTAL_OCORRENCIAS}}</b></td>
-                    <td><b>{{ str_replace(".", "", substr($data['DEMANDAS'][0]->PORCENTAGEM_TOTAL,0, 3)) }}%</b></td>
-                </tr>
             </tbody>
         </table>
 

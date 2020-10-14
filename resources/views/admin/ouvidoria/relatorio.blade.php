@@ -3,20 +3,27 @@
 @section('content')
 
     <div class="bg-light mb-2 p-2 d-flex justify-content-between align-items-center">
-        <a href="{{ route('ouvidoria.gerar.relatorio') }}">
+        <a href="/admin/ouvidoria/gerar-relatorio-mensal?mes={{ app('request')->input('mes') }}">
             <button type="button" class="btn btn-info btn-sm">
                 <i class="fas fa-file-pdf"></i> 
                 Imprimir relatório
             </button>
         </a>
 
-        
-
+        <form action="{{ route('ouvidoria.relatorio') }}" class="d-flex">
+            <select name="mes" class="form-control mr-2">
+                <option value="0" disabled="disabled" selected="selected">Filtre pelo mês</option>
+                @foreach ($meses as $keyMonth => $month)
+                    <option value="{{ $keyMonth }}" <?= ($keyMonth == app('request')->input('mes') ? "selected" : "") ?>>{{ $month }}</option>
+                @endforeach
+            </select>
+            <button class="btn btn-sm btn-primary"><i class="fas fa-search"></i></button>
+        </form>
     </div>
 
     <div class="row mt-3">
         <div class="col-md-6">
-            <div id="piechart"></div>
+            <div id="piechart-demandas"></div>
         </div>
 
         <div class="col-md-6">
@@ -49,9 +56,9 @@
             <tbody>
                 @foreach($relatorios['DEMANDANTES'] as $relatorio)
                     <tr>
-                        <td>{{ $relatorio->DEMANDANTES }}</td>
-                        <td>{{ $relatorio->QTD_DEMANDANTE }}</td>
-                        <td>{{ $relatorio->PORCENTAGEM }}%</td>
+                        <td>{{ $relatorio->nome }}</td>
+                        <td>{{ $relatorio->qtd_demandante_especifico }}</td>
+                        <td>{{ $relatorio->porcentagem_individual }}%</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -83,9 +90,9 @@
             <tbody>
                 @foreach($relatorios['DEMANDAS'] as $relatorio)
                     <tr>
-                        <td>{{ $relatorio->CATEGORIAS }}</td>
-                        <td>{{ $relatorio->QTD_CATEGORIA }}</td>
-                        <td>{{ $relatorio->PORCENTAGEM }}%</td>
+                        <td>{{ $relatorio->nome }}</td>
+                        <td>{{ $relatorio->qtd_categoria_especifica }}</td>
+                        <td>{{ $relatorio->porcentagem_individual }}%</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -127,8 +134,96 @@
     </div>
 
 @push('scripts')
-    <script src="{{ asset('js/chart.min.js') }}"></script>
-    <script src="{{ asset('js/charts-ouvidoria.js') }}"></script>
+    <script type="text/javascript">
+            function init() {
+                google.load("visualization", "44", {packages:["corechart"]});
+                var interval = setInterval(function () {
+                if (google.visualization !== undefined && google.visualization.DataTable !== undefined 
+                    && google.visualization.PieChart !== undefined) {
+                    clearInterval(interval);
+                    window.status = 'ready';
+                    drawChart();
+                    drawChart2();
+                }
+                }, 100);
+            }
+
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Element');
+                data.addColumn('number', 'Percentage');
+                data.addRows([
+                    @foreach($graficos['demandas'] as $key => $value)
+                        @if ($key  != 'Demandas')
+                            ['{{ $key }}', {{ $value }}],
+                        @endif
+                    @endforeach
+                ]);
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart-demandas'));
+                chart.draw(data, {
+                    title: 'Categoria Demandas',
+                    backgroundColor: 'transparent',
+                    width: '100%',
+                    height: 400,
+                    titleTextStyle: {
+                        fontSize: 18
+                    },
+                    chartArea: {
+                        width: '80%', 
+                        height: '80%'
+                    },
+                    legend: {
+                        textStyle: {
+                            fontSize: 14
+                        }
+                    },
+                    tooltip: {
+                        textStyle: {
+                            fontSize: 13,
+                        }
+                    }
+                });
+            }
+
+            function drawChart2() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Element');
+                data.addColumn('number', 'Percentage');
+                data.addRows([
+                    @foreach($graficos['demandantes'] as $key => $value)
+                        @if ($key  != 'Demandantes')
+                            ['{{ $key }}', {{ $value }}],
+                        @endif
+                    @endforeach
+                ]);
+
+                var chart2 = new google.visualization.PieChart(document.getElementById('piechart-demandantes'));
+                chart2.draw(data, {
+                    title: 'Categoria Demandantes',
+                    backgroundColor: 'transparent',
+                    width: '100%',
+                    height: 400,
+                    titleTextStyle: {
+                        fontSize: 18
+                    },
+                    chartArea: {
+                        width: '80%', 
+                        height: '80%'
+                    },
+                    legend: {
+                        textStyle: {
+                            fontSize: 14
+                        }
+                    },
+                    tooltip: {
+                        textStyle: {
+                            fontSize: 13,
+                        }
+                    }
+                });
+            }
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <script>
         $("#collapseDemandantes").on('show.bs.collapse', function () {

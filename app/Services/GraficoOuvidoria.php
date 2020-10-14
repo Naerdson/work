@@ -12,9 +12,9 @@ class GraficoOuvidoria
         $this->ouvidoria = $ouvidoria;
     }
 
-    public function getDataDemandasAndDemandantesGoogleCharts()
+    public function getDataDemandasAndDemandantesGoogleCharts($filtroMes)
     {
-        $data = $this->ouvidoria->report();
+        $data = $this->ouvidoria->report($filtroMes);
 
         return [
             'demandas' => $this->transformDataDemandas($data),
@@ -25,10 +25,10 @@ class GraficoOuvidoria
     private function transformDataDemandas($data)
     {
         $arrayCategoriaDemandas = [];
-
+        
         $arrayCategoriaDemandas['Demandas'] = 'Quantidade';
         foreach ($data['DEMANDAS'] as $demanda) {
-            $arrayCategoriaDemandas[$demanda->CATEGORIAS] = $demanda->QTD_CATEGORIA;
+            $arrayCategoriaDemandas[$demanda->nome] = $demanda->qtd_categoria_especifica;
         }
 
         return $arrayCategoriaDemandas;
@@ -40,7 +40,7 @@ class GraficoOuvidoria
 
         $arrayCategoriaDemandates['Demandantes'] = 'Quantidade';
         foreach ($data['DEMANDANTES'] as $demandante) {
-            $arrayCategoriaDemandates[$demandante->DEMANDANTES] = $demandante->QTD_DEMANDANTE;
+            $arrayCategoriaDemandates[$demandante->nome] = $demandante->qtd_demandante_especifico;
         }
 
         return $arrayCategoriaDemandates;

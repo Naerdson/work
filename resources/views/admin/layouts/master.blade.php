@@ -14,8 +14,9 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/e5b2bd6d10.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/loader.js') }}"></script>
 </head>
-<body>
+<body onload="init()">
 <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">

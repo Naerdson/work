@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\OuvidoriaStatus as StatusModel;
 use Illuminate\Support\Facades\DB;
-USE App\Models\Setor as SetorModel;
+use App\Models\Setor as SetorModel;
+use Carbon\Carbon;
 
 class OuvidoriasOcorrencia extends Model
 {
@@ -43,7 +44,6 @@ class OuvidoriasOcorrencia extends Model
         'status_id', 
         'campus_id', 
         'setor_responsavel_id',
-        'created_at',
         'updated_at'
     ];
 
@@ -94,51 +94,43 @@ class OuvidoriasOcorrencia extends Model
         ];
     }
 
-    public function report()
+    public function report($filtroMes)
     {
+        $filtroMes = (is_null($filtroMes) ? Carbon::now()->month : (int) $filtroMes);
         $reclamacaoOuvidoriaID = OuvidoriasCategoria::RECLAMACAO;
 
         return [
-            'DEMANDANTES'   =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
-                                    ->join('ouvidorias_demandantes as demandantes', 'demandantes.id', '=', 'ocorrencias.demandante_id')
-                                    ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE())')
-                                    ->groupBy('demandantes.nome')
-                                    ->orderBy('QTD_DEMANDANTE', 'DESC')
-                                    ->selectRaw('
-                                        demandantes.nome as DEMANDANTES, 
-                                        count(ocorrencias.demandante_id) as QTD_DEMANDANTE, 
-                                        TRUNCATE(count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100, 1) as PORCENTAGEM, 
-                                        (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS, 
-                                        (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
+            'DEMANDANTES'   =>  DB::select("
+                                    select
+                                        demandante.nome,
+                                        count(ocorrencia.demandante_id) as qtd_demandante_especifico,
+                                        TRUNCATE(count(ocorrencia.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias where month(created_at) = {$filtroMes}) * 100, 2) as porcentagem_individual,
+                                        (SELECT COUNT(*) from ouvidorias_ocorrencias where MONTH(created_at) = {$filtroMes}) as total_ocorrencias
                                     from 
-                                        ouvidorias_ocorrencias as ocorrencias
-                                    join ouvidorias_demandantes as demandantes 
-                                        on demandantes.id = ocorrencias.demandante_id
+                                        `ouvidorias_ocorrencias` as ocorrencia
+                                        join ouvidorias_demandantes as demandante
+                                            on demandante.id = ocorrencia.demandante_id
                                     where 
-                                        MONTH(ocorrencias.created_at) = MONTH(CURDATE())
-                                    ) as PORCENTAGEM_TOTAL')
-                                    ->get(),
-            'DEMANDAS'      =>  DB::table('ouvidorias_ocorrencias as ocorrencias')
-                                    ->join('ouvidorias_categorias as categorias', 'categorias.id' ,'=', 'ocorrencias.categoria_id')
-                                    ->whereRaw('MONTH(ocorrencias.created_at) = MONTH(CURDATE())')
-                                    ->groupBy('categorias.nome')
-                                    ->orderBy('QTD_CATEGORIA', 'DESC')
-                                    ->selectRaw('
-                                        categorias.nome as CATEGORIAS, 
-                                        count(ocorrencias.categoria_id) as QTD_CATEGORIA, 
-                                        TRUNCATE(count(ocorrencias.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100, 1) as PORCENTAGEM, 
-                                        (SELECT COUNT(*) from ouvidorias_ocorrencias) as TOTAL_OCORRENCIAS,
-                                        (select count(ocorrencias.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias) * 100 as PORCENTAGEM
-                                        from 
-                                            ouvidorias_ocorrencias as ocorrencias
-                                        join ouvidorias_demandantes as demandantes 
-                                            on demandantes.id = ocorrencias.demandante_id
-                                        where 
-                                            MONTH(ocorrencias.created_at) = MONTH(CURDATE())
-                                        ) as PORCENTAGEM_TOTAL')
-                                    ->get(),
-            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = MONTH(CURDATE()) AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")
-                                    ->get()
+                                        month(ocorrencia.created_at) = {$filtroMes}
+                                        group by demandante.nome
+                                        order by ocorrencia.demandante_id asc;
+                                "),
+            'DEMANDAS'      =>  DB::select("
+                                    select
+                                        categoria.nome,
+                                        count(ocorrencia.categoria_id) as qtd_categoria_especifica,
+                                        TRUNCATE(count(ocorrencia.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias where month(created_at) = {$filtroMes}) * 100, 2) as porcentagem_individual,
+                                        (SELECT COUNT(*) from ouvidorias_ocorrencias where MONTH(created_at) = {$filtroMes}) as total_ocorrencias
+                                    from 
+                                        `ouvidorias_ocorrencias` as ocorrencia
+                                        join ouvidorias_categorias as categoria
+                                            on categoria.id = ocorrencia.categoria_id
+                                    where 
+                                        month(ocorrencia.created_at) = {$filtroMes}
+                                        group by categoria.nome
+                                        order by ocorrencia.categoria_id asc;
+                                "),
+            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get()
         ];
     }
 
