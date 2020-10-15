@@ -27,7 +27,7 @@ class User extends Authenticatable
         'updated_at'
     ];
     protected $visible = ['nome'];
-
+    
     public function nivel()
     {
         return $this->hasOne(NivelUsuario::class, 'id', 'nivel_id');

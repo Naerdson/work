@@ -12,10 +12,10 @@ class OuvidoriaStatusSeeder extends Seeder
     public function run()
     {
         DB::table('ouvidorias_status')->insert([
-            ['nome' => 'Aberto'],
-            ['nome' => 'Encaminhado'],
-            ['nome' => 'Respondido por email'],
-            ['nome' => 'Concluido']
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Aberto'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Encaminhado'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Respondido por email'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Concluido']
         ]);
     }
 }

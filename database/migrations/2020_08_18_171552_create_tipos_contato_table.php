@@ -16,7 +16,8 @@ class CreateTiposContatoTable extends Migration
         Schema::create('tipos_contatos', function (Blueprint $table) {
             $table->id();
             $table->string('descricao');
-            $table->timestamps();
+            $table->datetime('created_at', 4);
+            $table->datetime('updated_at', 4);
         });
     }
 

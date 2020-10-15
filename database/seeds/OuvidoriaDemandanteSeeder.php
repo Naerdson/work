@@ -13,10 +13,10 @@ class OuvidoriaDemandanteSeeder extends Seeder
     public function run()
     {
         DB::table('ouvidorias_demandantes')->insert([
-            ['nome' => 'Aluno(a)'],
-            ['nome' => 'Professor(a)'],
-            ['nome' => 'Funcionário(a)'],
-            ['nome' => 'Publico Externo']
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Aluno(a)'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Professor(a)'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Funcionário(a)'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'nome' => 'Publico Externo']
         ]);
     }
 }

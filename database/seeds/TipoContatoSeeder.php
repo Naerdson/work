@@ -13,8 +13,8 @@ class TipoContatoSeeder extends Seeder
     public function run()
     {
         DB::table('tipos_contatos')->insert([
-            ['descricao' => 'Email'],
-            ['descricao' => 'Telefone/Whatsapp'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'descricao' => 'Email'],
+            ['created_at' => date('Y-m-d h:i:s'), 'updated_at' => date('Y-m-d h:i:s'), 'descricao' => 'Telefone/Whatsapp'],
         ]);
     }
 }

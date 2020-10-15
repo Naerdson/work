@@ -27,7 +27,8 @@ class CreateOuvidoriaOcorrenciaTable extends Migration
 
             $table->foreign('status_id')->references('id')->on('ouvidorias_status');
             $table->foreign('setor_responsavel_id')->references('id')->on('setores');
-            $table->timestamps();
+            $table->datetime('created_at', 4);
+            $table->datetime('updated_at', 4);
         });
     }
 

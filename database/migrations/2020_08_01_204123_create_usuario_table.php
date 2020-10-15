@@ -23,7 +23,8 @@ class CreateUsuarioTable extends Migration
 
             $table->foreign('nivel_id')->references('id')->on('niveis_usuarios');
             $table->foreign('setor_id')->references('id')->on('setores');
-            $table->timestamps();
+            $table->datetime('created_at', 4);
+            $table->datetime('updated_at', 4);
         });
     }
 

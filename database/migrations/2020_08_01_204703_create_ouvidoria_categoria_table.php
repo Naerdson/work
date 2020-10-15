@@ -16,7 +16,8 @@ class CreateOuvidoriaCategoriaTable extends Migration
         Schema::create('ouvidorias_categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->timestamps();
+            $table->datetime('created_at', 4);
+            $table->datetime('updated_at', 4);
         });
     }
 

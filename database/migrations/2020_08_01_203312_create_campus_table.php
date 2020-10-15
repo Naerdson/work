@@ -16,7 +16,8 @@ class CreateCampusTable extends Migration
         Schema::create('campus', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->timestamps();
+            $table->datetime('created_at', 4);
+            $table->datetime('updated_at', 4);
         });
     }
 

@@ -17,7 +17,8 @@ class CreateTokenApiTable extends Migration
             $table->id();
             $table->string('token')->unique();
             $table->string('descricao');
-            $table->timestamps();
+            $table->datetime('created_at', 4);
+            $table->datetime('updated_at', 4);
         });
     }
 
