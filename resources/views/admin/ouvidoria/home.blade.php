@@ -95,7 +95,7 @@
                                             <span class="span bg-secondary">Respondido por email</span>
                                         @endif
                                     </td>
-                                    <td class="text-dark">{{ date("d/m/Y H:i", strtotime($ocorrencia['data_criacao'])) }}</td>
+                                    <td class="text-dark">{{ date("d/m/Y H:i", strtotime($ocorrencia['created_at'])) }}</td>
                                     <td class="text-dark">{{ $ocorrencia['protocolo'] }}</td>
                                     <td class="text-dark">{{ $ocorrencia['categoria']['nome'] }}</td>
                                     <td class="text-dark">{{ $ocorrencia['setor_responsavel']['nome']  }}</td>
