@@ -31,8 +31,9 @@ class seriesFormRequest extends FormRequest
     public function messages()
     {
         return [
+
             'required' => 'O campo :attribute é obrigatório!',
-            'nome' => 'O campo :attribute precisa ter pelo menos 3 caracteres!'
+            'nome' => 'O campo :attribute precisa ter pelo menos 3 caracteres!',
         ];
     }
 }

@@ -11,21 +11,30 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2 d-flex justify-content-between">
-    <a class="navbar navbar-expand-lg" href="{{ route('listar_series') }}">Home</a>
+<navbar class="navbar navbar-expand-lg navbar-light bg-primary mb-2 d-flex justify-content-between" >
+    <a></a>
     @auth
-    <a href="/sair" class="text-danger">Sair</a>
+    <a href="/sair" class="btn btn-danger">Sair</a>
     @endauth
     <!--@guest
         <a href="/entrar" >Entrar</a>
     @endguest
     -->
-</nav>
-@include('erros',['errors' => $errors])
+</navbar>
 
+@include('erros',['errors' => $errors])
     <div class="container">
         <div class="" >
-            <h1>@yield('cabecalho')</h1>
+            <h6>
+                @if(!empty($mensagem))
+                    <div class="alert alert-success">
+                        {{ $mensagem }}
+                    </div>
+                @endif
+            </h6>
+            <h1><b>@yield('cabecalho')</b></h1>
+            <br>
+            <br>
         </div>
 
         @yield('conteudo')

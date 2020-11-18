@@ -17,10 +17,41 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/series','SeriesgController@index')
     ->name('listar_series');
-Route::get('/series/criar','SeriesgController@create')
-    ->name('form_criar_serie');
-Route::post('/series/criar','SeriesgController@store');
+Route::post('/series','SeriesgController@store');
+Route::post('/series/{id}/editaNome', 'SeriesController@editaNome');
 Route::delete('/series/{id}','SeriesgController@destroy');
+Route::post('/series/{id}/editaNome', 'SeriesgController@editaNome');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**Route::get('/sair',function(){
     \Illuminate\Support\Facades\Auth::logout();
     return redirect('entrar');
@@ -34,9 +65,6 @@ Route::get('/sair',function(){
     \Illuminate\Support\Facades\Auth::logout();
     return redirect('/login');
 });
-
-
-
 
 Auth::routes();
 
