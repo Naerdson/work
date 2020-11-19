@@ -1,7 +1,7 @@
 @extends('layout')
 @section ('cabecalho')
 <br>
-Lista de Cadastros
+Cadastrar
 @endsection
 
 @section('conteudo')
@@ -26,7 +26,17 @@ Lista de Cadastros
 </form>
 <br><br><br>
 <hr>
-<br><br><br>
+<br>
+<h2><b>Lista de usuários cadastrados</b></h2>
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10"><b>Nome</b></div>
+        <div class="col-sm-1"><b>Editar</b></div>
+        <div class="col-sm-1"><b>Excluir</b></div>
+    </div>
+</div>
+<br>
 
     <ul class="list-group">
         @foreach ($series as $serie)
