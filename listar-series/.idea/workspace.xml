@@ -15,6 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a74744fb-7be6-45e2-8726-ea479d1b2f80" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/series/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/series/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -195,7 +196,8 @@
       <workItem from="1605610150677" duration="25536000" />
       <workItem from="1605696336267" duration="580000" />
       <workItem from="1605697774600" duration="20598000" />
-      <workItem from="1605785070115" duration="3752000" />
+      <workItem from="1605785070115" duration="6260000" />
+      <workItem from="1605868892900" duration="6586000" />
     </task>
     <task id="LOCAL-00001" summary="modificações 18/11">
       <created>1605719342268</created>
@@ -211,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605719741826</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="commit de melhoramentos da tela de cadasdtros">
+      <created>1605795372698</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1605795372699</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +241,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="modificações 18/11" />
     <MESSAGE value="commit de melhoramentos da tela de cadasdtros" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit de melhoramentos da tela de cadasdtros" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="WindowStateProjectService">
     <state x="226" y="157" key="#CLI_Interpreters" timestamp="1604675430056">

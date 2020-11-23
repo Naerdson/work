@@ -46,11 +46,12 @@ Cadastrar
                 <div class="input-group w-50" hidden id="input-nome-serie-{{ $serie->id }}">
                     <input type="text" class="form-control" value="{{ $serie->nome }}">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" onclick="editarSerie({{ $serie->id }})">
-                            <i class="fas fa-check"></i>
-                        </button>
+                            <button class="btn btn-primary" onclick="editarSerie({{ $serie->id }})">
+                                <i class="fas fa-check"></i>
+                            </button>
                         @csrf
                     </div>
+
                 </div>
                 <span class="d-flex">
                     <button class="btn btn-info btn-sm mr-1" onclick="toggleInput({{$serie->id}})">

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="width: 40rem;">
                 <div class="card-header">{{ __('Entrar') }}</div>
 
                 <div class="card-body">
