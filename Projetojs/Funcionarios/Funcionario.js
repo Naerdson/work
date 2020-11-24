@@ -5,5 +5,14 @@ export class Funcionario{
         this._cpf = cpf;
 
         this._bonicicacao = 1;
+        this._senha;
+    }
+
+   autenticar(senha){
+       return senha == this._senha;
+   }
+
+   cadastarSenha(senha){
+       this._senha = senha;
     }
 }

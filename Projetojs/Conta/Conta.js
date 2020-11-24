@@ -17,7 +17,6 @@ export class Conta{
         }
     }
 
-
     get cliente(){
         return this._cliente;
     }
