@@ -13,13 +13,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a74744fb-7be6-45e2-8726-ea479d1b2f80" name="Default Changelist" comment="">
+    <list default="true" id="a74744fb-7be6-45e2-8726-ea479d1b2f80" name="Default Changelist" comment="Alterações simples">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SeriesgController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SeriesgController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/series/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/series/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/entrar/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/entrar/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +149,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ouvidoria" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../newOuvidoria" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -209,6 +205,7 @@
       <workItem from="1606410955668" duration="597000" />
       <workItem from="1606479468023" duration="1283000" />
       <workItem from="1606482333911" duration="30000" />
+      <workItem from="1606745543471" duration="397000" />
     </task>
     <task id="LOCAL-00001" summary="modificações 18/11">
       <created>1605719342268</created>
@@ -231,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605795372699</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Alterações simples">
+      <created>1606745612274</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606745612274</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,7 +256,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="modificações 18/11" />
     <MESSAGE value="commit de melhoramentos da tela de cadasdtros" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Alterações simples" />
+    <option name="LAST_COMMIT_MESSAGE" value="Alterações simples" />
   </component>
   <component name="WindowStateProjectService">
     <state x="226" y="157" key="#CLI_Interpreters" timestamp="1604675430056">
@@ -279,10 +284,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="370" y="247" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.984@0.0.1280.984" timestamp="1604678189597" />
-    <state x="420" y="247" key="FileChooserDialogImpl" timestamp="1606482363476">
+    <state x="420" y="247" key="FileChooserDialogImpl" timestamp="1606745930022">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="420" y="247" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1606482363476" />
+    <state x="420" y="247" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1606745930022" />
     <state width="1237" height="263" key="GridCell.Tab.0.bottom" timestamp="1604682260441">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
@@ -311,10 +316,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="141" y="137" key="SettingsEditor/0.0.1280.984@0.0.1280.984" timestamp="1604675444499" />
-    <state x="232" y="225" key="Vcs.Push.Dialog.v2" timestamp="1605719711560">
+    <state x="232" y="225" key="Vcs.Push.Dialog.v2" timestamp="1606745655348">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="232" y="225" key="Vcs.Push.Dialog.v2/0.0.1280.984@0.0.1280.984" timestamp="1605719711560" />
+    <state x="232" y="225" key="Vcs.Push.Dialog.v2/0.0.1280.984@0.0.1280.984" timestamp="1606745655348" />
     <state x="457" y="406" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605719281081">
       <screen x="0" y="0" width="1280" height="984" />
     </state>

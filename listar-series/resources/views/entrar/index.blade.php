@@ -22,7 +22,7 @@
     </button>
 
     <a href="/registrar" class="btn btn-secondary mt-3">
-        Registrar-se
+       <h6> Registrar-se </h6>
     </a>
 
 </form>
