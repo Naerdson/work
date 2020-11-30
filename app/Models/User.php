@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Log;
+
 
 
 class User extends Authenticatable
@@ -17,7 +17,6 @@ class User extends Authenticatable
     protected $fillable = [
         'nome', 'usuario', 'email', 'setor_id', 'nivel_id'
     ];
-
 
     public function nivel()
     {

@@ -150,25 +150,25 @@
                     </div>
                     <div class="d-md-flex justify-content-between">
                         <div class="d-flex flex-md-row">
-                            <p class="pr-4">
-                                <i class="fas fa-history" style="color: #17a2b8;"></i> 
-                                - Histórico
+                            <a class="pr-4">
+                                <i class="fas fa-history" style="color: #17a2b8;"></i>
+                                <a href="{{route('admin.home')}}"/>- Histórico</a>
+                            </p>
+                            <a class="pr-4">
+                                <i class="fas fa-envelope" style="color: #007bff;"></i>
+                                <a href="{{route('admin.home')}}"/>- Responder por email</a>
                             </p>
                             <p class="pr-4">
-                                <i class="fas fa-envelope" style="color: #007bff;"></i> 
-                                - Responder por email
+                                <i class="fas fa-check" style="color: #28a745;"></i>
+                                <a href="{{route('admin.home')}}"/>- Encerrar</a>
                             </p>
                             <p class="pr-4">
-                                <i class="fas fa-check" style="color: #28a745;"></i> 
-                                - Encerrar
+                                <i class="fas fa-forward" style="color: #e0a800;"></i>
+                                <a href="{{route('ouvidoria.home.encaminhar')}}">- Encaminhar</a>
                             </p>
-                            <p class="pr-4">
-                                <i class="fas fa-forward" style="color: #e0a800;"></i> 
-                                - Encaminhar
-                            </p>
-                            <p class="pr-4">
-                                <i class="fas fa-info-circle" style="color: #23272B"></i> 
-                                - Descrição da ocorrência
+                            <a class="pr-4">
+                                <i class="fas fa-info-circle" style="color: #23272B"></i>
+                                <a href="{{route('admin.home')}}"/>- Descrição da ocorrência</a>
                             </p>
                         </div>
                         @if(count($ouvidorias))

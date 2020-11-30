@@ -30,12 +30,12 @@
                 <img src="{{ asset('img/logo-branca.png') }}" style="width: 60%;" class="logo">
             </div>
             <ul class="list-unstyled components">
-                <!-- <li class="active">
+                <li class="active">
                     <a href="{{ route('admin.home') }}">
                         <i class="fas fa-home"></i>
                         <span class="title">Inicio</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
                     <a href="{{ route('ouvidoria.home') }}">
                         <i class="fas fa-bullhorn"></i>
@@ -49,12 +49,12 @@
                             <span class="title">Usuários</span>
                         </a>
                     </li>
-                    <!-- <li>
+                    <li>
                         <a href="{{ route('config.create') }}">
                             <i class="fas fa-cogs"></i>
                             <span class="title">Configurações</span>
                         </a>
-                    </li> -->
+                    </li>
                 @endcan
                 <li>
                     <a href="{{ route('logout') }}">
