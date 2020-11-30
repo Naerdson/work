@@ -15,7 +15,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a74744fb-7be6-45e2-8726-ea479d1b2f80" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SeriesgController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SeriesgController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/series/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/series/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +153,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ouvidoria" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -198,6 +201,14 @@
       <workItem from="1605697774600" duration="20598000" />
       <workItem from="1605785070115" duration="6260000" />
       <workItem from="1605868892900" duration="6586000" />
+      <workItem from="1606323168822" duration="1092000" />
+      <workItem from="1606387704162" duration="8720000" />
+      <workItem from="1606399040829" duration="1814000" />
+      <workItem from="1606405648896" duration="829000" />
+      <workItem from="1606409616096" duration="212000" />
+      <workItem from="1606410955668" duration="597000" />
+      <workItem from="1606479468023" duration="1283000" />
+      <workItem from="1606482333911" duration="30000" />
     </task>
     <task id="LOCAL-00001" summary="modificações 18/11">
       <created>1605719342268</created>
@@ -268,10 +279,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="370" y="247" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.984@0.0.1280.984" timestamp="1604678189597" />
-    <state x="420" y="247" key="FileChooserDialogImpl" timestamp="1605611821632">
+    <state x="420" y="247" key="FileChooserDialogImpl" timestamp="1606482363476">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="420" y="247" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1605611821632" />
+    <state x="420" y="247" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1606482363476" />
     <state width="1237" height="263" key="GridCell.Tab.0.bottom" timestamp="1604682260441">
       <screen x="0" y="0" width="1280" height="984" />
     </state>

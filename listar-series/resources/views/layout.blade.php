@@ -14,7 +14,7 @@
 <navbar class="navbar navbar-expand-lg navbar-light bg-primary mb-2 d-flex justify-content-between" >
     <a></a>
     @auth
-    <a href="/sair" class="btn btn-danger">Sair</a>
+    <a href="/sair" class="btn btn-danger" style="margin-right: 20px">Sair</a>
     @endauth
     <!--@guest
         <a href="/entrar" >Entrar</a>
@@ -24,7 +24,7 @@
 
 @include('erros',['errors' => $errors])
     <div class="container">
-        <div class="" >
+        <div class="">
             <h6>
                 @if(!empty($mensagem))
                     <div class="alert alert-success">
@@ -32,6 +32,16 @@
                     </div>
                 @endif
             </h6>
+<!--@include('erros',['errors' => $errors])
+<div class="container">
+    <div class="">
+        <h6>
+            @if(!empty($mensagem))
+                <div class="alert alert-danger">
+                    {{ $mensagem }}
+                </div>
+            @endif
+        </h6>-->
             <h1><b>@yield('cabecalho')</b></h1>
             <br>
             <br>

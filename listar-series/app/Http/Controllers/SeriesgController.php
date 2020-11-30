@@ -16,6 +16,7 @@ class SeriesgController extends Controller
             -> orderby('nome')
             ->get();
         $mensagem = $request->session()->get('mensagem');
+        $mensagem1 = $request->session()->get('mensagem1');
 
         return view('series.index',compact('series','mensagem'));
 

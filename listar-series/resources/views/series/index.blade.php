@@ -53,21 +53,22 @@ Cadastrar
                     </div>
 
                 </div>
-                <span class="d-flex">
-                    <button class="btn btn-info btn-sm mr-1" onclick="toggleInput({{$serie->id}})">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    @auth
-                    <form method="post" action="/series/{{$serie->id}}"
-                           onsubmit="return confirm('Tem certeza que deseja remover {{addslashes($serie->nome)}} ?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sn">
-                            <i class="fas fa-trash-alt"></i>
+                    <span class="d-flex">
+                        <button class="btn btn-info btn-sm mr-1" onclick="toggleInput({{$serie->id}})">
+                            <i class="fas fa-edit"></i>
                         </button>
-                    </form>
-                    @endauth
-                </span>
+                        @auth
+                        <form method="post" action="/series/{{$serie->id}}"
+                               onsubmit="return confirm('Tem certeza que deseja remover {{addslashes($serie->nome)}} ?')">
+                            @csrf
+                            @method('DELETE')
+
+                                <button class="btn btn-danger btn-sn" style="margin-left: 70px">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                        </form>
+                        @endauth
+                    </span>
             </li>
         @endforeach
     </ul>

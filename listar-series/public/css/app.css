@@ -2669,8 +2669,9 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary {
+    display: block;
     background-color: #007bff;
-    width: 73%;
+    width: 100%;
     border-radius: 5px;
     padding: 5px;
     color: white;
