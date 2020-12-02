@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unifametro - Ouvidoria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="src/css/style.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header>
+    <img src="src/img/logo-unifametro-01.png" alt="Logo Unifametro">
+    <ul>
+        <a href="http://www.unifametro.edu.br/" target="_blank">
+            <li>
+                Inicio
+            </li>
+        </a>
+        <a href="http://www.unifametro.edu.br/contato/fale-conosco/" target="_blank">
+            <li>
+                Fale conosco
+            </li>
+        </a>
+        <li>
+            <a href="http://portal.fametro.com.br/" target="_blank">
+                <i class="fa fa-graduation-cap"></i>
+                PORTAL ACADÊMICO
+            </a>
+        </li>
+    </ul>
+</header>
+<section>
+    <h1>OUVIDORIA UNIFAMETRO</h1>
+    <p class="text-dark">Prezado(a), Procurando fazer o melhor por você, a Ouvidoria da UNIFAMETRO quer saber sua opinião sobre nossos serviços. <br> Preencha este formulário para registrar suas opiniões. Se preferir, identifique-se e deixe seu contato</p>
+    <div class="container">
+        <div class="opcoes-ouvidoria">
+            <a href="#" id="collapseOuvidoria" class="active">OUVIDORIA</a>
+            <a href="#" id="collapseAcompanhamento">ACOMPANHAR ATENDIMENTO</a>
+        </div>
+        <div id="ouvidoria">
+            <form id="form-ouvidoria">
+                <div class="row">
+                    <div class="col">
+                        <label for="nome">Nome (opcional)</label>
+                        <input type="text" name="nome">
+                    </div>
+                    <div class="col">
+                        <label for="demandante_id" class="required">Demandante</label>
+                        <select name="demandante_id" id="demandante_id" required>
+                            <option selected disabled>Selecione o demandante</option>
+                            <option value="1">Aluno(a)</option>
+                            <option value="2">Professor(a)</option>
+                            <option value="3">Funcionário(a)</option>
+                            <option value="4">Publico Externo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="categoria_id" class="required">Tipo de Demanda</label>
+                        <select name="categoria_id" id="categoria_id" required>
+                            <option selected disabled>Selecione o tipo de demanda</option>
+                            <option value="1">Reclamação</option>
+                            <option value="2">Elogio</option>
+                            <option value="3">Sugestão</option>
+                            <option value="4">Informação</option>
+                            <option value="5">Denúncia</option>
+                            <option value="6">Outras</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="causa_id" class="required">Causa</label>
+                        <select name="causa_id" id="causa_id" required>
+                            <option selected disabled>selecione a causa</option>
+                            <option value="1">Atendimento</option>
+                            <option value="2">Infraestrutura</option>
+                            <option value="3">Manutenção e Limpeza</option>
+                            <option value="4">Segurança</option>
+                            <option value="5">Cobrança(financeira)</option>
+                            <option value="6">Mensalidade</option>
+                            <option value="7">Notas e Frequência</option>
+                            <option value="8">Serviços e equipamentos de informática</option>
+                            <option value="9">Telefonia</option>
+                            <option value="10">Cumprimento de prazos</option>
+                            <option value="11">Outros</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="campus_id" class="required">Campus</label>
+                        <select name="campus_id" id="campus_id" required>
+                            <option selected disabled>Selecione o campus</option>
+                            <option value="1">Campus Conselheiro Estelita</option>
+                            <option value="2">Campus Padre Ibiapina</option>
+                            <option value="3">Campus Guilherme Rocha</option>
+                            <option value="4">Campus Carneiro da Cunha</option>
+                            <option value="5">Campus Maracanaú</option>
+                            <option value="6">Campus Cascavel</option>
+                            <option value="7">Campus Aldeota</option>
+                            <option value="8">Campus Messejana</option>
+                            <option value="9">Clinica Escola</option>
+                            <option value="10">Complexo Odontológico</option>
+                            <option value="11">NPJ(Núcleo de Práticas Jurídicas)</option>
+                            <option value="12">Outro</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="setor_id" class="required">Setor</label>
+                        <select name="setor_id" id="setor_id" required>
+                            <option selected disabled>Seleciona o setor</option>
+                            <option value="1">Atendimento ao Aluno</option>
+                            <option value="2">Biblioteca</option>
+                            <option value="3">Call center</option>
+                            <option value="4">Coordenações</option>
+                            <option value="5">CPA(Comissão Própria de Avaliação)</option>
+                            <option value="6">Diretoria Acadêmica</option>
+                            <option value="7">Diretoria Geral</option>
+                            <option value="8">Divisão Administrativa(manutenção,compras,etc)</option>
+                            <option value="9">FIES/PROUNI</option>
+                            <option value="10">Financeiro</option>
+                            <option value="11">Marketing</option>
+                            <option value="12">NEAD(Núcleo de Educação a Distância)</option>
+                            <option value="13">Negociação(Massare)</option>
+                            <option value="14">NTI(Núcleo de Tecnologia da Informação)</option>
+                            <option value="15">NEE(Núcleo de Estágio e Emprego)</option>
+                            <option value="16">Núcleo Pedagógico</option>
+                            <option value="17">Ouvidoria</option>
+                            <option value="18">Pós-Graduação</option>
+                            <option value="19">Recepção</option>
+                            <option value="20">Relacionamento</option>
+                            <option value="21">RH(Setor de Recursos Humanos)</option>
+                            <option value="22">Secretaria das Coordenações</option>
+                            <option value="23">Tesouraria</option>
+                            <option value="24">Outro</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="descricao" class="required">Descrição</label>
+                        <textarea name="descricao" id="descricao" required
+                                  placeholder="Descreva aqui o motivo"></textarea>
+                    </div>
+                </div>
+                <div class="row form-row-teste">
+                    <div class="col">
+                        <label class="required" for="inputState" >Contato para retorno</label>
+                        <select id="tipo_contato" name="tipo_contato_id" >
+                            <option selected disabled>Informe o tipo de contato</option>
+                            <option value="1">Email</option>
+                            <option value="2">Telefone/Whatsapp</option>
+                        </select>
+                    </div>
+                    <div class="form-row-teste col" id="inputs">
+                        <input type="text" name="contato" id="WTaluno" placeholder="00900000000" required style="top:32px;position:relative;">
+                    </div>
+                </div>
+                <button type="submit">
+                    ENVIAR
+                    <span class="spinner-border spinner-border-sm" id="spinnerOuvidoria" style="display:none;"></span>
+                </button>
+            </form>
+        </div>
+        <div id="acompanhamento">
+            <form id="form-acompanhamento">
+                <div class="row">
+                    <div class="col">
+                        <label for="nome" class="required">N° do protocolo</label>
+                        <input type="text" name="protocolo" required>
+                    </div>
+                </div>
+                <button type="submit" class="button-block">
+                    Acompanhar demanda
+                    <span class="spinner-border spinner-border-sm" id="spinnerAcompanhar"></span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+</section>
+<div class="container">
+    <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+    <br>
+    <input type="hidden" id="perg6" name="perg6" value="9390">
+    <input type="hidden" id="tp6" name="tp6" value="6">
+    <input type="hidden" id="q" name="q" value="7">
+    <div id="pergunta9390">
+        <span class="font-a">
+        </span>
+    </div>
+    <script>
+        $(document).ready(function(){
+            if ( $('#pergunta9390').css('display') != 'none' ) {
+                $('#contaPerg9390').css('display','block');
+            }
+        });
+    </script>
+    <div id="perg9390" data-role="fieldcontain" style="text-align:center;" class="ui-field-contain ui-body ui-br">
+        <fieldset data-mini="true" data-role="controlgroup" data-type="horizontal" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-mini">
+            <div style="margin-bottom:10px;text-align:left;">
+                <span class="font-a" style="text-align:left;">
+                    Qualidade das informações prestadas:
+                </span>
+            </div>
+            <div class="ui-radio d-inline p-2">
+                <input type="radio" ordem="5" name="p6" id="radio6_1" value="71467">
+                <label for="radio6_1" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-left">
+                    <span class="ui-btn-inner ui-corner-left">
+                        <span class="ui-btn-text">
+                            <img id="radio6img5" style="margin:8px;width:48px;height:48px;" src="src/img/grin-beam-regular.svg" border="0" alt="Excelente" title="Excelente">
+                        </span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="ui-radio d-inline p-2">
+                <input type="radio" ordem="4" name="p6" id="radio6_2" value="71468">
+                <label for="radio6_2" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                    <span class="ui-btn-inner">
+                        <span class="ui-btn-text">
+                            <img id="radio6img4" style="margin:8px;width:48px;height:48px;" src="src/img/smile-regular.svg" border="0" alt="Bom" title="Bom">
+                        </span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="ui-radio d-inline p-2">
+                <input type="radio" ordem="3" name="p6" id="radio6_3" value="71469">
+                <label for="radio6_3" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                    <span class="ui-btn-inner">
+                        <span class="ui-btn-text">
+                            <img id="radio6img3" style="margin:8px;width:48px;height:48px;" src="src/img/meh-regular.svg" border="0" alt="Regular" title="Regular">
+                        </span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="ui-radio d-inline p-2">
+                <input type="radio" ordem="2" name="p6" id="radio6_4" value="71470">
+                <label for="radio6_4" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                    <span class="ui-btn-inner">
+                        <span class="ui-btn-text">
+                            <img id="radio6img2" style="margin:8px;width:48px;height:48px;" src="src/img/frown-regular.svg" border="0" alt="Ruim" title="Ruim">
+                        </span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="ui-radio d-inline p-2">
+                <input type="radio" ordem="0" name="p6" id="radio6_5" value="71471">
+                <label for="radio6_5" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-right ui-controlgroup-last">
+                    <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                        <span class="ui-btn-text">
+                            <img id="radio6img0" style="margin:8px;width:48px;height:48px;" src="src/img/meh-blank-regular.svg" border="0" alt="Não desejo responder / Não se aplica" title="Não desejo responder / Não se aplica">
+                        </span>
+                    </span>
+                </label>
+            </div>
+
+            <style>
+                .ui-mini .ui-btn-inner { padding: 6px; }
+            </style>
+            <script>
+                function resposta6(valor) {
+                    $('#det6_container').css('display','block');
+                    switch(parseInt(valor))	{
+                        case 5: $('#det6_container').html('&raquo; Excelente'); break;
+                        case 4: $('#det6_container').html('&raquo; Bom'); break;
+                        case 3: $('#det6_container').html('&raquo; Regular'); break;
+                        case 2: $('#det6_container').html('&raquo; Ruim'); break;
+                        case 0: $('#det6_container').html('&raquo; Não desejo responder / Não se aplica'); break;
+                    }
+                }
+                $(document).ready(function(){
+                    $("input[name='p6']").change(function() {
+                        $("#radio6img5").attr('src', 'images/tp6_ico_set1_5h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                        $("#radio6img4").attr('src', 'images/tp6_ico_set1_4h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                        $("#radio6img3").attr('src', 'images/tp6_ico_set1_3h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                        $("#radio6img2").attr('src', 'images/tp6_ico_set1_2h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                        $("#radio6img0").attr('src', 'images/tp6_ico_set1_0h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                        $("#radio6img" + $(this).attr('ordem')).attr('src', 'images/tp6_ico_set1_' + $(this).attr('ordem') + '.png').css({ 'margin':'0px', 'width':'32px', 'height':'32px' });
+                        resposta6($(this).attr('ordem'));
+                    });
+                });
+            </script>
+            <div class="font-a" style="display:none;text-align:left;padding-top:5px;width:100%;clear:both;" id="det6_container"></div>
+        </fieldset>
+        <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+        <input type="hidden" id="perg7" name="perg7" value="9391">
+        <input type="hidden" id="tp7" name="tp7" value="6">
+        <input type="hidden" id="q" name="q" value="8">
+        <div id="pergunta9391"><span class="font-a">
+				</span>
+        </div>
+        <script>
+            $(document).ready(function(){
+                if ( $('#pergunta9391').css('display') != 'none' ) {
+                    $('#contaPerg9391').css('display','block');
+                }
+            });
+        </script>
+        <div id="perg9391" data-role="fieldcontain" style="text-align:center;" class="ui-field-contain ui-body ui-br">
+            <fieldset data-mini="true" data-role="controlgroup" data-type="horizontal" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-mini">
+                <div style="margin-bottom:10px;text-align:left;">
+                        <span class="font-a" style="text-align:left;">
+                            Rapidez no atendimento:
+                        </span>
+                </div>
+                <div class="ui-radio d-inline p-2">
+                    <input type="radio" ordem="5" name="p7" id="radio7_1" value="71472">
+                    <label for="radio7_1" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-mini ui-corner-left ui-radio-off ui-btn-up-h">
+                            <span class="ui-btn-inner ui-corner-left">
+                                <span class="ui-btn-text">
+                                    <img id="radio7img5" style="margin:8px;width:48px;height:48px;" src="src/img/grin-beam-regular.svg" border="0" alt="Excelente" title="Excelente">
+                                </span>
+                            </span>
+                    </label>
+                </div>
+
+                <div class="ui-radio d-inline p-2">
+                    <input type="radio" ordem="4" name="p7" id="radio7_2" value="71473">
+                    <label for="radio7_2" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-mini ui-radio-off ui-btn-up-h">
+                            <span class="ui-btn-inner">
+                                <span class="ui-btn-text">
+                                    <img id="radio7img4" style="margin:8px;width:48px;height:48px;" src="src/img/smile-regular.svg" border="0" alt="Bom" title="Bom">
+                                </span>
+                            </span>
+                    </label>
+                </div>
+
+                <div class="ui-radio d-inline p-2">
+                    <input type="radio" ordem="3" name="p7" id="radio7_3" value="71474">
+                    <label for="radio7_3" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-mini ui-btn-up-h ui-radio-off">
+                            <span class="ui-btn-inner">
+                                <span class="ui-btn-text">
+                                    <img id="radio7img3" style="margin:8px;width:48px;height:48px;" src="src/img/meh-regular.svg" border="0" alt="Regular" title="Regular">
+                                </span>
+                            </span>
+                    </label>
+                </div>
+
+                <div class="ui-radio d-inline p-2">
+                    <input type="radio" ordem="2" name="p7" id="radio7_4" value="71475">
+                    <label for="radio7_4" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                            <span class="ui-btn-inner">
+                                <span class="ui-btn-text">
+                                    <img id="radio7img2" style="margin:8px;width:48px;height:48px;" src="src/img/frown-regular.svg" border="0" alt="Ruim" title="Ruim">
+                                </span>
+                            </span>
+                    </label>
+                </div>
+
+                <div class="ui-radio d-inline p-2">
+                    <input type="radio" ordem="0" name="p7" id="radio7_5" value="71476">
+                    <label for="radio7_5" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-mini ui-corner-right ui-controlgroup-last ui-radio-off ui-btn-up-h">
+                            <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                                <span class="ui-btn-text">
+                                    <img id="radio7img0" style="margin:8px;width:48px;height:48px;" src="src/img/meh-blank-regular.svg" border="0" alt="Não desejo responder / Não se aplica" title="Não desejo responder / Não se aplica">
+                                </span>
+                            </span>
+                    </label>
+                </div>
+
+                <style>
+                    .ui-mini .ui-btn-inner { padding: 6px; }
+                </style>
+                <script>
+                    function resposta7(valor) {
+                        $('#det7_container').css('display','block');
+                        switch(parseInt(valor))	{
+                            case 5: $('#det7_container').html('&raquo; Excelente'); break;
+                            case 4: $('#det7_container').html('&raquo; Bom'); break;
+                            case 3: $('#det7_container').html('&raquo; Regular'); break;
+                            case 2: $('#det7_container').html('&raquo; Ruim'); break;
+                            case 0: $('#det7_container').html('&raquo; Não desejo responder / Não se aplica'); break;
+                        }
+                    }
+                    $(document).ready(function(){
+                        $("input[name='p7']").change(function() {
+                            $("#radio7img5").attr('src', 'images/tp6_ico_set1_5h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                            $("#radio7img4").attr('src', 'images/tp6_ico_set1_4h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                            $("#radio7img3").attr('src', 'images/tp6_ico_set1_3h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                            $("#radio7img2").attr('src', 'images/tp6_ico_set1_2h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                            $("#radio7img0").attr('src', 'images/tp6_ico_set1_0h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                            $("#radio7img" + $(this).attr('ordem')).attr('src', 'images/tp6_ico_set1_' + $(this).attr('ordem') + '.png').css({ 'margin':'0px', 'width':'32px', 'height':'32px' });
+                            resposta7($(this).attr('ordem'));
+                        });
+                    });
+                </script>
+                <div class="font-a" style="display: block; text-align: left; padding-top: 5px; width: 100%; clear: both;" id="det7_container">
+                </div>
+            </fieldset>
+            <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+            <input type="hidden" id="perg8" name="perg8" value="9392">
+            <input type="hidden" id="tp8" name="tp8" value="6">
+            <input type="hidden" id="q" name="q" value="9">
+            <div id="pergunta9392">
+                    <span class="font-a">
+				    </span>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    if ( $('#pergunta9392').css('display') != 'none' ) {
+                        $('#contaPerg9392').css('display','block');
+                    }
+                });
+            </script>
+            <div id="perg9392" data-role="fieldcontain" style="text-align:center;" class="ui-field-contain ui-body ui-br">
+                <fieldset data-mini="true" data-role="controlgroup" data-type="horizontal" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-mini">
+                    <div style="margin-bottom:10px;text-align:left;">
+                            <span class="font-a" style="text-align:left;">
+                                Quanto às instalações?  <br>a) Segurança
+                            </span>
+                    </div>
+                    <div class="ui-radio d-inline p-2">
+                        <input type="radio" ordem="5" name="p8" id="radio8_1" value="71477">
+                        <label for="radio8_1" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-left">
+                                <span class="ui-btn-inner ui-corner-left">
+                                    <span class="ui-btn-text">
+                                        <img id="radio8img5" style="margin:8px;width:48px;height:48px;" src="src/img/grin-beam-regular.svg" border="0" alt="Excelente" title="Excelente">
+                                    </span>
+                                </span>
+                        </label>
+                    </div>
+
+                    <div class="ui-radio d-inline p-2">
+                        <input type="radio" ordem="4" name="p8" id="radio8_2" value="71478">
+                        <label for="radio8_2" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                <span class="ui-btn-inner">
+                                    <span class="ui-btn-text">
+                                        <img id="radio8img4" style="margin:8px;width:48px;height:48px;" src="src/img/smile-regular.svg" border="0" alt="Bom" title="Bom">
+                                    </span>
+                                </span>
+                        </label>
+                    </div>
+
+                    <div class="ui-radio d-inline p-2">
+                        <input type="radio" ordem="3" name="p8" id="radio8_3" value="71479">
+                        <label for="radio8_3" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                <span class="ui-btn-inner">
+                                    <span class="ui-btn-text">
+                                        <img id="radio8img3" style="margin:8px;width:48px;height:48px;" src="src/img/meh-regular.svg" border="0" alt="Regular" title="Regular">
+                                    </span>
+                                </span>
+                        </label>
+                    </div>
+
+                    <div class="ui-radio d-inline p-2">
+                        <input type="radio" ordem="2" name="p8" id="radio8_4" value="71480">
+                        <label for="radio8_4" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                <span class="ui-btn-inner">
+                                    <span class="ui-btn-text">
+                                        <img id="radio8img2" style="margin:8px;width:48px;height:48px;" src="src/img/frown-regular.svg" border="0" alt="Ruim" title="Ruim">
+                                    </span>
+                                </span>
+                        </label>
+                    </div>
+
+                    <div class="ui-radio d-inline p-2">
+                        <input type="radio" ordem="0" name="p8" id="radio8_5" value="71481">
+                        <label for="radio8_5" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-right ui-controlgroup-last">
+                                <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                                    <span class="ui-btn-text">
+                                        <img id="radio8img0" style="margin:8px;width:48px;height:48px;" src="src/img/meh-blank-regular.svg" border="0" alt="Não desejo responder / Não se aplica" title="Não desejo responder / Não se aplica">
+                                    </span>
+                                </span>
+                        </label>
+                    </div>
+
+                    <style>
+                        .ui-mini .ui-btn-inner { padding: 6px; }
+                    </style>
+                    <script>
+                        function resposta8(valor) {
+                            $('#det8_container').css('display','block');
+                            switch(parseInt(valor))	{
+                                case 5: $('#det8_container').html('&raquo; Excelente'); break;
+                                case 4: $('#det8_container').html('&raquo; Bom'); break;
+                                case 3: $('#det8_container').html('&raquo; Regular'); break;
+                                case 2: $('#det8_container').html('&raquo; Ruim'); break;
+                                case 0: $('#det8_container').html('&raquo; Não desejo responder / Não se aplica'); break;
+                            }
+                        }
+                        $(document).ready(function(){
+                            $("input[name='p8']").change(function() {
+                                $("#radio8img5").attr('src', 'images/tp6_ico_set1_5h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                $("#radio8img4").attr('src', 'images/tp6_ico_set1_4h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                $("#radio8img3").attr('src', 'images/tp6_ico_set1_3h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                $("#radio8img2").attr('src', 'images/tp6_ico_set1_2h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                $("#radio8img0").attr('src', 'images/tp6_ico_set1_0h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                $("#radio8img" + $(this).attr('ordem')).attr('src', 'images/tp6_ico_set1_' + $(this).attr('ordem') + '.png').css({ 'margin':'0px', 'width':'32px', 'height':'32px' });
+                                resposta8($(this).attr('ordem'));
+                            });
+                        });
+                    </script>
+                    <div class="font-a" style="display:none;text-align:left;padding-top:5px;width:100%;clear:both;" id="det8_container">
+
+                    </div>
+                </fieldset>
+                <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+                <input type="hidden" id="perg9" name="perg9" value="9393">
+                <input type="hidden" id="tp9" name="tp9" value="6">
+                <input type="hidden" id="q" name="q" value="10">
+                <div id="pergunta9393">
+                        <span class="font-a">
+				        </span>
+                </div>
+                <script>
+                    $(document).ready(function(){
+                        if ( $('#pergunta9393').css('display') != 'none' ) {
+                            $('#contaPerg9393').css('display','block');
+                        }
+                    });
+                </script>
+                <div id="perg9393" data-role="fieldcontain" style="text-align:center;" class="ui-field-contain ui-body ui-br">
+                    <fieldset data-mini="true" data-role="controlgroup" data-type="horizontal" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-mini">
+                        <div style="margin-bottom:10px;text-align:left;">
+                                <span class="font-a" style="text-align:left;">
+                                    Quanto às instalações?  <br>b) Limpeza e Higiene
+                                </span>
+                        </div>
+                        <div class="ui-radio d-inline p-2">
+                            <input type="radio" ordem="5" name="p9" id="radio9_1" value="71482">
+                            <label for="radio9_1" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-left">
+                                    <span class="ui-btn-inner ui-corner-left">
+                                        <span class="ui-btn-text">
+                                            <img id="radio9img5" style="margin:8px;width:48px;height:48px;" src="src/img/grin-beam-regular.svg" border="0" alt="Excelente" title="Excelente">
+                                        </span>
+                                    </span>
+                            </label>
+                        </div>
+
+                        <div class="ui-radio d-inline p-2">
+                            <input type="radio" ordem="4" name="p9" id="radio9_2" value="71483">
+                            <label for="radio9_2" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                    <span class="ui-btn-inner">
+                                        <span class="ui-btn-text">
+                                            <img id="radio9img4" style="margin:8px;width:48px;height:48px;" src="src/img/smile-regular.svg" border="0" alt="Bom" title="Bom">
+                                        </span>
+                                    </span>
+                            </label>
+                        </div>
+
+                        <div class="ui-radio d-inline p-2">
+                            <input type="radio" ordem="3" name="p9" id="radio9_3" value="71484">
+                            <label for="radio9_3" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                    <span class="ui-btn-inner">
+                                        <span class="ui-btn-text">
+                                            <img id="radio9img3" style="margin:8px;width:48px;height:48px;" src="src/img/meh-regular.svg" border="0" alt="Regular" title="Regular">
+                                        </span>
+                                    </span>
+                            </label>
+                        </div>
+
+                        <div class="ui-radio d-inline p-2">
+                            <input type="radio" ordem="2" name="p9" id="radio9_4" value="71485">
+                            <label for="radio9_4" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                    <span class="ui-btn-inner">
+                                        <span class="ui-btn-text">
+                                            <img id="radio9img2" style="margin:8px;width:48px;height:48px;" src="src/img/frown-regular.svg" border="0" alt="Ruim" title="Ruim">
+                                        </span>
+                                    </span>
+                            </label>
+                        </div>
+
+                        <div class="ui-radio d-inline p-2">
+                            <input type="radio" ordem="0" name="p9" id="radio9_5" value="71486">
+                            <label for="radio9_5" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-right ui-controlgroup-last">
+                                    <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                                        <span class="ui-btn-text">
+                                            <img id="radio9img0" style="margin:8px;width:48px;height:48px;" src="src/img/meh-blank-regular.svg" border="0" alt="Não desejo responder / Não se aplica" title="Não desejo responder / Não se aplica">
+                                        </span>
+                                    </span>
+                            </label>
+                        </div>
+
+                        <style>
+                            .ui-mini .ui-btn-inner { padding: 6px; }
+                        </style>
+                        <script>
+                            function resposta9(valor) {
+                                $('#det9_container').css('display','block');
+                                switch(parseInt(valor))	{
+                                    case 5: $('#det9_container').html('&raquo; Excelente'); break;
+                                    case 4: $('#det9_container').html('&raquo; Bom'); break;
+                                    case 3: $('#det9_container').html('&raquo; Regular'); break;
+                                    case 2: $('#det9_container').html('&raquo; Ruim'); break;
+                                    case 0: $('#det9_container').html('&raquo; Não desejo responder / Não se aplica'); break;
+                                }
+                            }
+                            $(document).ready(function(){
+                                $("input[name='p9']").change(function() {
+                                    $("#radio9img5").attr('src', 'images/tp6_ico_set1_5h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                    $("#radio9img4").attr('src', 'images/tp6_ico_set1_4h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                    $("#radio9img3").attr('src', 'images/tp6_ico_set1_3h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                    $("#radio9img2").attr('src', 'images/tp6_ico_set1_2h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                    $("#radio9img0").attr('src', 'images/tp6_ico_set1_0h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                    $("#radio9img" + $(this).attr('ordem')).attr('src', 'images/tp6_ico_set1_' + $(this).attr('ordem') + '.png').css({ 'margin':'0px', 'width':'32px', 'height':'32px' });
+                                    resposta9($(this).attr('ordem'));
+                                });
+                            });
+                        </script>
+                        <div class="font-a" style="display:none;text-align:left;padding-top:5px;width:100%;clear:both;" id="det9_container"></div>
+                    </fieldset>
+                    <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+                    <input type="hidden" id="perg10" name="perg10" value="9394">
+                    <input type="hidden" id="tp10" name="tp10" value="6">
+                    <input type="hidden" id="q" name="q" value="11">
+                    <div id="pergunta9394">
+                            <span class="font-a">
+				            </span>
+                    </div>
+                    <script>
+                        $(document).ready(function(){
+                            if ( $('#pergunta9394').css('display') != 'none' ) {
+                                $('#contaPerg9394').css('display','block');
+                            }
+                        });
+                    </script>
+                    <div id="perg9394" data-role="fieldcontain" style="text-align:center;" class="ui-field-contain ui-body ui-br">
+                        <fieldset data-mini="true" data-role="controlgroup" data-type="horizontal" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal ui-mini">
+                            <div style="margin-bottom:10px;text-align:left;">
+                                    <span class="font-a" style="text-align:left;">
+                                        Quanto às instalações?  <br>c) Facilidade de acesso aos setores
+                                    </span>
+                            </div>
+                            <div class="ui-radio d-inline p-2">
+                                <input type="radio" ordem="5" name="p10" id="radio10_1" value="71487">
+                                <label for="radio10_1" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-left">
+                                        <span class="ui-btn-inner ui-corner-left">
+                                            <span class="ui-btn-text">
+                                                <img id="radio10img5" style="margin:8px;width:48px;height:48px;" src="src/img/grin-beam-regular.svg" border="0" alt="Excelente" title="Excelente">
+                                            </span>
+                                        </span>
+                                </label>
+                            </div>
+
+                            <div class="ui-radio d-inline p-2">
+                                <input type="radio" ordem="4" name="p10" id="radio10_2" value="71488">
+                                <label for="radio10_2" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                        <span class="ui-btn-inner">
+                                            <span class="ui-btn-text">
+                                                <img id="radio10img4" style="margin:8px;width:48px;height:48px;" src="src/img/smile-regular.svg" border="0" alt="Bom" title="Bom">
+                                            </span>
+                                        </span>
+                                </label>
+                            </div>
+
+                            <div class="ui-radio d-inline p-2">
+                                <input type="radio" ordem="3" name="p10" id="radio10_3" value="71489">
+                                <label for="radio10_3" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                        <span class="ui-btn-inner">
+                                            <span class="ui-btn-text">
+                                                <img id="radio10img3" style="margin:8px;width:48px;height:48px;" src="src/img/meh-regular.svg" border="0" alt="Regular" title="Regular">
+                                            </span>
+                                        </span>
+                                </label>
+                            </div>
+
+                            <div class="ui-radio d-inline p-2">
+                                <input type="radio" ordem="2" name="p10" id="radio10_4" value="71490">
+                                <label for="radio10_4" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off">
+                                        <span class="ui-btn-inner">
+                                            <span class="ui-btn-text">
+                                                <img id="radio10img2" style="margin:8px;width:48px;height:48px;" src="src/img/frown-regular.svg" border="0" alt="Ruim" title="Ruim">
+                                            </span>
+                                        </span>
+                                </label>
+                            </div>
+
+                            <div class="ui-radio d-inline p-2">
+                                <input type="radio" ordem="0" name="p10" id="radio10_5" value="71491">
+                                <label for="radio10_5" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="h" data-mini="true" class="ui-btn ui-btn-up-h ui-mini ui-radio-off ui-corner-right ui-controlgroup-last">
+                                        <span class="ui-btn-inner ui-corner-right ui-controlgroup-last">
+                                            <span class="ui-btn-text">
+                                                <img id="radio10img0" style="margin:8px;width:48px;height:48px;" src="src/img/meh-blank-regular.svg" border="0" alt="Não desejo responder / Não se aplica" title="Não desejo responder / Não se aplica">
+                                            </span>
+                                        </span>
+                                </label>
+                            </div>
+
+                            <style>
+                                .ui-mini .ui-btn-inner { padding: 6px; }
+                            </style>
+                            <script>
+                                function resposta10(valor) {
+                                    $('#det10_container').css('display','block');
+                                    switch(parseInt(valor))	{
+                                        case 5: $('#det10_container').html('&raquo; Excelente'); break;
+                                        case 4: $('#det10_container').html('&raquo; Bom'); break;
+                                        case 3: $('#det10_container').html('&raquo; Regular'); break;
+                                        case 2: $('#det10_container').html('&raquo; Ruim'); break;
+                                        case 0: $('#det10_container').html('&raquo; Não desejo responder / Não se aplica'); break;
+                                    }
+                                }
+                                $(document).ready(function(){
+                                    $("input[name='p10']").change(function() {
+                                        $("#radio10img5").attr('src', 'images/tp6_ico_set1_5h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                        $("#radio10img4").attr('src', 'images/tp6_ico_set1_4h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                        $("#radio10img3").attr('src', 'images/tp6_ico_set1_3h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                        $("#radio10img2").attr('src', 'images/tp6_ico_set1_2h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                        $("#radio10img0").attr('src', 'images/tp6_ico_set1_0h.png').css({ 'margin':'4px', 'width':'24px', 'height':'24px' });
+                                        $("#radio10img" + $(this).attr('ordem')).attr('src', 'images/tp6_ico_set1_' + $(this).attr('ordem') + '.png').css({ 'margin':'0px', 'width':'32px', 'height':'32px' });
+                                        resposta10($(this).attr('ordem'));
+                                    });
+                                });
+                            </script>
+                            <div class="font-a" style="display:none;text-align:left;padding-top:5px;width:100%;clear:both;" id="det10_container"></div>
+                        </fieldset>
+                        <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+                        <input type="hidden" id="perg11" name="perg11" value="9395">
+                        <input type="hidden" id="tp11" name="tp11" value="5">
+                        <input type="hidden" id="q" name="q" value="12">
+                        <div id="pergunta9395">
+                                <span class="font-a">
+					                <span style="border:0px solid;margin:0px;">
+                                        Sugestões/Comentários:
+                                    </span>
+				                </span>
+                        </div>
+                        <script>
+                            $(document).ready(function(){
+                                if ( $('#pergunta9395').css('display') != 'none' ) {
+                                    $('#contaPerg9395').css('display','block');
+                                }
+                            });
+                        </script>
+                        <div id="perg9395" data-role="fieldcontain" style="text-align:center;" class="ui-field-contain ui-body ui-br">
+                            <fieldset data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+                                <script>
+                                    $(document).ready(function(){
+                                        $('#perg0,#pergunta0').css('display','none');
+                                        $("textarea[name='txt11']").focus(function() {
+                                            $('#perg0,#pergunta0, #contaPerg0').css('display','block');
+                                        });
+                                    });
+                                </script>
+                                <textarea placeholder="Digite..." name="txt11" class="ui-input-text ui-body-h ui-corner-all ui-shadow-inset"></textarea>
+                                <input type="hidden" name="p11" value="71492">
+                            </fieldset>
+                            <hr style="background-color:#aaa;margin:15px 0;border:0px;height:1px;width:100%;">
+                            <div style="float:right;">
+                                <div id="botao_enviarrespostas" style="display:none;">
+                                    <div data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="arrow-r" data-iconpos="null" data-theme="f" data-inline="true" data-mini="false" class="ui-btn ui-btn-up-f ui-btn-inline ui-shadow ui-btn-corner-all ui-fullsize ui-btn-icon-left" aria-disabled="false"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Enviar respostas</span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span><button id="btSubmitEnviar" type="submit" data-icon="arrow-r" data-inline="true" data-theme="f" class="ui-btn-hidden" aria-disabled="false">Enviar respostas</button></div>
+                                </div>
+                                <div id="botao_proximo">
+                                    <div data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="arrow-r" data-iconpos="null" data-theme="h" data-inline="true" data-mini="false" class="ui-btn ui-btn-up-h ui-btn-inline ui-shadow ui-btn-corner-all ui-fullsize ui-btn-icon-left" aria-disabled="false"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text"></span><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></span><button id="btSubmitProx" type="submit" data-icon="arrow-r" data-inline="true" data-theme="h" class="ui-btn-hidden" aria-disabled="false">Próxima</button></div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <input type="hidden" id="pre" name="pre" value="0">
+                            <input type="hidden" id="prcd" name="prcd" value="0">
+                            <input type="hidden" id="dadoscadastro" name="dadoscadastro" value="">
+                            <input type="hidden" id="nome" name="nome" value="">
+                            <input type="hidden" id="email" name="email" value="">
+                            <input type="hidden" id="telefone" name="telefone" value="">
+                            <input type="hidden" id="datahora" name="datahora" value="2020-12-02 10:46:52">
+                            <input type="hidden" id="campoextra1" name="campoextra1" value="">
+                            <input type="hidden" id="campoextra2" name="campoextra2" value="">
+                            <input type="hidden" id="campoextra3" name="campoextra3" value="">
+                            <input type="hidden" id="campoextra4" name="campoextra4" value="">
+                            <input type="hidden" id="campoextra5" name="campoextra5" value="">
+                            <input type="hidden" id="campoextra6" name="campoextra6" value="">
+                            <input type="hidden" id="campoextra7" name="campoextra7" value="">
+                            <input type="hidden" id="campoextra8" name="campoextra8" value="">
+                            <input type="hidden" id="campoextra9" name="campoextra9" value="">
+                            <input type="hidden" id="campoextra10" name="campoextra10" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal com os históricos da ocorrência - INICIO -->
+
+<div class="modal fade" id="modalHistorico" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Histórico da ocorrência</h4>
+            </div>
+            <div class="modal-body">
+                <p id="categoria_ocorrencia" style="padding-left: 1em;"></p>
+                <p id="setor" style="padding-left: 1em;"></p>
+                <p id="status" style="padding-left: 1em;"></p>
+                <div class="card border-0">
+                    <div class="card-body p-0">
+                        <ul class="timeline" id="timeline">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal com os históricos da ouvidoria - INICIO -->
+
+
+<!-- Modal com mensagem de sucesso ao abrir a ouvidoria - INICIO -->
+
+<div class="modal fade" id="modalSucessoOuvidoria" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #00C851;">
+                <h4 class="text-white" style="    font-weight: 300;">Ouvidoria aberta com sucesso</h4>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <i class="fas fa-check" style="color: #28a745; font-size: 4em;"></i>
+                </div>
+                <p class="text-center mt-4">Acompanhe o andamento da ocorrência através do número de protocolo.</p>
+                <h3 class="text-center mt-2"><strong id="Numprotocolo"></strong></h3>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal com mensagem de sucesso ao abrir a ouvidoria - FIM -->
+
+<!-- Modal com mensagem de ERROR ao abrir a ouvidoria - INICIO -->
+
+<div class="modal fade" id="modalErrorOuvidoria" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #ff3547;">
+                <h4 class="text-white" style="font-weight: 300;">Error ao processar a requisição</h4>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center mt-3">
+                    <i class="fas fa-times" style="color: #FF3547; font-size: 4em;"></i>
+                </div>
+                <p class="text-center mt-4" id="errorMsgOuvidoria"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-dark" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal com mensagem de sucesso ao ERROR a ouvidoria - FIM -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="src/js/script.js"></script>
+<script>
+
+</script>
+</body>
+
+</html>
