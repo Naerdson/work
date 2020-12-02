@@ -15,7 +15,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a74744fb-7be6-45e2-8726-ea479d1b2f80" name="Default Changelist" comment="Alterações simples">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/entrar/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/entrar/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +148,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../newOuvidoria" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -206,6 +205,7 @@
       <workItem from="1606479468023" duration="1283000" />
       <workItem from="1606482333911" duration="30000" />
       <workItem from="1606745543471" duration="397000" />
+      <workItem from="1606823606437" duration="951000" />
     </task>
     <task id="LOCAL-00001" summary="modificações 18/11">
       <created>1605719342268</created>
