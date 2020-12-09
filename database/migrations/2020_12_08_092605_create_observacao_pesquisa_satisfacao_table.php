@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePesquisaSatisfacaoTable extends Migration
+class CreateObservacaoPesquisaSatisfacaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreatePesquisaSatisfacaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('pesquisa_satisfacao', function (Blueprint $table) {
+        Schema::create('observacao_pesquisas_satisfacao', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ocorrencia_id')->references('id')->on('ouvidorias_ocorrencias');
-            $table->foreignId('pergunta_id')->references('id')->on('perguntas_pesquisas');
-            $table->string('resposta');
+            $table->string('descricao');
             $table->timestamps();
-            $table->softDeletes();
-
         });
     }
 
@@ -31,6 +28,6 @@ class CreatePesquisaSatisfacaoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pesquisa_satisfacao');
+        Schema::dropIfExists('observacao_pesquisas_satisfacao');
     }
 }

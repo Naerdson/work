@@ -13,14 +13,14 @@ class OuvidoriasOcorrencia extends Model
     protected $table = 'ouvidorias_ocorrencias';
 
     protected $fillable = [
-        'nome', 
-        'protocolo', 
-        'contato', 
-        'descricao', 
-        'status_id', 
-        'categoria_id', 
-        'demandante_id', 
-        'campus_id', 
+        'nome',
+        'protocolo',
+        'contato',
+        'descricao',
+        'status_id',
+        'categoria_id',
+        'demandante_id',
+        'campus_id',
         'setor_responsavel_id',
         'tipo_contato_id'
     ];
@@ -35,10 +35,10 @@ class OuvidoriasOcorrencia extends Model
     ];
 
     protected $hidden = [
-        'categoria_id', 
-        'demandante_id', 
-        'status_id', 
-        'campus_id', 
+        'categoria_id',
+        'demandante_id',
+        'status_id',
+        'campus_id',
         'setor_responsavel_id',
         'updated_at'
     ];
@@ -49,8 +49,8 @@ class OuvidoriasOcorrencia extends Model
         $operadorFiltroProtoloco = (is_null($filtro)) ? '!=' : '=';
         $status_id = $this->getIdStatus($status);
 
-        $operadorFiltroStatus = ($status_id == 0) ? '>' : '='; 
-        $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '='; 
+        $operadorFiltroStatus = ($status_id == 0) ? '>' : '=';
+        $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '=';
         $filtroSetor = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
 
         return OuvidoriasOcorrencia::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id')
@@ -98,11 +98,11 @@ class OuvidoriasOcorrencia extends Model
                                         count(ocorrencia.demandante_id) as qtd_demandante_especifico,
                                         cast(100. * count(ocorrencia.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias where month(created_at) = {$filtroMes}) as decimal(10,2)) as porcentagem_individual,
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias where MONTH(created_at) = {$filtroMes}) as total_ocorrencias
-                                    from 
+                                    from
                                         ouvidorias_ocorrencias as ocorrencia
                                         join ouvidorias_demandantes as demandante
                                             on demandante.id = ocorrencia.demandante_id
-                                    where 
+                                    where
                                         month(ocorrencia.created_at) = {$filtroMes}
                                         group by demandante.nome;
                                 "),
@@ -112,11 +112,11 @@ class OuvidoriasOcorrencia extends Model
                                         count(ocorrencia.categoria_id) as qtd_categoria_especifica,
                                         cast(100. * count(ocorrencia.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias where month(created_at) = {$filtroMes}) as decimal(10,2)) as porcentagem_individual,
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias where MONTH(created_at) = {$filtroMes}) as total_ocorrencias
-                                    from 
+                                    from
                                         ouvidorias_ocorrencias as ocorrencia
                                         join ouvidorias_categorias as categoria
                                             on categoria.id = ocorrencia.categoria_id
-                                    where 
+                                    where
                                         month(ocorrencia.created_at) = {$filtroMes}
                                         group by categoria.nome;
                                 "),
@@ -152,5 +152,15 @@ class OuvidoriasOcorrencia extends Model
     public function campus()
     {
         return $this->hasOne(Campus::class, 'id', 'campus_id');
+    }
+
+    public function pesquisa_satisfacao()
+    {
+        return $this->hasMany(PesquisaSatifacao::class, 'ocorrencia_id', 'id');
+    }
+
+    public function observao_pesquisa_satisfacao()
+    {
+        return $this->hasOne(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
     }
 }

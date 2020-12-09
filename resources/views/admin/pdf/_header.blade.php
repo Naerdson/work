@@ -18,14 +18,14 @@
         right: 0;
         width: 100%;
         text-align: center;
-        padding-top: 10px;   
+        padding-top: 10px;
     }
-    
+
     .header img {
         width: 30%;
     }
     .header p {
-        font-size: 23px;  
+        font-size: 23px;
         font-weight: bold;
         margin:0;
     }
@@ -39,7 +39,7 @@
 </style>
 
 <div class="header">
-    <img src="{{ asset('img/logo_uni_relatorio.png') }}">
+
     <p>Centro Universitário Fametro</p>
     <span>RUA CONSELHEIRO ESTELITA, 500 - BAIRRO: CENTRO - CEP: 60010260 - FORTALEZA - CE - CNPJ: 03.884.793/001-47</span>
 </div>

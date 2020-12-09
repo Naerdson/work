@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campus;
+use App\Models\OpcaoPesquisaSatisfacao;
 use App\Models\OuvidoriasCategoria;
 use App\Models\OuvidoriasDemandante;
 use App\Models\PerguntasPesquisa;
@@ -19,7 +20,8 @@ class RecursosIniciaisOuvidoriaController extends Controller
             'campus' => Campus::all()->toArray(),
             'categorias_demandantes' => OuvidoriasDemandante::all()->toArray(),
             'tipos_contato' => TiposContato::all()->toArray(),
-            'perguntas_pesquisa' => PerguntasPesquisa::all()->toArray()
+            'perguntas_pesquisa' => PerguntasPesquisa::all()->toArray(),
+            'opcoes_pesquisa_satisfacao' => OpcaoPesquisaSatisfacao::all()->toArray()
         ], 200);
     }
 }

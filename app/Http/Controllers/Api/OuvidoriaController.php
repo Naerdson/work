@@ -7,18 +7,21 @@ use App\Http\Requests\OuvidoriaStoreRequest;
 use Illuminate\Http\Request;
 use App\Models\Helpers;
 use App\Http\Resources\Ouvidoria as OuvidoriaResource;
+use App\Models\ObservacaoPesquisaSatisfacao;
 use App\Models\OuvidoriasOcorrencia;
+use App\Models\PesquisaSatifacao;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class OuvidoriaController extends Controller
 {
 
-    public function store(OuvidoriaStoreRequest $request, helpers $functions)
+    public function store(Request $request, helpers $functions)
     {
         define('TIPO_CONTATO_EMAIL', 1);
-        
+
         try {
+
             $ouvidoriaInstance = OuvidoriasOcorrencia::create(array_merge(
                 $request->all(),
                 [
@@ -26,17 +29,24 @@ class OuvidoriaController extends Controller
                 ]
             ));
 
-            if($ouvidoriaInstance->tipo_contato_id == TIPO_CONTATO_EMAIL){
+            // if($ouvidoriaInstance->tipo_contato_id == TIPO_CONTATO_EMAIL){
 
-               $contatoEmail = $ouvidoriaInstance->contato;
-               $numeroProtocolo = $ouvidoriaInstance->protocolo;
+            //    $contatoEmail = $ouvidoriaInstance->contato;
+            //    $numeroProtocolo = $ouvidoriaInstance->protocolo;
 
                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
                    $message->to($contatoEmail);
                    $message->from('sistemas@unifametro.edu.br','Unifametro');
                    $message->subject('Recebemos sua solicitação.');
                });
-            }
+            // }
+
+
+            // foreach ($request->input('resposta') as $key => $value) {
+            //     PesquisaSatifacao::create(['ocorrencia_id' => $ouvidoriaInstance->id, 'pergunta_id' => $key, 'resposta_id' => $value]);
+            // }
+
+            // ObservacaoPesquisaSatisfacao::create(['ocorrencia_id' => $ouvidoriaInstance->id, 'descricao' => $request->input('observacao')]);
 
             return response()->json([
                 'message' => 'Ouvidoria aberta com sucesso',

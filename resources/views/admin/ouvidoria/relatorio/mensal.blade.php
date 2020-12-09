@@ -2,7 +2,7 @@
 
 @section('content')
     @section('title')
-        <h4 class="text-center text-uppercase mt-3 mb-4">RELATÓRIO OUVIDORIA - 
+        <h4 class="text-center text-uppercase mt-3 mb-4">RELATÓRIO OUVIDORIA -
             @foreach ($meses as $keyMonth => $month)
                 @if ($mes == $keyMonth)
                     {{ $month }}
@@ -10,12 +10,42 @@
             @endforeach
         </h4>
     @endsection
-    
+
+    @foreach($perguntas as $pergunta)
+        <h6>{{ $pergunta['nome'] }}</h6>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Resposta</th>
+                    <th>Quantidade</th>
+                    <th>Porcentagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>Não desejo responder / Não se aplica</td>
+                    </tr>
+                    <tr>
+                        <td>Ruim</td>
+                    </tr>
+                    <tr>
+                        <td>Regular</td>
+                    </tr>
+                    <tr>
+                        <td>Bom</td>
+                    </tr>
+                    <tr>
+                        <td>Excelente</td>
+                    </tr>
+            </tbody>
+        </table>
+    @endforeach
+
     <div class="row">
         <div class="col-2">
             <div id="myPieChart"></div>
         </div>
-            
+
         <div class="col-2">
             <div id="myPieChart2"></div>
         </div>
@@ -97,7 +127,7 @@
             function init() {
                 google.load("visualization", "44", {packages:["corechart"]});
                 var interval = setInterval(function () {
-                if (google.visualization !== undefined && google.visualization.DataTable !== undefined 
+                if (google.visualization !== undefined && google.visualization.DataTable !== undefined
                     && google.visualization.PieChart !== undefined) {
                     clearInterval(interval);
                     window.status = 'ready';
@@ -130,7 +160,7 @@
                     backgroundColor: 'transparent',
                     chartArea: {
                         top: 60,
-                        width: '70%', 
+                        width: '70%',
                         height: '70%'
                     },
                     legend: {
@@ -165,7 +195,7 @@
                     },
                     chartArea: {
                         top: 80,
-                        width: '70%', 
+                        width: '70%',
                         height: '70%'
                     },
                     legend: {

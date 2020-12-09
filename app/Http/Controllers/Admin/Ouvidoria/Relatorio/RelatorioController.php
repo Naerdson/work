@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Ouvidoria\Relatorio;
 
 use App\Http\Controllers\Controller;
 use App\Models\OuvidoriasOcorrencia;
+use App\Models\PerguntasPesquisa;
+use App\Models\PesquisaSatifacao;
 use App\Services\GraficoOuvidoria as ChartsOuvidoriaService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -29,27 +31,32 @@ class RelatorioController extends Controller
         ]);
     }
 
-    public function downloadReport(Request $request) 
+    public function downloadReport(Request $request)
     {
         $filtroMes = (is_null($request->input('mes')) ? Carbon::now()->month : (int) $request->input('mes'));
 
+        $data = PesquisaSatifacao::whereMonth('created_at', $filtroMes)->get()->groupBy('pergunta_id');
+
+        // dd($data->toArray());
+        // dd($this->ouvidoria->report($request->input('mes')));
         $pdf = PDF::loadView('admin.ouvidoria.relatorio.mensal', [
             'data' => $this->ouvidoria->report($request->input('mes')),
             'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts($request->input('mes')),
             'mes' => $filtroMes,
-            'meses' => $this->getMonth()
+            'meses' => $this->getMonth(),
+            'perguntas' => PerguntasPesquisa::get(),
         ]);
 
         $pdf->setOptions([
             'enable-javascript' => true,
-            'javascript-delay' => 1000,
-            'no-stop-slow-scripts' => true,
-            'enable-smart-shrinking' => true,
+            // 'javascript-delay' => 1000,
+            // 'no-stop-slow-scripts' => true,
+            // 'enable-smart-shrinking' => true,
             'page-size' => 'a4',
             'footer-center' => '[page]'
         ]);
 
-        return $pdf->download('RelatorioOuvidoria.pdf');
+        return $pdf->stream('RelatorioOuvidoria.pdf');
     }
 
     public function getMonth()
