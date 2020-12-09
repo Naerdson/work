@@ -11,10 +11,10 @@ class User extends Authenticatable
     protected $table = 'usuarios';
 
     protected $fillable = [
-        'nome', 
-        'usuario', 
-        'email', 
-        'setor_id', 
+        'nome',
+        'usuario',
+        'email',
+        'setor_id',
         'nivel_id'
     ];
 
@@ -27,17 +27,19 @@ class User extends Authenticatable
         'updated_at'
     ];
     protected $visible = ['nome'];
-    
+
     public function nivel()
     {
         return $this->hasOne(NivelUsuario::class, 'id', 'nivel_id');
     }
 
     public function authenticateLdap($password){
+
         return $this->_attemptAuthenticatedManuallyInAd($this->usuario, $password);
     }
 
     private function _attemptAuthenticatedManuallyInAd($username, $password){
+
         if (empty($username) || empty($password)) return false;
 
         $ldap_host = env('LDAP_HOSTS');

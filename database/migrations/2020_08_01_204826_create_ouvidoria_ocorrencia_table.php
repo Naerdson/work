@@ -22,6 +22,7 @@ class CreateOuvidoriaOcorrenciaTable extends Migration
             $table->foreignId('categoria_id')->references('id')->on('ouvidorias_categorias');
             $table->foreignId('demandante_id')->references('id')->on('ouvidorias_demandantes');
             $table->foreignId('campus_id')->references('id')->on('campus');
+            //$table->foreignId('causa_id')->references('id')->on('causas');
             $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('setor_responsavel_id')->default(19);
 
