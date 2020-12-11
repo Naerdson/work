@@ -35,6 +35,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
+        // 'binary' => base_path('vendor/h4cc/wkhtmltopdf-amd64/bin'),
         'binary' => 'wkhtmltopdf',
         // 'binary'  => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"',
         'timeout' => false,
@@ -44,6 +45,7 @@ return [
 
     'image' => [
         'enabled' => true,
+        // 'binary' => base_path('vendor/h4cc/wkhtmltoimage-amd64/bin'),
         'binary' => 'wkhtmltoimage',
         // 'binary'  => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"',
         'timeout' => false,

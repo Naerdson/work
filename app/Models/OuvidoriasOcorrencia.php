@@ -31,7 +31,8 @@ class OuvidoriasOcorrencia extends Model
         'demandante',
         'status',
         'campus',
-        'historicos'
+        'historicos',
+        'pesquisa_satisfacao'
     ];
 
     protected $hidden = [
@@ -120,7 +121,26 @@ class OuvidoriasOcorrencia extends Model
                                         month(ocorrencia.created_at) = {$filtroMes}
                                         group by categoria.nome;
                                 "),
-            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get()
+            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get(),
+            'PESQUISA_SATISFACAO' => DB::select(
+                                        "select
+                                        per.id as pergunta_id,
+                                        res.nome as resposta,
+                                        count(pes.resposta_id) as quantidade,
+                                        cast(100 * count(pes.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes}) as decimal(10,2)) as porcentagem
+                                    from
+                                        pesquisa_satisfacao as pes
+                                        join perguntas_pesquisas as per
+                                            on per.id = pes.pergunta_id
+                                        join opcoes_pesquisa_satisfacao as res
+                                            on res.id = pes.resposta_id
+                                        join ouvidorias_ocorrencias as ocorrencia
+                                            on ocorrencia.id = pes.ocorrencia_id
+                                    where
+                                        month(ocorrencia.created_at) = {$filtroMes}
+                                        group by res.nome;
+                                    ")
+
         ];
     }
 
@@ -156,11 +176,12 @@ class OuvidoriasOcorrencia extends Model
 
     public function pesquisa_satisfacao()
     {
-        return $this->hasMany(PesquisaSatifacao::class, 'ocorrencia_id', 'id');
+        return $this->hasOne(PesquisaSatifacao::class, 'ocorrencia_id', 'id');
     }
 
     public function observao_pesquisa_satisfacao()
     {
-        return $this->hasOne(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
+        return $this->hasMany(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
     }
+
 }

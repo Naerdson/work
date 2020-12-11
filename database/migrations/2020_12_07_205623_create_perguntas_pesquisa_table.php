@@ -28,6 +28,6 @@ class CreatePerguntasPesquisaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perguntas_pesquisa');
+        Schema::dropIfExists('perguntas_pesquisas');
     }
 }

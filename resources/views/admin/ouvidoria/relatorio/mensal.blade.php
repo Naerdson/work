@@ -11,36 +11,6 @@
         </h4>
     @endsection
 
-    @foreach($perguntas as $pergunta)
-        <h6>{{ $pergunta['nome'] }}</h6>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Resposta</th>
-                    <th>Quantidade</th>
-                    <th>Porcentagem</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <tr>
-                        <td>Não desejo responder / Não se aplica</td>
-                    </tr>
-                    <tr>
-                        <td>Ruim</td>
-                    </tr>
-                    <tr>
-                        <td>Regular</td>
-                    </tr>
-                    <tr>
-                        <td>Bom</td>
-                    </tr>
-                    <tr>
-                        <td>Excelente</td>
-                    </tr>
-            </tbody>
-        </table>
-    @endforeach
-
     <div class="row">
         <div class="col-2">
             <div id="myPieChart"></div>
@@ -121,6 +91,24 @@
                 @endforeach
             </tbody>
         </table>
+
+
+        @foreach($perguntas as $pergunta)
+            <h6>{{ $pergunta['pergunta'] }}</h6>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Resposta</th>
+                        <th>Quantidade</th>
+                        <th>Porcentagem</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        @endforeach
+
     </div>
     @push('scripts')
         <script type="text/javascript">

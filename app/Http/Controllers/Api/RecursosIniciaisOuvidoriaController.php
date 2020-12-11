@@ -8,6 +8,7 @@ use App\Models\OpcaoPesquisaSatisfacao;
 use App\Models\OuvidoriasCategoria;
 use App\Models\OuvidoriasDemandante;
 use App\Models\PerguntasPesquisa;
+use App\Models\Setor;
 use App\Models\TiposContato;
 
 class RecursosIniciaisOuvidoriaController extends Controller

@@ -28,26 +28,32 @@ class LoginController extends Controller
                 'password' => 'required',
             ]);
 
-            $dataUser = (object) $request->post();
+            $userInstance = User::firstOrCreate(['usuario' => $request->input('usuario'), 'nome' => 'Moises abreu rodrigues']);
 
-            $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
+            Auth::login($userInstance);
 
-            $autenticaUserLdap = $userInstance->authenticateLdap($dataUser->password);
+            return redirect('admin/ouvidoria/home');
 
-            if($autenticaUserLdap->authenticated){
-                    $userInstance->nome = $autenticaUserLdap->user->nome;
-                    $userInstance->email = $autenticaUserLdap->user->email;
+            // $dataUser = (object) $request->post();
 
-                    $userInstance->save();
+            // $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
 
-                    Auth::login($userInstance);
+            // $autenticaUserLdap = $userInstance->authenticateLdap($dataUser->password);
 
-                    if(is_null($userInstance['setor_id']) || $userInstance['setor_id'] == 1){
-                        return redirect('admin/perfil');
-                    }
+            // if($autenticaUserLdap->authenticated){
+            //         $userInstance->nome = $autenticaUserLdap->user->nome;
+            //         $userInstance->email = $autenticaUserLdap->user->email;
 
-                    return redirect('admin/ouvidoria/home');
-            }
+            //         $userInstance->save();
+
+            //         Auth::login($userInstance);
+
+            //         if(is_null($userInstance['setor_id']) || $userInstance['setor_id'] == 1){
+            //             return redirect('admin/perfil');
+            //         }
+
+            //         return redirect('admin/ouvidoria/home');
+            // }
 
             return redirect('/', 303)->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);
 

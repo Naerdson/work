@@ -34,19 +34,19 @@ class OuvidoriaController extends Controller
             //    $contatoEmail = $ouvidoriaInstance->contato;
             //    $numeroProtocolo = $ouvidoriaInstance->protocolo;
 
-               Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
-                   $message->to($contatoEmail);
-                   $message->from('sistemas@unifametro.edu.br','Unifametro');
-                   $message->subject('Recebemos sua solicitação.');
-               });
+            //    Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
+            //        $message->to($contatoEmail);
+            //        $message->from('sistemas@unifametro.edu.br','Unifametro');
+            //        $message->subject('Recebemos sua solicitação.');
+            //    });
             // }
 
 
-            // foreach ($request->input('resposta') as $key => $value) {
-            //     PesquisaSatifacao::create(['ocorrencia_id' => $ouvidoriaInstance->id, 'pergunta_id' => $key, 'resposta_id' => $value]);
-            // }
+            foreach ($request->input('resposta') as $key => $value) {
+                PesquisaSatifacao::create(['ocorrencia_id' => $ouvidoriaInstance->id, 'pergunta_id' => $key, 'resposta_id' => $value]);
+            }
 
-            // ObservacaoPesquisaSatisfacao::create(['ocorrencia_id' => $ouvidoriaInstance->id, 'descricao' => $request->input('observacao')]);
+            ObservacaoPesquisaSatisfacao::create(['ocorrencia_id' => $ouvidoriaInstance->id, 'descricao' => $request->input('observacao')]);
 
             return response()->json([
                 'message' => 'Ouvidoria aberta com sucesso',
