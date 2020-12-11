@@ -9,6 +9,8 @@ use App\Models\OuvidoriasCategoria;
 use App\Models\OuvidoriasDemandante;
 use App\Models\PerguntasPesquisa;
 use App\Models\TiposContato;
+use App\Models\Setor;
+use App\Models\Causa;
 
 class RecursosIniciaisOuvidoriaController extends Controller
 {
@@ -21,7 +23,9 @@ class RecursosIniciaisOuvidoriaController extends Controller
             'categorias_demandantes' => OuvidoriasDemandante::all()->toArray(),
             'tipos_contato' => TiposContato::all()->toArray(),
             'perguntas_pesquisa' => PerguntasPesquisa::all()->toArray(),
-            'opcoes_pesquisa_satisfacao' => OpcaoPesquisaSatisfacao::all()->toArray()
+            'opcoes_pesquisa_satisfacao' => OpcaoPesquisaSatisfacao::all()->toArray(),
+            'setores' => Setor::all()->toArray(),
+            'causas' => Causa::all()->toArray()
         ], 200);
     }
 }

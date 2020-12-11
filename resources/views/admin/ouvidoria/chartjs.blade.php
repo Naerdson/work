@@ -7,7 +7,7 @@
       function init() {
         google.load("visualization", "44", {packages:["corechart"]});
         var interval = setInterval(function () {
-          if (google.visualization !== undefined && google.visualization.DataTable !== undefined 
+          if (google.visualization !== undefined && google.visualization.DataTable !== undefined
             && google.visualization.PieChart !== undefined) {
             clearInterval(interval);
             window.status = 'ready';
@@ -46,7 +46,7 @@
       }
     </script>
 </head>
-    
+
     <body onload="init()">
         <div class="d-flex">
             <div>
@@ -56,7 +56,7 @@
                 <div id="myPieChart2" style="width: 520px; height: 300px;"></div>
             </div>
         </div>
-        
-        
+
+
     </body>
 </html>

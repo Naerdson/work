@@ -29,10 +29,11 @@ class OuvidoriaController extends Controller
                 ]
             ));
 
-            // if($ouvidoriaInstance->tipo_contato_id == TIPO_CONTATO_EMAIL){
+            if($ouvidoriaInstance->tipo_contato_id == TIPO_CONTATO_EMAIL){
 
-            //    $contatoEmail = $ouvidoriaInstance->contato;
-            //    $numeroProtocolo = $ouvidoriaInstance->protocolo;
+               $contatoEmail = $ouvidoriaInstance->contato;
+               $numeroProtocolo = $ouvidoriaInstance->protocolo;
+            }
 
                Mail::send('emails.confirmacao-ouvidoria', ['protocolo' => $numeroProtocolo], function ($message) use ($contatoEmail) {
                    $message->to($contatoEmail);
