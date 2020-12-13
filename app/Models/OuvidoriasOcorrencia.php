@@ -21,6 +21,7 @@ class OuvidoriasOcorrencia extends Model
         'categoria_id',
         'demandante_id',
         'campus_id',
+        'causa_id',
         'setor_responsavel_id',
         'tipo_contato_id'
     ];
@@ -32,6 +33,7 @@ class OuvidoriasOcorrencia extends Model
         'status',
         'campus',
         'historicos',
+        'causa'
     ];
 
     protected $hidden = [
@@ -53,7 +55,7 @@ class OuvidoriasOcorrencia extends Model
         $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '=';
         $filtroSetor = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
 
-        return self::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id')
+        return self::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id', 'causa_id')
                 ->where('setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor)
                 ->where('status_id', $operadorFiltroStatus, $status_id)
                 ->where('protocolo', $operadorFiltroProtoloco , $filtro)
@@ -177,6 +179,11 @@ class OuvidoriasOcorrencia extends Model
     public function observao_pesquisa_satisfacao()
     {
         return $this->hasOne(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
+    }
+
+    public function causa()
+    {
+        return $this->hasOne(Causa::class, 'id', 'causa_id');
     }
 
 }

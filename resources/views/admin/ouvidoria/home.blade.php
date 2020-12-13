@@ -76,6 +76,7 @@
                                     <th class="text-black-50">Data de abertura</th>
                                     <th class="text-black-50">Protocolo</th>
                                     <th class="text-black-50">Categoria</th>
+                                    <th class="text-black-50">Causa</th>
                                     <th class="text-black-50">Setor Responsável</th>
                                     <th class="text-black-50">Ações</th>
                                 </tr>
@@ -98,6 +99,7 @@
                                     <td class="text-dark">{{ date("d/m/Y H:i", strtotime($ocorrencia['created_at'])) }}</td>
                                     <td class="text-dark">{{ $ocorrencia['protocolo'] }}</td>
                                     <td class="text-dark">{{ $ocorrencia->categoria->nome }}</td>
+                                    <td class="text-dark">{{ $ocorrencia->causa->nome }}</td>
                                     <td class="text-dark">{{ $ocorrencia->setor_responsavel->nome  }}</td>
                                     <td>
                                         @if ($ocorrencia->status->id == 3 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
