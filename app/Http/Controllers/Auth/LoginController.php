@@ -30,30 +30,26 @@ class LoginController extends Controller
 
             $userInstance = User::firstOrCreate(['usuario' => $request->input('usuario'), 'nome' => 'Moises abreu rodrigues']);
 
-            Auth::login($userInstance);
+            $dataUser = (object) $request->post();
 
-            return redirect('admin/ouvidoria/home');
+            $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
 
-            // $dataUser = (object) $request->post();
+            $autenticaUserLdap = $userInstance->authenticateLdap($dataUser->password);
 
-            // $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
+            if($autenticaUserLdap->authenticated){
+                    $userInstance->nome = $autenticaUserLdap->user->nome;
+                    $userInstance->email = $autenticaUserLdap->user->email;
 
-            // $autenticaUserLdap = $userInstance->authenticateLdap($dataUser->password);
+                    $userInstance->save();
 
-            // if($autenticaUserLdap->authenticated){
-            //         $userInstance->nome = $autenticaUserLdap->user->nome;
-            //         $userInstance->email = $autenticaUserLdap->user->email;
+                    Auth::login($userInstance);
 
-            //         $userInstance->save();
+                    if(is_null($userInstance['setor_id']) || $userInstance['setor_id'] == 1){
+                        return redirect('admin/perfil');
+                    }
 
-            //         Auth::login($userInstance);
-
-            //         if(is_null($userInstance['setor_id']) || $userInstance['setor_id'] == 1){
-            //             return redirect('admin/perfil');
-            //         }
-
-            //         return redirect('admin/ouvidoria/home');
-            // }
+                    return redirect('admin/ouvidoria/home');
+            }
 
             return redirect('/', 303)->with(['type' => 'danger', 'message' => 'Usuário ou senha incorreto. Tente novamente.']);
 
