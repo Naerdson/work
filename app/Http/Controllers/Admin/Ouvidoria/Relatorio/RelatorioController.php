@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin\Ouvidoria\Relatorio;
 
 use App\Http\Controllers\Controller;
+use App\Models\OpcaoPesquisaSatisfacao;
 use App\Models\OuvidoriasOcorrencia;
+use App\Models\PerguntasPesquisa;
+use App\Models\PesquisaSatifacao;
 use App\Services\GraficoOuvidoria as ChartsOuvidoriaService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Models\ObservacaoPesquisaSatisfacao;
 use PDF;
 
 class RelatorioController extends Controller
@@ -29,13 +34,14 @@ class RelatorioController extends Controller
         ]);
     }
 
-    public function downloadReport(Request $request) 
+    public function downloadReport(Request $request)
     {
         $filtroMes = (is_null($request->input('mes')) ? Carbon::now()->month : (int) $request->input('mes'));
 
-        $pdf = PDF::loadView('admin.ouvidoria.relatorio.mensal', [
+        $pdf = \PDF::loadView('admin.ouvidoria.relatorio.mensal', [
             'data' => $this->ouvidoria->report($request->input('mes')),
             'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts($request->input('mes')),
+            'observacoes_pesquisa_satisfacao' => ObservacaoPesquisaSatisfacao::whereMonth('created_at', $filtroMes)->get(),
             'mes' => $filtroMes,
             'meses' => $this->getMonth()
         ]);

@@ -13,32 +13,34 @@ class OuvidoriasOcorrencia extends Model
     protected $table = 'ouvidorias_ocorrencias';
 
     protected $fillable = [
-        'nome', 
-        'protocolo', 
-        'contato', 
-        'descricao', 
-        'status_id', 
-        'categoria_id', 
-        'demandante_id', 
-        'campus_id', 
+        'nome',
+        'protocolo',
+        'contato',
+        'descricao',
+        'status_id',
+        'categoria_id',
+        'demandante_id',
+        'campus_id',
+        'causa_id',
         'setor_responsavel_id',
         'tipo_contato_id'
     ];
 
     protected $with = [
-        'setorResponsavel',
+        'setor_responsavel',
         'categoria',
         'demandante',
         'status',
         'campus',
-        'historicos'
+        'historicos',
+        'causa'
     ];
 
     protected $hidden = [
-        'categoria_id', 
-        'demandante_id', 
-        'status_id', 
-        'campus_id', 
+        'categoria_id',
+        'demandante_id',
+        'status_id',
+        'campus_id',
         'setor_responsavel_id',
         'updated_at'
     ];
@@ -49,11 +51,11 @@ class OuvidoriasOcorrencia extends Model
         $operadorFiltroProtoloco = (is_null($filtro)) ? '!=' : '=';
         $status_id = $this->getIdStatus($status);
 
-        $operadorFiltroStatus = ($status_id == 0) ? '>' : '='; 
-        $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '='; 
+        $operadorFiltroStatus = ($status_id == 0) ? '>' : '=';
+        $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '=';
         $filtroSetor = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
 
-        return OuvidoriasOcorrencia::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id')
+        return self::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id', 'causa_id')
                 ->where('setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor)
                 ->where('status_id', $operadorFiltroStatus, $status_id)
                 ->where('protocolo', $operadorFiltroProtoloco , $filtro)
@@ -79,10 +81,10 @@ class OuvidoriasOcorrencia extends Model
     public function getCountOuvidoria()
     {
         return [
-            'total' => OuvidoriasOcorrencia::count(),
-            'encaminhado' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
-            'concluido' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
-            'aberto' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_ABERTO)->count(),
+            'total' => self::count(),
+            'encaminhado' => self::where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
+            'concluido' => self::where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
+            'aberto' => self::where('status_id', StatusModel::STATUS_ABERTO)->count(),
         ];
     }
 
@@ -90,6 +92,7 @@ class OuvidoriasOcorrencia extends Model
     {
         $filtroMes = (is_null($filtroMes) ? Carbon::now()->month : (int) $filtroMes);
         $reclamacaoOuvidoriaID = OuvidoriasCategoria::RECLAMACAO;
+        $pesquisasSatisfacao = PesquisaSatifacao::whereMonth('created_at', $filtroMes)->groupBy('pergunta_id')->get();
 
         return [
             'DEMANDANTES'   =>  DB::select("
@@ -98,11 +101,11 @@ class OuvidoriasOcorrencia extends Model
                                         count(ocorrencia.demandante_id) as qtd_demandante_especifico,
                                         cast(100. * count(ocorrencia.demandante_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias where month(created_at) = {$filtroMes}) as decimal(10,2)) as porcentagem_individual,
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias where MONTH(created_at) = {$filtroMes}) as total_ocorrencias
-                                    from 
+                                    from
                                         ouvidorias_ocorrencias as ocorrencia
                                         join ouvidorias_demandantes as demandante
                                             on demandante.id = ocorrencia.demandante_id
-                                    where 
+                                    where
                                         month(ocorrencia.created_at) = {$filtroMes}
                                         group by demandante.nome;
                                 "),
@@ -112,15 +115,34 @@ class OuvidoriasOcorrencia extends Model
                                         count(ocorrencia.categoria_id) as qtd_categoria_especifica,
                                         cast(100. * count(ocorrencia.categoria_id) / (SELECT COUNT(*) from ouvidorias_ocorrencias where month(created_at) = {$filtroMes}) as decimal(10,2)) as porcentagem_individual,
                                         (SELECT COUNT(*) from ouvidorias_ocorrencias where MONTH(created_at) = {$filtroMes}) as total_ocorrencias
-                                    from 
+                                    from
                                         ouvidorias_ocorrencias as ocorrencia
                                         join ouvidorias_categorias as categoria
                                             on categoria.id = ocorrencia.categoria_id
-                                    where 
+                                    where
                                         month(ocorrencia.created_at) = {$filtroMes}
                                         group by categoria.nome;
                                 "),
-            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get()
+            'RECLAMACOES'   =>  self::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get(),
+            'PESQUISA_SATISFACAO' => $pesquisasSatisfacao->map(static function ($pesquisaSatifacao) use ($filtroMes){
+                    $respostas = DB::select("
+                        SELECT 
+                            opcoes.nome,
+                            count(pesquisa_satisfacao.resposta_id) as qtd,
+                            cast(100 * count(pesquisa_satisfacao.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes} and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}) as decimal(10,2)) as porcentagem
+                        FROM 
+                            pesquisa_satisfacao
+                        join opcoes_pesquisa_satisfacao as opcoes
+                            on opcoes.id = pesquisa_satisfacao.resposta_id
+                        where month(pesquisa_satisfacao.created_at) = {$filtroMes}
+                        and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}
+                        group by opcoes.nome;");
+
+                        return [
+                            'pergunta' => $pesquisaSatifacao->pergunta->nome,
+                            'resposta' => $respostas
+                        ];
+            })
         ];
     }
 
@@ -129,7 +151,7 @@ class OuvidoriasOcorrencia extends Model
         return $this->hasMany(OuvidoriasHistorico::class, 'ocorrencia_id', 'id');
     }
 
-    public function setorResponsavel()
+    public function setor_responsavel()
     {
         return $this->hasOne(Setor::class, 'id', 'setor_responsavel_id');
     }
@@ -153,4 +175,15 @@ class OuvidoriasOcorrencia extends Model
     {
         return $this->hasOne(Campus::class, 'id', 'campus_id');
     }
+
+    public function observao_pesquisa_satisfacao()
+    {
+        return $this->hasOne(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
+    }
+
+    public function causa()
+    {
+        return $this->hasOne(Causa::class, 'id', 'causa_id');
+    }
+
 }

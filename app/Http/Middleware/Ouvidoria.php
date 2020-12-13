@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Response;
 
 class Ouvidoria
 {
@@ -15,13 +16,20 @@ class Ouvidoria
      */
     public function handle($request, Closure $next)
     {
-        if($request->getClientIp() == '10.1.15.119' && $request->getPort() == '8082') {
-            return $next($request);
+        header('Access-Control-Allow-Origin', '*');
 
+
+        $headers = [
+            'Access-Control-Allow-Methods'=> 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers'=> 'Content-Type, X-Auth-Token, Origin'
+        ];
+        if($request->getMethod() == "OPTIONS") {
+            return Response::make('OK', 200, $headers);
         }
 
-        return response()->json([
-            'error' => 'Não autorizado'
-        ], 401);
+        $response = $next($request);
+        foreach($headers as $key => $value)
+            $response->header($key, $value);
+        return $response;
     }
 }

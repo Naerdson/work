@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             OuvidoriaStatusSeeder::class,
             SetorSeeder::class,
             TipoContatoSeeder::class,
+            PerguntasPesquisaSatisfacaoSeeder::class,
+            OpcoesPesquisaSatisfacaoSeeder::class,
+            CausaSeeder::class
         ]);
     }
 }

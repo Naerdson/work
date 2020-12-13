@@ -2,7 +2,7 @@
 
 @section('content')
     @section('title')
-        <h4 class="text-center text-uppercase mt-3 mb-4">RELATÓRIO OUVIDORIA - 
+        <h4 class="text-center text-uppercase mt-3 mb-4">RELATÓRIO OUVIDORIA -
             @foreach ($meses as $keyMonth => $month)
                 @if ($mes == $keyMonth)
                     {{ $month }}
@@ -10,12 +10,12 @@
             @endforeach
         </h4>
     @endsection
-    
+
     <div class="row">
         <div class="col-2">
             <div id="myPieChart"></div>
         </div>
-            
+
         <div class="col-2">
             <div id="myPieChart2"></div>
         </div>
@@ -91,13 +91,62 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="mb-4 mt-4">
+            <h5>PESQUISA DE SATISFAÇÃO</h5>
+        </div>
+
+        @foreach($data['PESQUISA_SATISFACAO'] as $pergunta)
+            <h6>{{ $pergunta['pergunta'] }}</h6>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Resposta</th>
+                        <th>Quantidade</th>
+                        <th>Porcentagem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($pergunta['resposta'] as $resposta)
+                        <tr>
+                            <td>{{ $resposta->nome }}</td>
+                            <td>{{ $resposta->qtd }}</td>
+                            <td>{{ $resposta->porcentagem }}%</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endforeach
+
+        <h6>SUGESTÕES/COMENTÁRIOS</h6>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Contato</th>
+                    <th>Comentário</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($observacoes_pesquisa_satisfacao as $observacao)
+                <tr>
+                    <td>{{ $observacao->ocorrencia->nome ?? 'Não Informado!' }}</td>
+                    <td>{{ date("d/m/Y H:i", strtotime($observacao->ocorrencia->created_at)) }}</td>
+                    <td>{{ $observacao->ocorrencia->contato }}</td>
+                    <td>{{ $observacao->descricao }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
     @push('scripts')
         <script type="text/javascript">
             function init() {
                 google.load("visualization", "44", {packages:["corechart"]});
                 var interval = setInterval(function () {
-                if (google.visualization !== undefined && google.visualization.DataTable !== undefined 
+                if (google.visualization !== undefined && google.visualization.DataTable !== undefined
                     && google.visualization.PieChart !== undefined) {
                     clearInterval(interval);
                     window.status = 'ready';
@@ -130,7 +179,7 @@
                     backgroundColor: 'transparent',
                     chartArea: {
                         top: 60,
-                        width: '70%', 
+                        width: '70%',
                         height: '70%'
                     },
                     legend: {
@@ -165,7 +214,7 @@
                     },
                     chartArea: {
                         top: 80,
-                        width: '70%', 
+                        width: '70%',
                         height: '70%'
                     },
                     legend: {

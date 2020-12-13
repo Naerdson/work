@@ -9,7 +9,7 @@ Route::namespace('Auth')->group(function () {
 
 Route::prefix('admin')->group(function () {
     Route::namespace('Admin')->group(function () {
-        
+
         Route::get('home', 'HomeController@index')->name('admin.home');
         Route::namespace('Ouvidoria')->group(function () {
             Route::get('ouvidoria/home{status?}', 'OuvidoriaController@index')->name('ouvidoria.home');
@@ -21,14 +21,14 @@ Route::prefix('admin')->group(function () {
             Route::get('ouvidoria/gerar-relatorio-mensal{mes?}', 'Relatorio\RelatorioController@downloadReport')->name('ouvidoria.gerar.relatorio');
         });
 
-       
+
         Route::namespace('UserManagement')->group(function () {
             Route::group(['middleware' => 'Admin'], function () {
                 Route::get('usuario/home', 'UserManagementController@index')->name('usuarios.home');
                 Route::get('usuario/gerenciar/{id}', 'UserManagementController@show')->name('usuarios.gerenciar');
                 Route::patch('usuario/gerenciar/{id}', 'UserManagementController@update')->name('usuario.gerenciar.atualizar');
             });
-        }); 
+        });
 
         Route::namespace('Config')->group(function () {
             Route::get('config/api', 'ApplicationController@create')->name('config.create');

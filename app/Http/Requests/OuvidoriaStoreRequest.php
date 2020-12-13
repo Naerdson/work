@@ -11,7 +11,7 @@ class OuvidoriaStoreRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -19,15 +19,17 @@ class OuvidoriaStoreRequest extends FormRequest
      */
     public function rules()
     {
-        $this->sanitize();
-
         return [
-            'nome' => ['string','nullable'],
-            'descricao' => ['string', 'required'],
-            'categoria_id' => ['required',' integer'],
-            'demandante_id' => ['required','integer'],
-            'campus_id' => ['required','integer']
+            'nome' => 'string|nullable',
+            'tipo_contato_id' => 'integer|required|exists:tipos_contatos,id',
+            'contato' => 'required',
+            'descricao' => 'string|required',
+            'categoria_id' => 'required|integer|exists:ouvidorias_categorias,id',
+            'demandante_id' => 'required|integer|exists:ouvidorias_demandantes,id',
+            'campus_id' => 'required|integer|exists:campus,id'
         ];
+
+        $this->sanitize();
     }
 
     public function sanitize()

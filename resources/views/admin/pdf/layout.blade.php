@@ -8,8 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <script src="{{ asset('js/loader.js') }}"></script>
+    <link rel="stylesheet" href="{{ public_path('css\bootstrap.min.css') }}">
+    <script type="text/javascript" src="{{ public_path('js\loader.js') }}"></script>
     <style>
         .page-break {
             page-break-after: always;
@@ -21,7 +21,9 @@
 
     @yield('title')
     @yield('content')
+
     
     @stack('scripts')
+    <!-- <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script> -->
 </body>
 </html>
