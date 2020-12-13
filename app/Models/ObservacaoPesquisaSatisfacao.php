@@ -12,4 +12,11 @@ class ObservacaoPesquisaSatisfacao extends Model
         'ocorrencia_id',
         'descricao'
     ];
+
+    protected $with = ['ocorrencia'];
+
+    public function ocorrencia()
+    {
+        return $this->hasOne(OuvidoriasOcorrencia::class, 'id', 'ocorrencia_id');
+    }
 }

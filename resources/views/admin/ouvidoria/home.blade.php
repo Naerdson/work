@@ -82,25 +82,25 @@
                             </thead>
 
                             <tbody>
-                            @foreach ($ouvidorias->toArray()['data'] as $ocorrencia)
+                            @foreach ($ouvidorias as $ocorrencia)
                                 <tr>
                                     <td class="text-dark">
-                                        @if($ocorrencia['status']['nome'] == 'Encaminhado')
+                                        @if($ocorrencia->status->nome == 'Encaminhado')
                                             <span class="span bg-warning">Encaminhado</span>
-                                        @elseif($ocorrencia['status']['nome'] == 'Aberto')
+                                        @elseif($ocorrencia->status->nome == 'Aberto')
                                             <span class="span bg-dark">Aberto</span>
-                                        @elseif($ocorrencia['status']['nome'] == 'Concluido')
+                                        @elseif($ocorrencia->status->nome == 'Concluido')
                                             <span class="span bg-success">Concluido</span>
-                                        @elseif($ocorrencia['status']['nome'] = 'Respondido por email')
+                                        @elseif($ocorrencia->status->nome = 'Respondido por email')
                                             <span class="span bg-secondary">Respondido por email</span>
                                         @endif
                                     </td>
                                     <td class="text-dark">{{ date("d/m/Y H:i", strtotime($ocorrencia['created_at'])) }}</td>
                                     <td class="text-dark">{{ $ocorrencia['protocolo'] }}</td>
-                                    <td class="text-dark">{{ $ocorrencia['categoria']['nome'] }}</td>
-                                    <td class="text-dark">{{ $ocorrencia['setor_responsavel']['nome']  }}</td>
+                                    <td class="text-dark">{{ $ocorrencia->categoria->nome }}</td>
+                                    <td class="text-dark">{{ $ocorrencia->setor_responsavel->nome  }}</td>
                                     <td>
-                                        @if ($ocorrencia['status']['id'] == 3 && $ocorrencia['setor_responsavel']['id'] == auth()->user()->setor_id)
+                                        @if ($ocorrencia->status->id == 3 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
                                             <form method="post"
                                                   action="{{ route('ouvidoria.home.encerrar', $ocorrencia['id']) }}"
                                                   style="display: inline"
@@ -112,16 +112,15 @@
                                                 </button>
                                             </form>
                                         @endif
-                                            
-                                        @if ($ocorrencia['status']['id'] <= 3)
-                                            @if($ocorrencia['tipo_contato_id'] == 1 && $ocorrencia['setor_responsavel']['id'] == auth()->user()->setor_id)
+                                        @if ($ocorrencia->status->id <= 3)
+                                            @if($ocorrencia['tipo_contato_id'] == 1 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                         data-ocorrenciaid="{{ $ocorrencia['id'] }}"
                                                         data-email="{{ $ocorrencia['contato'] }}" data-toggle="modal"
                                                         data-target="#modalResponderOcorrencia">
                                                         <i class="fas fa-envelope"></i>
                                                 </button>
-                                            @elseif($ocorrencia['setor_responsavel']['id'] == auth()->user()->setor_id)
+                                            @elseif($ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
                                                 <a href="https://wa.me/55{{$ocorrencia['contato']}}" target="_blank" class="btn btn-success btn-sm">
                                                     <i class="fab fa-whatsapp"></i>
                                                 </a>
@@ -136,7 +135,7 @@
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if($ocorrencia['status']['id'] == 1 && $ocorrencia['setor_responsavel']['id'] == 19 || $ocorrencia['status']['id'] >= 2 && $ocorrencia['setor_responsavel']['id'] == auth()->user()->setor_id)
+                                            @if($ocorrencia->status->id == 1 && $ocorrencia->setor_responsavel->id == 19 || $ocorrencia->status->id >= 2 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
                                                 <button type="button" class="btn btn-warning btn-sm"
                                                         data-ocorrenciaid="{{ $ocorrencia['id'] }}"
                                                         data-toggle="modal"
@@ -157,9 +156,9 @@
                                             data-toggle="modal" data-target="#modalDescricaoOcorrencia"
                                             data-nome="{{ $ocorrencia['nome'] }}"
                                             data-email="{{ $ocorrencia['contato'] }}"
-                                            data-categoria="{{ $ocorrencia['categoria']['nome'] }}"
-                                            data-demandante="{{ $ocorrencia['demandante']['nome'] }}"
-                                            data-campus="{{ $ocorrencia['campus']['nome'] }}"
+                                            data-categoria="{{ $ocorrencia->categoria->nome }}"
+                                            data-demandante="{{ $ocorrencia->demandante->nome }}"
+                                            data-campus="{{ $ocorrencia->campus->nome }}"
                                             data-descricao="{{ $ocorrencia['descricao'] }}">
                                             <i class="fas fa-info-circle"></i>
                                         </button>

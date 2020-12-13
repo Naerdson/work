@@ -24,6 +24,6 @@ class PesquisaSatifacao extends Model
 
     public function resposta()
     {
-        return $this->hasOne(OpcaoPesquisaSatisfacao::class, 'id', 'resposta_id');
+        return $this->hasMany(OpcaoPesquisaSatisfacao::class, 'id', 'resposta_id');
     }
 }

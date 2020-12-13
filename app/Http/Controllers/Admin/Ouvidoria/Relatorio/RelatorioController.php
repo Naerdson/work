@@ -11,6 +11,7 @@ use App\Services\GraficoOuvidoria as ChartsOuvidoriaService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\ObservacaoPesquisaSatisfacao;
 use PDF;
 
 class RelatorioController extends Controller
@@ -37,54 +38,12 @@ class RelatorioController extends Controller
     {
         $filtroMes = (is_null($request->input('mes')) ? Carbon::now()->month : (int) $request->input('mes'));
 
-        // $data = PesquisaSatifacao::whereMonth('created_at', $filtroMes)->get()->groupBy('pergunta_id')->map(function ($pesquisa) {
-        //     // return $pesquisa->transform(static function(PesquisaSatifacao $pesquisa) {
-        //     //     return [
-        //     //         'pergunta' => $pesquisa->pergunta->nome,
-        //     //         'resposta' => $pesquisa->resposta->count()
-        //     //     ];
-        //     // });
-        //     // return $pesquisa->map(function (PesquisaSatifacao $pesquisaSatifacao) {
-        //     //     return [
-        //     //         'pergunta' => $pesquisaSatifacao->pergunta->nome,
-        //     //         'resposta' => $pesquisaSatifacao->resposta->count()
-        //     //     ];
-        //     // });
-        // });
-
-        // $data = OuvidoriasOcorrencia::whereMonth('created_at', $filtroMes)->get();
-
-        // dd($data);
-        // $pesquisa = $data->each(static function (PesquisaSatifacao $pesquisaSatifacao) {
-        //     dd($pesquisaSatifacao);
-        //     $resposta = OpcaoPesquisaSatisfacao::whereId($pesquisaSatifacao->resposta_id)->count();
-
-        //     return [
-        //         'pergunta' => $pesquisaSatifacao->pergunta->nome,
-        //         'resposta' => $resposta
-        //     ];
-        // });
-
-        // dd($pesquisa);
-        // $pesquisas = $data->map(function($pesquisa) {
-        //     return $pesquisa->transform(static function(PesquisaSatifacao $pesquisaSatifacao) {
-        //         $respostas = DB::table('opcoes_pesquisa_satisfacao')->where('id', $pesquisaSatifacao->resposta_id);
-
-        //         // return [
-        //         //     'pergunta' => $pesquisaSatifacao->pergunta->nome,
-        //         //     'respostas' => $respostas->count()
-        //         // ];
-        //     });
-        // });
-
-
-
-        $pdf = PDF::loadView('admin.ouvidoria.relatorio.mensal', [
+        $pdf = \PDF::loadView('admin.ouvidoria.relatorio.mensal', [
             'data' => $this->ouvidoria->report($request->input('mes')),
             'graficos' => $this->graficos->getDataDemandasAndDemandantesGoogleCharts($request->input('mes')),
+            'observacoes_pesquisa_satisfacao' => ObservacaoPesquisaSatisfacao::whereMonth('created_at', $filtroMes)->get(),
             'mes' => $filtroMes,
-            'meses' => $this->getMonth(),
-            // 'perguntas' => $pesquisa
+            'meses' => $this->getMonth()
         ]);
 
         $pdf->setOptions([

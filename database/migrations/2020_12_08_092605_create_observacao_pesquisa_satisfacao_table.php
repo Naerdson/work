@@ -16,7 +16,7 @@ class CreateObservacaoPesquisaSatisfacaoTable extends Migration
         Schema::create('observacao_pesquisas_satisfacao', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ocorrencia_id')->references('id')->on('ouvidorias_ocorrencias');
-            $table->string('descricao');
+            $table->longText('descricao');
             $table->timestamps();
         });
     }

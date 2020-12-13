@@ -92,8 +92,11 @@
             </tbody>
         </table>
 
+        <div class="mb-4 mt-4">
+            <h5>PESQUISA DE SATISFAÇÃO</h5>
+        </div>
 
-        @foreach($perguntas as $pergunta)
+        @foreach($data['PESQUISA_SATISFACAO'] as $pergunta)
             <h6>{{ $pergunta['pergunta'] }}</h6>
             <table class="table table-striped table-bordered">
                 <thead>
@@ -104,10 +107,38 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @foreach($pergunta['resposta'] as $resposta)
+                        <tr>
+                            <td>{{ $resposta->nome }}</td>
+                            <td>{{ $resposta->qtd }}</td>
+                            <td>{{ $resposta->porcentagem }}%</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         @endforeach
+
+        <h6>SUGESTÕES/COMENTÁRIOS</h6>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Contato</th>
+                    <th>Comentário</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($observacoes_pesquisa_satisfacao as $observacao)
+                <tr>
+                    <td>{{ $observacao->ocorrencia->nome ?? 'Não Informado!' }}</td>
+                    <td>{{ date("d/m/Y H:i", strtotime($observacao->ocorrencia->created_at)) }}</td>
+                    <td>{{ $observacao->ocorrencia->contato }}</td>
+                    <td>{{ $observacao->descricao }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
     </div>
     @push('scripts')

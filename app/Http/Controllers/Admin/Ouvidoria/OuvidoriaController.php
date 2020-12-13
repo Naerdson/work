@@ -18,7 +18,7 @@ class OuvidoriaController extends Controller
 
     public function index(Request $request)
     {
-        $filtro = $request->get('filtro');
+        $filtro = $request->input('filtro');
         $status = $request->get('status');
 
         return view('admin.ouvidoria.home', [

@@ -21,8 +21,7 @@ class RecursosIniciaisOuvidoriaController extends Controller
             'campus' => Campus::all()->toArray(),
             'categorias_demandantes' => OuvidoriasDemandante::all()->toArray(),
             'tipos_contato' => TiposContato::all()->toArray(),
-            'perguntas_pesquisa' => PerguntasPesquisa::all()->toArray(),
-            'opcoes_pesquisa_satisfacao' => OpcaoPesquisaSatisfacao::all()->toArray()
+            'setores' => Setor::all()->toArray()
         ], 200);
     }
 }

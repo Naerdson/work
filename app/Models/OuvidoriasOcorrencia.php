@@ -26,13 +26,12 @@ class OuvidoriasOcorrencia extends Model
     ];
 
     protected $with = [
-        'setorResponsavel',
+        'setor_responsavel',
         'categoria',
         'demandante',
         'status',
         'campus',
         'historicos',
-        'pesquisa_satisfacao'
     ];
 
     protected $hidden = [
@@ -54,7 +53,7 @@ class OuvidoriasOcorrencia extends Model
         $operadorFiltroOuvidoria = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? '>' : '=';
         $filtroSetor = (auth()->user()->setor_id == SetorModel::OUVIDORIA) ? 0 : auth()->user()->setor_id;
 
-        return OuvidoriasOcorrencia::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id')
+        return self::select('id', 'protocolo', 'nome', 'contato', 'tipo_contato_id', 'descricao', 'status_id', 'created_at', 'setor_responsavel_id', 'categoria_id', 'demandante_id', 'campus_id')
                 ->where('setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor)
                 ->where('status_id', $operadorFiltroStatus, $status_id)
                 ->where('protocolo', $operadorFiltroProtoloco , $filtro)
@@ -80,10 +79,10 @@ class OuvidoriasOcorrencia extends Model
     public function getCountOuvidoria()
     {
         return [
-            'total' => OuvidoriasOcorrencia::count(),
-            'encaminhado' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
-            'concluido' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
-            'aberto' => OuvidoriasOcorrencia::where('status_id', StatusModel::STATUS_ABERTO)->count(),
+            'total' => self::count(),
+            'encaminhado' => self::where('status_id', StatusModel::STATUS_ENCAMINHADO)->count(),
+            'concluido' => self::where('status_id', StatusModel::STATUS_CONCLUIDO)->count(),
+            'aberto' => self::where('status_id', StatusModel::STATUS_ABERTO)->count(),
         ];
     }
 
@@ -91,6 +90,7 @@ class OuvidoriasOcorrencia extends Model
     {
         $filtroMes = (is_null($filtroMes) ? Carbon::now()->month : (int) $filtroMes);
         $reclamacaoOuvidoriaID = OuvidoriasCategoria::RECLAMACAO;
+        $pesquisasSatisfacao = PesquisaSatifacao::whereMonth('created_at', $filtroMes)->groupBy('pergunta_id')->get();
 
         return [
             'DEMANDANTES'   =>  DB::select("
@@ -121,26 +121,26 @@ class OuvidoriasOcorrencia extends Model
                                         month(ocorrencia.created_at) = {$filtroMes}
                                         group by categoria.nome;
                                 "),
-            'RECLAMACOES'   =>  OuvidoriasOcorrencia::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get(),
-            'PESQUISA_SATISFACAO' => DB::select(
-                                        "select
-                                        per.id as pergunta_id,
-                                        res.nome as resposta,
-                                        count(pes.resposta_id) as quantidade,
-                                        cast(100 * count(pes.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes}) as decimal(10,2)) as porcentagem
-                                    from
-                                        pesquisa_satisfacao as pes
-                                        join perguntas_pesquisas as per
-                                            on per.id = pes.pergunta_id
-                                        join opcoes_pesquisa_satisfacao as res
-                                            on res.id = pes.resposta_id
-                                        join ouvidorias_ocorrencias as ocorrencia
-                                            on ocorrencia.id = pes.ocorrencia_id
-                                    where
-                                        month(ocorrencia.created_at) = {$filtroMes}
-                                        group by res.nome;
-                                    ")
+            'RECLAMACOES'   =>  self::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get(),
+            'PESQUISA_SATISFACAO' => $pesquisasSatisfacao->map(static function ($pesquisaSatifacao) use ($filtroMes){
+                    $respostas = DB::select("
+                        SELECT 
+                            opcoes.nome,
+                            count(pesquisa_satisfacao.resposta_id) as qtd,
+                            cast(100 * count(pesquisa_satisfacao.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes} and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}) as decimal(10,2)) as porcentagem
+                        FROM 
+                            pesquisa_satisfacao
+                        join opcoes_pesquisa_satisfacao as opcoes
+                            on opcoes.id = pesquisa_satisfacao.resposta_id
+                        where month(pesquisa_satisfacao.created_at) = {$filtroMes}
+                        and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}
+                        group by opcoes.nome;");
 
+                        return [
+                            'pergunta' => $pesquisaSatifacao->pergunta->nome,
+                            'resposta' => $respostas
+                        ];
+            })
         ];
     }
 
@@ -149,7 +149,7 @@ class OuvidoriasOcorrencia extends Model
         return $this->hasMany(OuvidoriasHistorico::class, 'ocorrencia_id', 'id');
     }
 
-    public function setorResponsavel()
+    public function setor_responsavel()
     {
         return $this->hasOne(Setor::class, 'id', 'setor_responsavel_id');
     }
@@ -174,14 +174,9 @@ class OuvidoriasOcorrencia extends Model
         return $this->hasOne(Campus::class, 'id', 'campus_id');
     }
 
-    public function pesquisa_satisfacao()
-    {
-        return $this->hasOne(PesquisaSatifacao::class, 'ocorrencia_id', 'id');
-    }
-
     public function observao_pesquisa_satisfacao()
     {
-        return $this->hasMany(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
+        return $this->hasOne(ObservacaoPesquisaSatisfacao::class, 'ocorrencia_id', 'id');
     }
 
 }

@@ -1,5 +1,5 @@
 <style type="text/css">
-    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+    @import url("http://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
     * {
         margin: 0;
@@ -39,7 +39,7 @@
 </style>
 
 <div class="header">
-    <!-- <img src="{{ asset('img/logo_uni_relatorio.png') }}"> -->
+    <img src="{{ public_path('img/logo_uni_relatorio.png') }}">
     <p>Centro Universitário Fametro</p>
     <span>RUA CONSELHEIRO ESTELITA, 500 - BAIRRO: CENTRO - CEP: 60010260 - FORTALEZA - CE - CNPJ: 03.884.793/001-47</span>
 </div>
