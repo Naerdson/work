@@ -28,8 +28,6 @@ class LoginController extends Controller
                 'password' => 'required',
             ]);
 
-            $userInstance = User::firstOrCreate(['usuario' => $request->input('usuario'), 'nome' => 'Moises abreu rodrigues']);
-
             $dataUser = (object) $request->post();
 
             $userInstance = $this->user->firstOrNew(['usuario' => $dataUser->usuario]);
