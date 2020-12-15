@@ -111,7 +111,7 @@
                         <tr>
                             <td>{{ $resposta->nome }}</td>
                             <td>{{ $resposta->qtd }}</td>
-                            <td>{{ $resposta->porcentagem }}%</td>
+                            <td>{{ (float)$resposta->porcentagem}}%</td>
                         </tr>
                     @endforeach
                 </tbody>

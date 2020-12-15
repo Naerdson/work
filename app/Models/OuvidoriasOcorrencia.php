@@ -92,7 +92,7 @@ class OuvidoriasOcorrencia extends Model
     {
         $filtroMes = (is_null($filtroMes) ? Carbon::now()->month : (int) $filtroMes);
         $reclamacaoOuvidoriaID = OuvidoriasCategoria::RECLAMACAO;
-        $pesquisasSatisfacao = PesquisaSatifacao::whereMonth('created_at', $filtroMes)->groupBy('pergunta_id')->get();
+        $pesquisaSatifacaoOcorrencias = PesquisaSatifacao::select('id', 'pergunta_id')->whereMonth('created_at', $filtroMes)->groupBy('pergunta_id')->get();
 
         return [
             'DEMANDANTES'   =>  DB::select("
@@ -124,19 +124,18 @@ class OuvidoriasOcorrencia extends Model
                                         group by categoria.nome;
                                 "),
             'RECLAMACOES'   =>  self::whereRaw("MONTH(ouvidorias_ocorrencias.created_at) = {$filtroMes} AND ouvidorias_ocorrencias.categoria_id = {$reclamacaoOuvidoriaID}")->get(),
-            'PESQUISA_SATISFACAO' => $pesquisasSatisfacao->map(static function ($pesquisaSatifacao) use ($filtroMes){
-                    $respostas = DB::select("
-                        SELECT 
-                            opcoes.nome,
-                            count(pesquisa_satisfacao.resposta_id) as qtd,
-                            cast(100 * count(pesquisa_satisfacao.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes} and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}) as decimal(10,2)) as porcentagem
-                        FROM 
-                            pesquisa_satisfacao
-                        join opcoes_pesquisa_satisfacao as opcoes
-                            on opcoes.id = pesquisa_satisfacao.resposta_id
-                        where month(pesquisa_satisfacao.created_at) = {$filtroMes}
-                        and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}
-                        group by opcoes.nome;");
+            'PESQUISA_SATISFACAO' => $pesquisaSatifacaoOcorrencias->map(static function ($pesquisaSatifacao) use ($filtroMes, $pesquisaSatifacaoOcorrencias){
+                    $respostas = PesquisaSatifacao::select(
+                        'opcoes_pesquisa_satisfacao.nome',
+                        DB::raw(
+                            "count(pesquisa_satisfacao.resposta_id) as qtd,
+                            cast(100 * count(pesquisa_satisfacao.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes} and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}) as decimal(10,2)) as porcentagem"),
+                         )
+                        ->join('opcoes_pesquisa_satisfacao', 'opcoes_pesquisa_satisfacao.id', 'pesquisa_satisfacao.resposta_id')
+                        ->whereMonth('pesquisa_satisfacao.created_at', $filtroMes)
+                        ->where('pesquisa_satisfacao.pergunta_id', $pesquisaSatifacao->id)
+                        ->groupBy('opcoes_pesquisa_satisfacao.nome')
+                        ->get();
 
                         return [
                             'pergunta' => $pesquisaSatifacao->pergunta->nome,

@@ -55,7 +55,7 @@ class RelatorioController extends Controller
             'footer-center' => '[page]'
         ]);
 
-        return $pdf->download('RelatorioOuvidoria.pdf');
+        return $pdf->stream('RelatorioOuvidoria.pdf');
     }
 
     public function getMonth()
