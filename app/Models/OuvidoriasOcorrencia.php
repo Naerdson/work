@@ -129,7 +129,7 @@ class OuvidoriasOcorrencia extends Model
                         'opcoes_pesquisa_satisfacao.nome',
                         DB::raw(
                             "count(pesquisa_satisfacao.resposta_id) as qtd,
-                            cast(100 * count(pesquisa_satisfacao.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes} and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}) as decimal(10,2)) as porcentagem"),
+                            cast(100 * count(pesquisa_satisfacao.resposta_id) / (SELECT COUNT(*) from pesquisa_satisfacao where month(created_at) = {$filtroMes} and pesquisa_satisfacao.pergunta_id = {$pesquisaSatifacao->id}) as decimal(10,2)) as porcentagem")
                          )
                         ->join('opcoes_pesquisa_satisfacao', 'opcoes_pesquisa_satisfacao.id', 'pesquisa_satisfacao.resposta_id')
                         ->whereMonth('pesquisa_satisfacao.created_at', $filtroMes)
