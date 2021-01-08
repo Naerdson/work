@@ -26,7 +26,9 @@ class OuvidoriaStoreRequest extends FormRequest
             'descricao' => 'string|required',
             'categoria_id' => 'required|integer|exists:ouvidorias_categorias,id',
             'demandante_id' => 'required|integer|exists:ouvidorias_demandantes,id',
-            'campus_id' => 'required|integer|exists:campus,id'
+            'campus_id' => 'required|integer|exists:campus,id',
+            'causa_id' => 'required|integer|exists:causas,id',
+            'setor_id' => 'required|integer|exists:setores,id'
         ];
 
         $this->sanitize();

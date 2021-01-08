@@ -114,15 +114,15 @@
                                                 </button>
                                             </form>
                                         @endif
-                                        @if ($ocorrencia->status->id <= 3)
-                                            @if($ocorrencia['tipo_contato_id'] == 1 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
+                                        @if ($ocorrencia->status->id == 2 )
+                                            @if($ocorrencia['tipo_contato_id'] == 1 && $ocorrencia->setor_responsavel->id == 19)
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                         data-ocorrenciaid="{{ $ocorrencia['id'] }}"
                                                         data-email="{{ $ocorrencia['contato'] }}" data-toggle="modal"
                                                         data-target="#modalResponderOcorrencia">
                                                         <i class="fas fa-envelope"></i>
                                                 </button>
-                                            @elseif($ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
+                                            @elseif($ocorrencia->setor_responsavel->id == 19)
                                                 <a href="https://wa.me/55{{$ocorrencia['contato']}}" target="_blank" class="btn btn-success btn-sm">
                                                     <i class="fab fa-whatsapp"></i>
                                                 </a>
@@ -137,7 +137,8 @@
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if($ocorrencia->status->id == 1 && $ocorrencia->setor_responsavel->id == 19 || $ocorrencia->status->id >= 2 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
+                                        @endif
+                                                @if($ocorrencia->status->id == 1 && $ocorrencia->setor_responsavel->id == 19 )
                                                 <button type="button" class="btn btn-warning btn-sm"
                                                         data-ocorrenciaid="{{ $ocorrencia['id'] }}"
                                                         data-toggle="modal"
@@ -145,8 +146,15 @@
                                                         <i class="fas fa-forward"></i>
                                                 </button>
                                             @endif
-                                        @endif
-                           
+                                            @if($ocorrencia->status->id == 2 && $ocorrencia->setor_responsavel->id == auth()->user()->setor_id)
+                                                <button type="button" class="btn btn-warning btn-sm"
+                                                        data-ocorrenciaid="{{ $ocorrencia['id'] }}"
+                                                        data-toggle="modal"
+                                                        data-target="#modalEncaminharOcorrenciaParaOuvidoria">
+                                                        <i class="fas fa-forward"></i>
+                                                </button>
+                                            @endif
+
                                         @if($ocorrencia['status']['id'] >= 2  && auth()->user()->setor_id == 19)
                                             <a href="{{ route('ouvidoria.historico', $ocorrencia['id']) }}">
                                                 <button type="button" class="btn btn-info btn-sm">
@@ -173,7 +181,7 @@
                     <div class="d-md-flex justify-content-between pl-2 pr-2">
                         <div class="d-flex flex-md-row">
                             <p class="pr-3">
-                                <i class="fas fa-history" style="color: #17a2b8;"></i> 
+                                <i class="fas fa-history" style="color: #17a2b8;"></i>
                                 - Histórico
                             </p>
                             <p class="pr-3">
@@ -185,15 +193,15 @@
                                 - Responder por telefone
                             </p>
                             <p class="pr-3">
-                                <i class="fas fa-check" style="color: #006767;"></i> 
+                                <i class="fas fa-check" style="color: #006767;"></i>
                                 - Encerrar
                             </p>
                             <p class="pr-3">
-                                <i class="fas fa-forward" style="color: #e0a800;"></i> 
+                                <i class="fas fa-forward" style="color: #e0a800;"></i>
                                 - Encaminhar
                             </p>
                             <p class="pr-3">
-                                <i class="fas fa-info-circle" style="color: #23272B"></i> 
+                                <i class="fas fa-info-circle" style="color: #23272B"></i>
                                 - Descrição da ocorrência
                             </p>
                         </div>
@@ -216,7 +224,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <form method="post" action="{{ route('ouvidoria.home.responder.email')  }}">
                         @csrf
                         <input name="_method" type="hidden" value="PUT">
@@ -279,6 +287,7 @@
         </div>
     </div>
 
+   <!-- Modal Descrição da Ocorrência -->
     <div class="modal fade bd-example-modal-lg" id="modalDescricaoOcorrencia">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -338,6 +347,85 @@
             </div>
         </div>
     </div>
+    <!-- Modal Encaminhar Ocorrencia-->
+    <div class="modal fade" id="modalEncaminharOcorrencia" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="title-h" id="exampleModalLabel">Encaminhar Ocorrência</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('ouvidoria.home.encaminhar') }}">
+                        @csrf
+                        <input name="_method" type="hidden" value="PUT">
+                        <input type="hidden" name="ocorrencia_id" id="ocorrencia_id">
+                        <input type="hidden" name="status_ocorrencia_id" value="2">
+                        <div class="form-group">
+                            <label for="setor">Selecione o setor</label>
+                            <select name="setor_id" id="setor" class="form-control">
+                                <option disabled selected>Selecione</option>
+                                @foreach($setores as $setor)
+                                    @if($setor->id != 1 && $setor->id != 28)
+                                        <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                    @endif;
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Encaminhar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Encaminhar Ocorrencia Para ouvidoria-->
+    <div class="modal fade" id="modalEncaminharOcorrenciaParaOuvidoria" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="title-h" id="exampleModalLabel">Encaminhar Ocorrência</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('ouvidoria.home.encaminhar') }}">
+                        @csrf
+                        <input name="_method" type="hidden" value="PUT">
+                        <input type="hidden" name="ocorrencia_id" id="ocorrencia_id">
+                        <input type="hidden" name="status_ocorrencia_id" value="2">
+                        <div class="form-group">
+                            <label for="setor">Selecione o setor</label>
+                            <select name="setor_id" id="setor" class="form-control">
+                                <option disabled selected>Selecione</option>
+                                @foreach($setores as $setor)
+                                    @if($setor->id != 1 && $setor->id != 28)
+                                        <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                    @endif;
+                                @endforeach
+                            </select>
+                        </div>
+                    <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea class="form-control" name="mensagem" id="mensagem1" rows="6" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Encaminhar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script>
         $('#modalResponderOcorrencia').on('show.bs.modal', function (event) {
@@ -358,11 +446,20 @@
             modal.find('.modal-body #ocorrencia_id').val(ocorrencia_id)
         });
 
+        $('#modalEncaminharOcorrenciaParaOuvidoria').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var ocorrencia_id = button.data('ocorrenciaid'); // Extract info from data-* attributes
+
+            var modal = $(this)
+            modal.find('.modal-body #ocorrencia_id').val(ocorrencia_id)
+        });
+
         $('#modalDescricaoOcorrencia').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             var nomeDemandante = (button.data('nome').length <= 0) ? 'Confidencial' : button.data('nome');
             var emailDemandante = button.data('email');
             var demandante = button.data('demandante');
+            var setor_responsavel = button.data('setor_responsavel');
             var campus = button.data('campus');
             var descricao = button.data('descricao');
 
@@ -372,6 +469,7 @@
             modal.find('.modal-body #email').val(emailDemandante)
             modal.find('.modal-body #demandante').val(demandante)
             modal.find('.modal-body #campus').val(campus)
+            modal.find('.modal-body #setor').val(setor_responsavel)
             modal.find('.modal-body #descricao').val(descricao)
         });
     </script>

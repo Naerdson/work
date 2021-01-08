@@ -32,7 +32,7 @@ class HistoricoController extends Controller
             $validatedData = $request->validate([
                 'ocorrencia_id' => 'required',
                 'status_ocorrencia_id' => 'required',
-                'setor_id' => 'required'
+                'setor_id' => 'required',
             ]);
 
             $historicoInstance = $this->historico->fill(array_merge(
@@ -53,6 +53,36 @@ class HistoricoController extends Controller
             return redirect()->route('ouvidoria.home')->with(['type' => 'danger', 'message' => 'Não foi possivel encaminhar a ocorrencia' . $e->getMessage() ]);
         }
 
+    }
+    public function forwardOccurrenceForOuvidoria(Request $request)
+    {
+        try {
+
+            $validatedData = $request->validate([
+                'ocorrencia_id' => 'required',
+                'status_ocorrencia_id' => 'required',
+                'setor_id' => 'required',
+                'tratativa' => 'required'
+            ]);
+
+            $historicoInstance = $this->historico->fill(array_merge(
+                $request->post(),
+                [
+                    'user_id' => (string) auth()->user()->id,
+                    'tratativa_id' => (string) auth()->user()->tratativa
+                ]
+            ));
+
+            $historicoInstance->save();
+
+            $ouvidoriaInstance = $this->ouvidoria->findOrFail( (int) $request->ocorrencia_id);
+            $ouvidoriaInstance->update([ "status_id" => 2, "setor_responsavel_id" => $request->setor_id,"tratativa"=> $request->tratativa ]);
+
+            return redirect()->route('ouvidoria.home')->with(['type' => 'success', 'message' => 'Ouvidoria encaminhada com sucesso' ]);
+
+        } catch (Exception $e) {
+            return redirect()->route('ouvidoria.home')->with(['type' => 'danger', 'message' => 'Não foi possivel encaminhar a ocorrencia' . $e->getMessage() ]);
+        }
     }
 
     /**

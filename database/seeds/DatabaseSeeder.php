@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             TipoContatoSeeder::class,
             PerguntasPesquisaSatisfacaoSeeder::class,
             OpcoesPesquisaSatisfacaoSeeder::class,
-            CausaSeeder::class
+            CausaSeeder::class,
         ]);
     }
 }

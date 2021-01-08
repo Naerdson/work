@@ -35,7 +35,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary'  => '/usr/local/bin/wkhtmltopdf-amd64',
+        'binary'  => '\usr\local\bin\wkhtmltopdf-amd64',
         'timeout' => false,
         'options' => [],
         'env'     => [],
@@ -43,10 +43,14 @@ return [
 
     'image' => [
         'enabled' => true,
-        'binary' => '/usr/local/bin/wkhtmltoimage-amd64',
+        'binary' => '\usr\local\bin\wkhtmltoimage-amd64',
         'timeout' => false,
         'options' => [],
         'env'     => [],
     ],
 
 ];
+
+//'binary' => 'vendor/h4cc/wkhtmltopdf-amd64/bin/wikhtmltopdf-amd64/usr/local/bin',
+//'binary'  => 'vendor/h4cc/wkhtmltoimage-amd64/bin/wikhtmltoimage-amd64/usr/local/bin',
+

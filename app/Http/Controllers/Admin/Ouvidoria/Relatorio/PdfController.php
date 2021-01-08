@@ -1,5 +1,5 @@
 <?php
-/*
+
 namespace App\Http\Controllers\Admin\Ouvidoria\Relatorio;
 
 use App\Http\Controllers\Controller;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\ObservacaoPesquisaSatisfacao;
 use PDF;
 
-class RelatorioController extends Controller
+class PdfController extends Controller
 {
     private $ouvidoria;
     private $graficos;
@@ -34,7 +34,7 @@ class RelatorioController extends Controller
         ]);
     }
 
-    public function downloadReport(Request $request)
+    public function dowloadReport(Request $request)
     {
         $filtroMes = (is_null($request->input('mes')) ? Carbon::now()->month : (int) $request->input('mes'));
 
@@ -60,19 +60,20 @@ class RelatorioController extends Controller
 
     public function getMonth()
     {
-        return [
-            "1" => "Janeiro",
-            "2" => "Fevereiro",
-            "3" => "Março",
-            "4" => "Abril",
-            "5" => "Maio",
-            "6" => "Junho",
-            "7" => "Julho",
-            "8" => "Agosto",
-            "9" => "Setembro",
-            "10" => "Outubro",
-            "11" => "Novembro",
-            "12" => "Dezembro"
-        ];
+    return [
+        "1" => "Janeiro",
+        "2" => "Fevereiro",
+        "3" => "Março",
+        "4" => "Abril",
+        "5" => "Maio",
+        "6" => "Junho",
+        "7" => "Julho",
+        "8" => "Agosto",
+        "9" => "Setembro",
+        "10" => "Outubro",
+        "11" => "Novembro",
+        "12" => "Dezembro"
+    ];
     }
+
 }

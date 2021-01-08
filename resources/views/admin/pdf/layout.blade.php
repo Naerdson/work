@@ -22,8 +22,8 @@
     @yield('title')
     @yield('content')
 
-    
+
     @stack('scripts')
-    <!-- <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script> -->
+    <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
 </body>
 </html>

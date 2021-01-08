@@ -14,11 +14,14 @@ Route::prefix('admin')->group(function () {
         Route::namespace('Ouvidoria')->group(function () {
             Route::get('ouvidoria/home{status?}', 'OuvidoriaController@index')->name('ouvidoria.home');
             Route::put('ouvidoria/encaminhar', 'HistoricoController@forwardOccurrence')->name('ouvidoria.home.encaminhar');
+            Route::put('ouvidoria/encaminhar/ouvidoria', 'HistoricoController@forwardOccurrenceForOuvidoria')->name('ouvidoria.home.encaminhar.ouvidoria');
             Route::put('ouvidoria/responder', 'HistoricoController@replyOccurrenceByEmail')->name('ouvidoria.home.responder.email');
             Route::put('ouvidoria/encerrar/{id}', 'HistoricoController@finishOccurrence')->name('ouvidoria.home.encerrar');
             Route::get('ouvidoria/historico/{id}', 'HistoricoController@getHistoric')->name('ouvidoria.historico');
-            Route::get('ouvidoria/relatorio{mes?}', 'Relatorio\RelatorioController@index')->name('ouvidoria.relatorio');
-            Route::get('ouvidoria/gerar-relatorio-mensal{mes?}', 'Relatorio\RelatorioController@downloadReport')->name('ouvidoria.gerar.relatorio');
+           // Route::get('ouvidoria/relatorio{mes?}', 'Relatorio\RelatorioController@index')->name('ouvidoria.relatorio');
+            Route::get('ouvidoria/relatorio{mes?}', 'Relatorio\PdfController@index')->name('ouvidoria.relatorio');
+            //Route::get('ouvidoria/gerar-relatorio-mensal{mes?}', 'Relatorio\RelatorioController@downloadReport')->name('ouvidoria.gerar.relatorio');
+            Route::get('ouvidoria/gerar-relatorio-mensal{mes?}', 'Relatorio\PdfController@dowloadReport')->name('ouvidoria.gerar.relatorio');
         });
 
 
@@ -39,6 +42,14 @@ Route::prefix('admin')->group(function () {
         Route::namespace('Perfil')->group(function () {
             Route::get('perfil/', 'PerfilController@edit')->name('perfil.edit');
             Route::patch('perfil/{id}', 'PerfilController@update')->name('perfil.update');
+        });
+
+        Route::get('/alertemail', function(){
+            return new \App\Mail\AlertaSetorOuvidoria
+            (
+                'Naerdson',
+                'Novo Email'
+            );
         });
     });
 });

@@ -59,7 +59,7 @@ class OuvidoriasOcorrencia extends Model
                 ->where('setor_responsavel_id', $operadorFiltroOuvidoria, $filtroSetor)
                 ->where('status_id', $operadorFiltroStatus, $status_id)
                 ->where('protocolo', $operadorFiltroProtoloco , $filtro)
-                ->paginate(5);
+                ->paginate(10);
     }
 
     private function getIdStatus($status)

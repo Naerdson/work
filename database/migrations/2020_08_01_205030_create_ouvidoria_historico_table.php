@@ -19,6 +19,7 @@ class CreateOuvidoriaHistoricoTable extends Migration
             $table->foreignId('status_ocorrencia_id')->references('id')->on('ouvidorias_status');
             $table->foreignId('setor_id')->references('id')->on('setores');
             $table->foreignId('user_id')->references('id')->on('usuarios');
+            $table->longText('tratativa');
             $table->datetime('created_at', 4);
             $table->datetime('updated_at', 4);
         });
